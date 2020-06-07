@@ -5,7 +5,8 @@
     "lib": ["es2016", "esnext.asynciterable"],
     "outDir": "dist",
     "rootDir": "src",
-    "removeComments": true
+    "removeComments": true,
+    "esModuleInterop": true
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*.ts"]

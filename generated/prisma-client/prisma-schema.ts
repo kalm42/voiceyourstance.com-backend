@@ -2,7 +2,15 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateUser {
+export const typeDefs = /* GraphQL */ `type AggregateLetter {
+  count: Int!
+}
+
+type AggregateMail {
+  count: Int!
+}
+
+type AggregatePayment {
   count: Int!
 }
 
@@ -10,15 +18,617 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
+type Letter {
+  id: ID!
+  fromName: String!
+  fromLine1: String!
+  fromCity: String!
+  fromState: String!
+  fromZip: String!
+  toName: String!
+  toLine1: String!
+  toCity: String!
+  toState: String!
+  toZip: String!
+  content: String!
+  payment: Payment
+  mail: Mail
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type LetterConnection {
+  pageInfo: PageInfo!
+  edges: [LetterEdge]!
+  aggregate: AggregateLetter!
+}
+
+input LetterCreateInput {
+  id: ID
+  fromName: String!
+  fromLine1: String!
+  fromCity: String!
+  fromState: String!
+  fromZip: String!
+  toName: String!
+  toLine1: String!
+  toCity: String!
+  toState: String!
+  toZip: String!
+  content: String!
+  payment: PaymentCreateOneWithoutLetterInput
+  mail: MailCreateOneWithoutLetterInput
+}
+
+input LetterCreateOneWithoutMailInput {
+  create: LetterCreateWithoutMailInput
+  connect: LetterWhereUniqueInput
+}
+
+input LetterCreateOneWithoutPaymentInput {
+  create: LetterCreateWithoutPaymentInput
+  connect: LetterWhereUniqueInput
+}
+
+input LetterCreateWithoutMailInput {
+  id: ID
+  fromName: String!
+  fromLine1: String!
+  fromCity: String!
+  fromState: String!
+  fromZip: String!
+  toName: String!
+  toLine1: String!
+  toCity: String!
+  toState: String!
+  toZip: String!
+  content: String!
+  payment: PaymentCreateOneWithoutLetterInput
+}
+
+input LetterCreateWithoutPaymentInput {
+  id: ID
+  fromName: String!
+  fromLine1: String!
+  fromCity: String!
+  fromState: String!
+  fromZip: String!
+  toName: String!
+  toLine1: String!
+  toCity: String!
+  toState: String!
+  toZip: String!
+  content: String!
+  mail: MailCreateOneWithoutLetterInput
+}
+
+type LetterEdge {
+  node: Letter!
+  cursor: String!
+}
+
+enum LetterOrderByInput {
+  id_ASC
+  id_DESC
+  fromName_ASC
+  fromName_DESC
+  fromLine1_ASC
+  fromLine1_DESC
+  fromCity_ASC
+  fromCity_DESC
+  fromState_ASC
+  fromState_DESC
+  fromZip_ASC
+  fromZip_DESC
+  toName_ASC
+  toName_DESC
+  toLine1_ASC
+  toLine1_DESC
+  toCity_ASC
+  toCity_DESC
+  toState_ASC
+  toState_DESC
+  toZip_ASC
+  toZip_DESC
+  content_ASC
+  content_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type LetterPreviousValues {
+  id: ID!
+  fromName: String!
+  fromLine1: String!
+  fromCity: String!
+  fromState: String!
+  fromZip: String!
+  toName: String!
+  toLine1: String!
+  toCity: String!
+  toState: String!
+  toZip: String!
+  content: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type LetterSubscriptionPayload {
+  mutation: MutationType!
+  node: Letter
+  updatedFields: [String!]
+  previousValues: LetterPreviousValues
+}
+
+input LetterSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LetterWhereInput
+  AND: [LetterSubscriptionWhereInput!]
+  OR: [LetterSubscriptionWhereInput!]
+  NOT: [LetterSubscriptionWhereInput!]
+}
+
+input LetterUpdateInput {
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: String
+  payment: PaymentUpdateOneWithoutLetterInput
+  mail: MailUpdateOneWithoutLetterInput
+}
+
+input LetterUpdateManyMutationInput {
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: String
+}
+
+input LetterUpdateOneRequiredWithoutMailInput {
+  create: LetterCreateWithoutMailInput
+  update: LetterUpdateWithoutMailDataInput
+  upsert: LetterUpsertWithoutMailInput
+  connect: LetterWhereUniqueInput
+}
+
+input LetterUpdateOneRequiredWithoutPaymentInput {
+  create: LetterCreateWithoutPaymentInput
+  update: LetterUpdateWithoutPaymentDataInput
+  upsert: LetterUpsertWithoutPaymentInput
+  connect: LetterWhereUniqueInput
+}
+
+input LetterUpdateWithoutMailDataInput {
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: String
+  payment: PaymentUpdateOneWithoutLetterInput
+}
+
+input LetterUpdateWithoutPaymentDataInput {
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: String
+  mail: MailUpdateOneWithoutLetterInput
+}
+
+input LetterUpsertWithoutMailInput {
+  update: LetterUpdateWithoutMailDataInput!
+  create: LetterCreateWithoutMailInput!
+}
+
+input LetterUpsertWithoutPaymentInput {
+  update: LetterUpdateWithoutPaymentDataInput!
+  create: LetterCreateWithoutPaymentInput!
+}
+
+input LetterWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  fromName: String
+  fromName_not: String
+  fromName_in: [String!]
+  fromName_not_in: [String!]
+  fromName_lt: String
+  fromName_lte: String
+  fromName_gt: String
+  fromName_gte: String
+  fromName_contains: String
+  fromName_not_contains: String
+  fromName_starts_with: String
+  fromName_not_starts_with: String
+  fromName_ends_with: String
+  fromName_not_ends_with: String
+  fromLine1: String
+  fromLine1_not: String
+  fromLine1_in: [String!]
+  fromLine1_not_in: [String!]
+  fromLine1_lt: String
+  fromLine1_lte: String
+  fromLine1_gt: String
+  fromLine1_gte: String
+  fromLine1_contains: String
+  fromLine1_not_contains: String
+  fromLine1_starts_with: String
+  fromLine1_not_starts_with: String
+  fromLine1_ends_with: String
+  fromLine1_not_ends_with: String
+  fromCity: String
+  fromCity_not: String
+  fromCity_in: [String!]
+  fromCity_not_in: [String!]
+  fromCity_lt: String
+  fromCity_lte: String
+  fromCity_gt: String
+  fromCity_gte: String
+  fromCity_contains: String
+  fromCity_not_contains: String
+  fromCity_starts_with: String
+  fromCity_not_starts_with: String
+  fromCity_ends_with: String
+  fromCity_not_ends_with: String
+  fromState: String
+  fromState_not: String
+  fromState_in: [String!]
+  fromState_not_in: [String!]
+  fromState_lt: String
+  fromState_lte: String
+  fromState_gt: String
+  fromState_gte: String
+  fromState_contains: String
+  fromState_not_contains: String
+  fromState_starts_with: String
+  fromState_not_starts_with: String
+  fromState_ends_with: String
+  fromState_not_ends_with: String
+  fromZip: String
+  fromZip_not: String
+  fromZip_in: [String!]
+  fromZip_not_in: [String!]
+  fromZip_lt: String
+  fromZip_lte: String
+  fromZip_gt: String
+  fromZip_gte: String
+  fromZip_contains: String
+  fromZip_not_contains: String
+  fromZip_starts_with: String
+  fromZip_not_starts_with: String
+  fromZip_ends_with: String
+  fromZip_not_ends_with: String
+  toName: String
+  toName_not: String
+  toName_in: [String!]
+  toName_not_in: [String!]
+  toName_lt: String
+  toName_lte: String
+  toName_gt: String
+  toName_gte: String
+  toName_contains: String
+  toName_not_contains: String
+  toName_starts_with: String
+  toName_not_starts_with: String
+  toName_ends_with: String
+  toName_not_ends_with: String
+  toLine1: String
+  toLine1_not: String
+  toLine1_in: [String!]
+  toLine1_not_in: [String!]
+  toLine1_lt: String
+  toLine1_lte: String
+  toLine1_gt: String
+  toLine1_gte: String
+  toLine1_contains: String
+  toLine1_not_contains: String
+  toLine1_starts_with: String
+  toLine1_not_starts_with: String
+  toLine1_ends_with: String
+  toLine1_not_ends_with: String
+  toCity: String
+  toCity_not: String
+  toCity_in: [String!]
+  toCity_not_in: [String!]
+  toCity_lt: String
+  toCity_lte: String
+  toCity_gt: String
+  toCity_gte: String
+  toCity_contains: String
+  toCity_not_contains: String
+  toCity_starts_with: String
+  toCity_not_starts_with: String
+  toCity_ends_with: String
+  toCity_not_ends_with: String
+  toState: String
+  toState_not: String
+  toState_in: [String!]
+  toState_not_in: [String!]
+  toState_lt: String
+  toState_lte: String
+  toState_gt: String
+  toState_gte: String
+  toState_contains: String
+  toState_not_contains: String
+  toState_starts_with: String
+  toState_not_starts_with: String
+  toState_ends_with: String
+  toState_not_ends_with: String
+  toZip: String
+  toZip_not: String
+  toZip_in: [String!]
+  toZip_not_in: [String!]
+  toZip_lt: String
+  toZip_lte: String
+  toZip_gt: String
+  toZip_gte: String
+  toZip_contains: String
+  toZip_not_contains: String
+  toZip_starts_with: String
+  toZip_not_starts_with: String
+  toZip_ends_with: String
+  toZip_not_ends_with: String
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  payment: PaymentWhereInput
+  mail: MailWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [LetterWhereInput!]
+  OR: [LetterWhereInput!]
+  NOT: [LetterWhereInput!]
+}
+
+input LetterWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
+type Mail {
+  id: ID!
+  lobId: String!
+  letter: Letter!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type MailConnection {
+  pageInfo: PageInfo!
+  edges: [MailEdge]!
+  aggregate: AggregateMail!
+}
+
+input MailCreateInput {
+  id: ID
+  lobId: String!
+  letter: LetterCreateOneWithoutMailInput!
+}
+
+input MailCreateOneWithoutLetterInput {
+  create: MailCreateWithoutLetterInput
+  connect: MailWhereUniqueInput
+}
+
+input MailCreateWithoutLetterInput {
+  id: ID
+  lobId: String!
+}
+
+type MailEdge {
+  node: Mail!
+  cursor: String!
+}
+
+enum MailOrderByInput {
+  id_ASC
+  id_DESC
+  lobId_ASC
+  lobId_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type MailPreviousValues {
+  id: ID!
+  lobId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type MailSubscriptionPayload {
+  mutation: MutationType!
+  node: Mail
+  updatedFields: [String!]
+  previousValues: MailPreviousValues
+}
+
+input MailSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MailWhereInput
+  AND: [MailSubscriptionWhereInput!]
+  OR: [MailSubscriptionWhereInput!]
+  NOT: [MailSubscriptionWhereInput!]
+}
+
+input MailUpdateInput {
+  lobId: String
+  letter: LetterUpdateOneRequiredWithoutMailInput
+}
+
+input MailUpdateManyMutationInput {
+  lobId: String
+}
+
+input MailUpdateOneWithoutLetterInput {
+  create: MailCreateWithoutLetterInput
+  update: MailUpdateWithoutLetterDataInput
+  upsert: MailUpsertWithoutLetterInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: MailWhereUniqueInput
+}
+
+input MailUpdateWithoutLetterDataInput {
+  lobId: String
+}
+
+input MailUpsertWithoutLetterInput {
+  update: MailUpdateWithoutLetterDataInput!
+  create: MailCreateWithoutLetterInput!
+}
+
+input MailWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  lobId: String
+  lobId_not: String
+  lobId_in: [String!]
+  lobId_not_in: [String!]
+  lobId_lt: String
+  lobId_lte: String
+  lobId_gt: String
+  lobId_gte: String
+  lobId_contains: String
+  lobId_not_contains: String
+  lobId_starts_with: String
+  lobId_not_starts_with: String
+  lobId_ends_with: String
+  lobId_not_ends_with: String
+  letter: LetterWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [MailWhereInput!]
+  OR: [MailWhereInput!]
+  NOT: [MailWhereInput!]
+}
+
+input MailWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createLetter(data: LetterCreateInput!): Letter!
+  updateLetter(data: LetterUpdateInput!, where: LetterWhereUniqueInput!): Letter
+  updateManyLetters(data: LetterUpdateManyMutationInput!, where: LetterWhereInput): BatchPayload!
+  upsertLetter(where: LetterWhereUniqueInput!, create: LetterCreateInput!, update: LetterUpdateInput!): Letter!
+  deleteLetter(where: LetterWhereUniqueInput!): Letter
+  deleteManyLetters(where: LetterWhereInput): BatchPayload!
+  createMail(data: MailCreateInput!): Mail!
+  updateMail(data: MailUpdateInput!, where: MailWhereUniqueInput!): Mail
+  updateManyMails(data: MailUpdateManyMutationInput!, where: MailWhereInput): BatchPayload!
+  upsertMail(where: MailWhereUniqueInput!, create: MailCreateInput!, update: MailUpdateInput!): Mail!
+  deleteMail(where: MailWhereUniqueInput!): Mail
+  deleteManyMails(where: MailWhereInput): BatchPayload!
+  createPayment(data: PaymentCreateInput!): Payment!
+  updatePayment(data: PaymentUpdateInput!, where: PaymentWhereUniqueInput!): Payment
+  updateManyPayments(data: PaymentUpdateManyMutationInput!, where: PaymentWhereInput): BatchPayload!
+  upsertPayment(where: PaymentWhereUniqueInput!, create: PaymentCreateInput!, update: PaymentUpdateInput!): Payment!
+  deletePayment(where: PaymentWhereUniqueInput!): Payment
+  deleteManyPayments(where: PaymentWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -38,77 +648,105 @@ type PageInfo {
   endCursor: String
 }
 
-type Query {
-  user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  node(id: ID!): Node
-}
-
-type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-}
-
-type User {
+type Payment {
   id: ID!
-  name: String!
+  stripeId: String!
+  letter: Letter!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
-type UserConnection {
+type PaymentConnection {
   pageInfo: PageInfo!
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
+  edges: [PaymentEdge]!
+  aggregate: AggregatePayment!
 }
 
-input UserCreateInput {
+input PaymentCreateInput {
   id: ID
-  name: String!
+  stripeId: String!
+  letter: LetterCreateOneWithoutPaymentInput!
 }
 
-type UserEdge {
-  node: User!
+input PaymentCreateOneWithoutLetterInput {
+  create: PaymentCreateWithoutLetterInput
+  connect: PaymentWhereUniqueInput
+}
+
+input PaymentCreateWithoutLetterInput {
+  id: ID
+  stripeId: String!
+}
+
+type PaymentEdge {
+  node: Payment!
   cursor: String!
 }
 
-enum UserOrderByInput {
+enum PaymentOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  stripeId_ASC
+  stripeId_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
-type UserPreviousValues {
+type PaymentPreviousValues {
   id: ID!
-  name: String!
+  stripeId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
-type UserSubscriptionPayload {
+type PaymentSubscriptionPayload {
   mutation: MutationType!
-  node: User
+  node: Payment
   updatedFields: [String!]
-  previousValues: UserPreviousValues
+  previousValues: PaymentPreviousValues
 }
 
-input UserSubscriptionWhereInput {
+input PaymentSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: UserWhereInput
-  AND: [UserSubscriptionWhereInput!]
-  OR: [UserSubscriptionWhereInput!]
-  NOT: [UserSubscriptionWhereInput!]
+  node: PaymentWhereInput
+  AND: [PaymentSubscriptionWhereInput!]
+  OR: [PaymentSubscriptionWhereInput!]
+  NOT: [PaymentSubscriptionWhereInput!]
 }
 
-input UserUpdateInput {
-  name: String
+input PaymentUpdateInput {
+  stripeId: String
+  letter: LetterUpdateOneRequiredWithoutPaymentInput
 }
 
-input UserUpdateManyMutationInput {
-  name: String
+input PaymentUpdateManyMutationInput {
+  stripeId: String
 }
 
-input UserWhereInput {
+input PaymentUpdateOneWithoutLetterInput {
+  create: PaymentCreateWithoutLetterInput
+  update: PaymentUpdateWithoutLetterDataInput
+  upsert: PaymentUpsertWithoutLetterInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PaymentWhereUniqueInput
+}
+
+input PaymentUpdateWithoutLetterDataInput {
+  stripeId: String
+}
+
+input PaymentUpsertWithoutLetterInput {
+  update: PaymentUpdateWithoutLetterDataInput!
+  create: PaymentCreateWithoutLetterInput!
+}
+
+input PaymentWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -123,26 +761,62 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
+  stripeId: String
+  stripeId_not: String
+  stripeId_in: [String!]
+  stripeId_not_in: [String!]
+  stripeId_lt: String
+  stripeId_lte: String
+  stripeId_gt: String
+  stripeId_gte: String
+  stripeId_contains: String
+  stripeId_not_contains: String
+  stripeId_starts_with: String
+  stripeId_not_starts_with: String
+  stripeId_ends_with: String
+  stripeId_not_ends_with: String
+  letter: LetterWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [PaymentWhereInput!]
+  OR: [PaymentWhereInput!]
+  NOT: [PaymentWhereInput!]
 }
 
-input UserWhereUniqueInput {
+input PaymentWhereUniqueInput {
   id: ID
+}
+
+type Query {
+  letter(where: LetterWhereUniqueInput!): Letter
+  letters(where: LetterWhereInput, orderBy: LetterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Letter]!
+  lettersConnection(where: LetterWhereInput, orderBy: LetterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LetterConnection!
+  mail(where: MailWhereUniqueInput!): Mail
+  mails(where: MailWhereInput, orderBy: MailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Mail]!
+  mailsConnection(where: MailWhereInput, orderBy: MailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MailConnection!
+  payment(where: PaymentWhereUniqueInput!): Payment
+  payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment]!
+  paymentsConnection(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PaymentConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  letter(where: LetterSubscriptionWhereInput): LetterSubscriptionPayload
+  mail(where: MailSubscriptionWhereInput): MailSubscriptionPayload
+  payment(where: PaymentSubscriptionWhereInput): PaymentSubscriptionPayload
 }
 `

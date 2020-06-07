@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from "apollo-server-express"
 
 export default gql`
   type Query {
@@ -10,4 +10,4 @@ export default gql`
   type Mutation {
     createIntentionToPay: String!
   }
-`;
+`

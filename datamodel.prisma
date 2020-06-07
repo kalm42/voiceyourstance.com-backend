@@ -1,4 +1,34 @@
-type User {
+type Letter {
   id: ID! @id
-  name: String!
+  fromName: String!
+  fromLine1: String!
+  fromCity: String!
+  fromState: String!
+  fromZip: String!
+  toName: String!
+  toLine1: String!
+  toCity: String!
+  toState: String!
+  toZip: String!
+  content: String!
+  payment: Payment @relation(link: INLINE)
+  mail: Mail @relation(link: INLINE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt 
+}
+
+type Payment {
+  id: ID! @id
+  stripeId: String!
+  letter: Letter!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt 
+}
+
+type Mail {
+  id: ID! @id
+  lobId: String!
+  letter: Letter!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt 
 }
