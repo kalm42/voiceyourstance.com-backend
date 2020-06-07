@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es2016", "esnext.asynciterable"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "removeComments": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts"]
+}
