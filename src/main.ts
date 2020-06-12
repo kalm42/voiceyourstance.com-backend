@@ -6,6 +6,7 @@ import { environment } from "./environment"
 import resolvers from "./resolvers"
 import typeDefs from "./type-defs"
 import cors from "cors"
+import { prisma } from "./prisma/generated/prisma-client"
 
 const FRONTEND = process.env.FRONTEND
 const key = process.env.STRIPE_KEY
@@ -18,6 +19,9 @@ const server = new ApolloServer({
   typeDefs,
   introspection: environment.apollo.introspection,
   playground: environment.apollo.playground,
+  context: ({ req }) => ({
+    db: prisma,
+  }),
 })
 
 const app = express()

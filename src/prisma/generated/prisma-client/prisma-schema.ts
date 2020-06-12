@@ -20,6 +20,8 @@ type BatchPayload {
 
 scalar DateTime
 
+scalar Json
+
 type Letter {
   id: ID!
   fromName: String!
@@ -32,7 +34,7 @@ type Letter {
   toCity: String!
   toState: String!
   toZip: String!
-  content: String!
+  content: Json!
   payment: Payment
   mail: Mail
   createdAt: DateTime!
@@ -57,7 +59,7 @@ input LetterCreateInput {
   toCity: String!
   toState: String!
   toZip: String!
-  content: String!
+  content: Json!
   payment: PaymentCreateOneWithoutLetterInput
   mail: MailCreateOneWithoutLetterInput
 }
@@ -84,7 +86,7 @@ input LetterCreateWithoutMailInput {
   toCity: String!
   toState: String!
   toZip: String!
-  content: String!
+  content: Json!
   payment: PaymentCreateOneWithoutLetterInput
 }
 
@@ -100,7 +102,7 @@ input LetterCreateWithoutPaymentInput {
   toCity: String!
   toState: String!
   toZip: String!
-  content: String!
+  content: Json!
   mail: MailCreateOneWithoutLetterInput
 }
 
@@ -152,7 +154,7 @@ type LetterPreviousValues {
   toCity: String!
   toState: String!
   toZip: String!
-  content: String!
+  content: Json!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -186,7 +188,7 @@ input LetterUpdateInput {
   toCity: String
   toState: String
   toZip: String
-  content: String
+  content: Json
   payment: PaymentUpdateOneWithoutLetterInput
   mail: MailUpdateOneWithoutLetterInput
 }
@@ -202,7 +204,7 @@ input LetterUpdateManyMutationInput {
   toCity: String
   toState: String
   toZip: String
-  content: String
+  content: Json
 }
 
 input LetterUpdateOneRequiredWithoutMailInput {
@@ -230,7 +232,7 @@ input LetterUpdateWithoutMailDataInput {
   toCity: String
   toState: String
   toZip: String
-  content: String
+  content: Json
   payment: PaymentUpdateOneWithoutLetterInput
 }
 
@@ -245,7 +247,7 @@ input LetterUpdateWithoutPaymentDataInput {
   toCity: String
   toState: String
   toZip: String
-  content: String
+  content: Json
   mail: MailUpdateOneWithoutLetterInput
 }
 
@@ -414,20 +416,6 @@ input LetterWhereInput {
   toZip_not_starts_with: String
   toZip_ends_with: String
   toZip_not_ends_with: String
-  content: String
-  content_not: String
-  content_in: [String!]
-  content_not_in: [String!]
-  content_lt: String
-  content_lte: String
-  content_gt: String
-  content_gte: String
-  content_contains: String
-  content_not_contains: String
-  content_starts_with: String
-  content_not_starts_with: String
-  content_ends_with: String
-  content_not_ends_with: String
   payment: PaymentWhereInput
   mail: MailWhereInput
   createdAt: DateTime
@@ -461,6 +449,7 @@ type Mail {
   id: ID!
   lobId: String!
   letter: Letter!
+  expectedDeliveryDate: DateTime!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -475,6 +464,7 @@ input MailCreateInput {
   id: ID
   lobId: String!
   letter: LetterCreateOneWithoutMailInput!
+  expectedDeliveryDate: DateTime!
 }
 
 input MailCreateOneWithoutLetterInput {
@@ -485,6 +475,7 @@ input MailCreateOneWithoutLetterInput {
 input MailCreateWithoutLetterInput {
   id: ID
   lobId: String!
+  expectedDeliveryDate: DateTime!
 }
 
 type MailEdge {
@@ -497,6 +488,8 @@ enum MailOrderByInput {
   id_DESC
   lobId_ASC
   lobId_DESC
+  expectedDeliveryDate_ASC
+  expectedDeliveryDate_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -506,6 +499,7 @@ enum MailOrderByInput {
 type MailPreviousValues {
   id: ID!
   lobId: String!
+  expectedDeliveryDate: DateTime!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -531,10 +525,12 @@ input MailSubscriptionWhereInput {
 input MailUpdateInput {
   lobId: String
   letter: LetterUpdateOneRequiredWithoutMailInput
+  expectedDeliveryDate: DateTime
 }
 
 input MailUpdateManyMutationInput {
   lobId: String
+  expectedDeliveryDate: DateTime
 }
 
 input MailUpdateOneWithoutLetterInput {
@@ -548,6 +544,7 @@ input MailUpdateOneWithoutLetterInput {
 
 input MailUpdateWithoutLetterDataInput {
   lobId: String
+  expectedDeliveryDate: DateTime
 }
 
 input MailUpsertWithoutLetterInput {
@@ -585,6 +582,14 @@ input MailWhereInput {
   lobId_ends_with: String
   lobId_not_ends_with: String
   letter: LetterWhereInput
+  expectedDeliveryDate: DateTime
+  expectedDeliveryDate_not: DateTime
+  expectedDeliveryDate_in: [DateTime!]
+  expectedDeliveryDate_not_in: [DateTime!]
+  expectedDeliveryDate_lt: DateTime
+  expectedDeliveryDate_lte: DateTime
+  expectedDeliveryDate_gt: DateTime
+  expectedDeliveryDate_gte: DateTime
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

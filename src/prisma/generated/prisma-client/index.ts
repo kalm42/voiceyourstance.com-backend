@@ -214,6 +214,8 @@ export type MailOrderByInput =
   | "id_DESC"
   | "lobId_ASC"
   | "lobId_DESC"
+  | "expectedDeliveryDate_ASC"
+  | "expectedDeliveryDate_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -244,6 +246,18 @@ export type LetterWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
+export interface LetterUpsertWithoutMailInput {
+  update: LetterUpdateWithoutMailDataInput;
+  create: LetterCreateWithoutMailInput;
+}
+
+export interface MailCreateInput {
+  id?: Maybe<ID_Input>;
+  lobId: String;
+  letter: LetterCreateOneWithoutMailInput;
+  expectedDeliveryDate: DateTimeInput;
+}
+
 export interface LetterUpdateWithoutMailDataInput {
   fromName?: Maybe<String>;
   fromLine1?: Maybe<String>;
@@ -255,21 +269,8 @@ export interface LetterUpdateWithoutMailDataInput {
   toCity?: Maybe<String>;
   toState?: Maybe<String>;
   toZip?: Maybe<String>;
-  content?: Maybe<String>;
+  content?: Maybe<Json>;
   payment?: Maybe<PaymentUpdateOneWithoutLetterInput>;
-}
-
-export interface MailCreateInput {
-  id?: Maybe<ID_Input>;
-  lobId: String;
-  letter: LetterCreateOneWithoutMailInput;
-}
-
-export interface LetterUpdateOneRequiredWithoutMailInput {
-  create?: Maybe<LetterCreateWithoutMailInput>;
-  update?: Maybe<LetterUpdateWithoutMailDataInput>;
-  upsert?: Maybe<LetterUpsertWithoutMailInput>;
-  connect?: Maybe<LetterWhereUniqueInput>;
 }
 
 export interface MailUpdateOneWithoutLetterInput {
@@ -281,173 +282,11 @@ export interface MailUpdateOneWithoutLetterInput {
   connect?: Maybe<MailWhereUniqueInput>;
 }
 
-export interface MailWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  lobId?: Maybe<String>;
-  lobId_not?: Maybe<String>;
-  lobId_in?: Maybe<String[] | String>;
-  lobId_not_in?: Maybe<String[] | String>;
-  lobId_lt?: Maybe<String>;
-  lobId_lte?: Maybe<String>;
-  lobId_gt?: Maybe<String>;
-  lobId_gte?: Maybe<String>;
-  lobId_contains?: Maybe<String>;
-  lobId_not_contains?: Maybe<String>;
-  lobId_starts_with?: Maybe<String>;
-  lobId_not_starts_with?: Maybe<String>;
-  lobId_ends_with?: Maybe<String>;
-  lobId_not_ends_with?: Maybe<String>;
-  letter?: Maybe<LetterWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<MailWhereInput[] | MailWhereInput>;
-  OR?: Maybe<MailWhereInput[] | MailWhereInput>;
-  NOT?: Maybe<MailWhereInput[] | MailWhereInput>;
-}
-
-export interface MailSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MailWhereInput>;
-  AND?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
-  OR?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
-  NOT?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
-}
-
-export interface LetterCreateInput {
-  id?: Maybe<ID_Input>;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: String;
-  payment?: Maybe<PaymentCreateOneWithoutLetterInput>;
-  mail?: Maybe<MailCreateOneWithoutLetterInput>;
-}
-
-export interface PaymentUpdateManyMutationInput {
-  stripeId?: Maybe<String>;
-}
-
-export interface PaymentCreateOneWithoutLetterInput {
-  create?: Maybe<PaymentCreateWithoutLetterInput>;
-  connect?: Maybe<PaymentWhereUniqueInput>;
-}
-
-export interface LetterUpdateWithoutPaymentDataInput {
-  fromName?: Maybe<String>;
-  fromLine1?: Maybe<String>;
-  fromCity?: Maybe<String>;
-  fromState?: Maybe<String>;
-  fromZip?: Maybe<String>;
-  toName?: Maybe<String>;
-  toLine1?: Maybe<String>;
-  toCity?: Maybe<String>;
-  toState?: Maybe<String>;
-  toZip?: Maybe<String>;
-  content?: Maybe<String>;
-  mail?: Maybe<MailUpdateOneWithoutLetterInput>;
-}
-
-export interface PaymentCreateWithoutLetterInput {
-  id?: Maybe<ID_Input>;
-  stripeId: String;
-}
-
-export type MailWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface MailCreateOneWithoutLetterInput {
-  create?: Maybe<MailCreateWithoutLetterInput>;
-  connect?: Maybe<MailWhereUniqueInput>;
-}
-
-export interface LetterCreateWithoutPaymentInput {
-  id?: Maybe<ID_Input>;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: String;
-  mail?: Maybe<MailCreateOneWithoutLetterInput>;
-}
-
-export interface MailCreateWithoutLetterInput {
-  id?: Maybe<ID_Input>;
-  lobId: String;
-}
-
-export interface PaymentCreateInput {
-  id?: Maybe<ID_Input>;
-  stripeId: String;
-  letter: LetterCreateOneWithoutPaymentInput;
-}
-
-export interface LetterUpdateInput {
-  fromName?: Maybe<String>;
-  fromLine1?: Maybe<String>;
-  fromCity?: Maybe<String>;
-  fromState?: Maybe<String>;
-  fromZip?: Maybe<String>;
-  toName?: Maybe<String>;
-  toLine1?: Maybe<String>;
-  toCity?: Maybe<String>;
-  toState?: Maybe<String>;
-  toZip?: Maybe<String>;
-  content?: Maybe<String>;
-  payment?: Maybe<PaymentUpdateOneWithoutLetterInput>;
-  mail?: Maybe<MailUpdateOneWithoutLetterInput>;
-}
-
-export interface MailUpdateManyMutationInput {
-  lobId?: Maybe<String>;
-}
-
-export interface MailUpdateInput {
-  lobId?: Maybe<String>;
-  letter?: Maybe<LetterUpdateOneRequiredWithoutMailInput>;
+export interface LetterUpdateOneRequiredWithoutMailInput {
+  create?: Maybe<LetterCreateWithoutMailInput>;
+  update?: Maybe<LetterUpdateWithoutMailDataInput>;
+  upsert?: Maybe<LetterUpsertWithoutMailInput>;
+  connect?: Maybe<LetterWhereUniqueInput>;
 }
 
 export interface PaymentWhereInput {
@@ -501,8 +340,15 @@ export interface PaymentWhereInput {
   NOT?: Maybe<PaymentWhereInput[] | PaymentWhereInput>;
 }
 
-export interface PaymentUpdateWithoutLetterDataInput {
-  stripeId?: Maybe<String>;
+export interface PaymentSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PaymentWhereInput>;
+  AND?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
+  OR?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
+  NOT?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
 }
 
 export interface LetterSubscriptionWhereInput {
@@ -516,9 +362,31 @@ export interface LetterSubscriptionWhereInput {
   NOT?: Maybe<LetterSubscriptionWhereInput[] | LetterSubscriptionWhereInput>;
 }
 
-export interface PaymentUpsertWithoutLetterInput {
-  update: PaymentUpdateWithoutLetterDataInput;
-  create: PaymentCreateWithoutLetterInput;
+export interface LetterCreateInput {
+  id?: Maybe<ID_Input>;
+  fromName: String;
+  fromLine1: String;
+  fromCity: String;
+  fromState: String;
+  fromZip: String;
+  toName: String;
+  toLine1: String;
+  toCity: String;
+  toState: String;
+  toZip: String;
+  content: Json;
+  payment?: Maybe<PaymentCreateOneWithoutLetterInput>;
+  mail?: Maybe<MailCreateOneWithoutLetterInput>;
+}
+
+export interface LetterUpsertWithoutPaymentInput {
+  update: LetterUpdateWithoutPaymentDataInput;
+  create: LetterCreateWithoutPaymentInput;
+}
+
+export interface PaymentCreateOneWithoutLetterInput {
+  create?: Maybe<PaymentCreateWithoutLetterInput>;
+  connect?: Maybe<PaymentWhereUniqueInput>;
 }
 
 export interface LetterUpdateOneRequiredWithoutPaymentInput {
@@ -526,6 +394,52 @@ export interface LetterUpdateOneRequiredWithoutPaymentInput {
   update?: Maybe<LetterUpdateWithoutPaymentDataInput>;
   upsert?: Maybe<LetterUpsertWithoutPaymentInput>;
   connect?: Maybe<LetterWhereUniqueInput>;
+}
+
+export interface PaymentCreateWithoutLetterInput {
+  id?: Maybe<ID_Input>;
+  stripeId: String;
+}
+
+export interface PaymentUpdateInput {
+  stripeId?: Maybe<String>;
+  letter?: Maybe<LetterUpdateOneRequiredWithoutPaymentInput>;
+}
+
+export interface MailCreateOneWithoutLetterInput {
+  create?: Maybe<MailCreateWithoutLetterInput>;
+  connect?: Maybe<MailWhereUniqueInput>;
+}
+
+export interface LetterCreateOneWithoutPaymentInput {
+  create?: Maybe<LetterCreateWithoutPaymentInput>;
+  connect?: Maybe<LetterWhereUniqueInput>;
+}
+
+export interface MailCreateWithoutLetterInput {
+  id?: Maybe<ID_Input>;
+  lobId: String;
+  expectedDeliveryDate: DateTimeInput;
+}
+
+export type PaymentWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface LetterUpdateInput {
+  fromName?: Maybe<String>;
+  fromLine1?: Maybe<String>;
+  fromCity?: Maybe<String>;
+  fromState?: Maybe<String>;
+  fromZip?: Maybe<String>;
+  toName?: Maybe<String>;
+  toLine1?: Maybe<String>;
+  toCity?: Maybe<String>;
+  toState?: Maybe<String>;
+  toZip?: Maybe<String>;
+  content?: Maybe<Json>;
+  payment?: Maybe<PaymentUpdateOneWithoutLetterInput>;
+  mail?: Maybe<MailUpdateOneWithoutLetterInput>;
 }
 
 export interface LetterWhereInput {
@@ -683,20 +597,6 @@ export interface LetterWhereInput {
   toZip_not_starts_with?: Maybe<String>;
   toZip_ends_with?: Maybe<String>;
   toZip_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
   payment?: Maybe<PaymentWhereInput>;
   mail?: Maybe<MailWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
@@ -720,23 +620,61 @@ export interface LetterWhereInput {
   NOT?: Maybe<LetterWhereInput[] | LetterWhereInput>;
 }
 
-export interface LetterCreateOneWithoutPaymentInput {
-  create?: Maybe<LetterCreateWithoutPaymentInput>;
-  connect?: Maybe<LetterWhereUniqueInput>;
-}
-
-export interface MailUpdateWithoutLetterDataInput {
+export interface MailUpdateInput {
   lobId?: Maybe<String>;
+  letter?: Maybe<LetterUpdateOneRequiredWithoutMailInput>;
+  expectedDeliveryDate?: Maybe<DateTimeInput>;
 }
 
-export interface LetterUpsertWithoutMailInput {
-  update: LetterUpdateWithoutMailDataInput;
-  create: LetterCreateWithoutMailInput;
+export interface MailSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MailWhereInput>;
+  AND?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
+  OR?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
+  NOT?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
 }
 
-export interface LetterCreateOneWithoutMailInput {
-  create?: Maybe<LetterCreateWithoutMailInput>;
-  connect?: Maybe<LetterWhereUniqueInput>;
+export interface PaymentUpdateWithoutLetterDataInput {
+  stripeId?: Maybe<String>;
+}
+
+export interface LetterUpdateWithoutPaymentDataInput {
+  fromName?: Maybe<String>;
+  fromLine1?: Maybe<String>;
+  fromCity?: Maybe<String>;
+  fromState?: Maybe<String>;
+  fromZip?: Maybe<String>;
+  toName?: Maybe<String>;
+  toLine1?: Maybe<String>;
+  toCity?: Maybe<String>;
+  toState?: Maybe<String>;
+  toZip?: Maybe<String>;
+  content?: Maybe<Json>;
+  mail?: Maybe<MailUpdateOneWithoutLetterInput>;
+}
+
+export interface PaymentUpsertWithoutLetterInput {
+  update: PaymentUpdateWithoutLetterDataInput;
+  create: PaymentCreateWithoutLetterInput;
+}
+
+export interface LetterCreateWithoutPaymentInput {
+  id?: Maybe<ID_Input>;
+  fromName: String;
+  fromLine1: String;
+  fromCity: String;
+  fromState: String;
+  fromZip: String;
+  toName: String;
+  toLine1: String;
+  toCity: String;
+  toState: String;
+  toZip: String;
+  content: Json;
+  mail?: Maybe<MailCreateOneWithoutLetterInput>;
 }
 
 export interface LetterCreateWithoutMailInput {
@@ -751,8 +689,18 @@ export interface LetterCreateWithoutMailInput {
   toCity: String;
   toState: String;
   toZip: String;
-  content: String;
+  content: Json;
   payment?: Maybe<PaymentCreateOneWithoutLetterInput>;
+}
+
+export interface MailUpdateManyMutationInput {
+  lobId?: Maybe<String>;
+  expectedDeliveryDate?: Maybe<DateTimeInput>;
+}
+
+export interface LetterCreateOneWithoutMailInput {
+  create?: Maybe<LetterCreateWithoutMailInput>;
+  connect?: Maybe<LetterWhereUniqueInput>;
 }
 
 export interface LetterUpdateManyMutationInput {
@@ -766,7 +714,7 @@ export interface LetterUpdateManyMutationInput {
   toCity?: Maybe<String>;
   toState?: Maybe<String>;
   toZip?: Maybe<String>;
-  content?: Maybe<String>;
+  content?: Maybe<Json>;
 }
 
 export interface MailUpsertWithoutLetterInput {
@@ -774,29 +722,82 @@ export interface MailUpsertWithoutLetterInput {
   create: MailCreateWithoutLetterInput;
 }
 
-export interface PaymentSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PaymentWhereInput>;
-  AND?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
-  OR?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
-  NOT?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
+export interface MailUpdateWithoutLetterDataInput {
+  lobId?: Maybe<String>;
+  expectedDeliveryDate?: Maybe<DateTimeInput>;
 }
 
-export type PaymentWhereUniqueInput = AtLeastOne<{
+export interface MailWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  lobId?: Maybe<String>;
+  lobId_not?: Maybe<String>;
+  lobId_in?: Maybe<String[] | String>;
+  lobId_not_in?: Maybe<String[] | String>;
+  lobId_lt?: Maybe<String>;
+  lobId_lte?: Maybe<String>;
+  lobId_gt?: Maybe<String>;
+  lobId_gte?: Maybe<String>;
+  lobId_contains?: Maybe<String>;
+  lobId_not_contains?: Maybe<String>;
+  lobId_starts_with?: Maybe<String>;
+  lobId_not_starts_with?: Maybe<String>;
+  lobId_ends_with?: Maybe<String>;
+  lobId_not_ends_with?: Maybe<String>;
+  letter?: Maybe<LetterWhereInput>;
+  expectedDeliveryDate?: Maybe<DateTimeInput>;
+  expectedDeliveryDate_not?: Maybe<DateTimeInput>;
+  expectedDeliveryDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  expectedDeliveryDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  expectedDeliveryDate_lt?: Maybe<DateTimeInput>;
+  expectedDeliveryDate_lte?: Maybe<DateTimeInput>;
+  expectedDeliveryDate_gt?: Maybe<DateTimeInput>;
+  expectedDeliveryDate_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<MailWhereInput[] | MailWhereInput>;
+  OR?: Maybe<MailWhereInput[] | MailWhereInput>;
+  NOT?: Maybe<MailWhereInput[] | MailWhereInput>;
+}
+
+export interface PaymentCreateInput {
+  id?: Maybe<ID_Input>;
+  stripeId: String;
+  letter: LetterCreateOneWithoutPaymentInput;
+}
+
+export type MailWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface PaymentUpdateInput {
+export interface PaymentUpdateManyMutationInput {
   stripeId?: Maybe<String>;
-  letter?: Maybe<LetterUpdateOneRequiredWithoutPaymentInput>;
-}
-
-export interface LetterUpsertWithoutPaymentInput {
-  update: LetterUpdateWithoutPaymentDataInput;
-  create: LetterCreateWithoutPaymentInput;
 }
 
 export interface NodeNode {
@@ -828,6 +829,110 @@ export interface PaymentPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface MailConnection {
+  pageInfo: PageInfo;
+  edges: MailEdge[];
+}
+
+export interface MailConnectionPromise
+  extends Promise<MailConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MailEdge>>() => T;
+  aggregate: <T = AggregateMailPromise>() => T;
+}
+
+export interface MailConnectionSubscription
+  extends Promise<AsyncIterator<MailConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MailEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMailSubscription>() => T;
+}
+
+export interface LetterPreviousValues {
+  id: ID_Output;
+  fromName: String;
+  fromLine1: String;
+  fromCity: String;
+  fromState: String;
+  fromZip: String;
+  toName: String;
+  toLine1: String;
+  toCity: String;
+  toState: String;
+  toZip: String;
+  content: Json;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface LetterPreviousValuesPromise
+  extends Promise<LetterPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  fromName: () => Promise<String>;
+  fromLine1: () => Promise<String>;
+  fromCity: () => Promise<String>;
+  fromState: () => Promise<String>;
+  fromZip: () => Promise<String>;
+  toName: () => Promise<String>;
+  toLine1: () => Promise<String>;
+  toCity: () => Promise<String>;
+  toState: () => Promise<String>;
+  toZip: () => Promise<String>;
+  content: () => Promise<Json>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface LetterPreviousValuesSubscription
+  extends Promise<AsyncIterator<LetterPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  fromName: () => Promise<AsyncIterator<String>>;
+  fromLine1: () => Promise<AsyncIterator<String>>;
+  fromCity: () => Promise<AsyncIterator<String>>;
+  fromState: () => Promise<AsyncIterator<String>>;
+  fromZip: () => Promise<AsyncIterator<String>>;
+  toName: () => Promise<AsyncIterator<String>>;
+  toLine1: () => Promise<AsyncIterator<String>>;
+  toCity: () => Promise<AsyncIterator<String>>;
+  toState: () => Promise<AsyncIterator<String>>;
+  toZip: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<Json>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface MailPreviousValues {
+  id: ID_Output;
+  lobId: String;
+  expectedDeliveryDate: DateTimeOutput;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface MailPreviousValuesPromise
+  extends Promise<MailPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  lobId: () => Promise<String>;
+  expectedDeliveryDate: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface MailPreviousValuesSubscription
+  extends Promise<AsyncIterator<MailPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  lobId: () => Promise<AsyncIterator<String>>;
+  expectedDeliveryDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface LetterEdge {
   node: Letter;
   cursor: String;
@@ -845,39 +950,45 @@ export interface LetterEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Mail {
-  id: ID_Output;
-  lobId: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+export interface AggregateLetter {
+  count: Int;
 }
 
-export interface MailPromise extends Promise<Mail>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  lobId: () => Promise<String>;
-  letter: <T = LetterPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface MailSubscription
-  extends Promise<AsyncIterator<Mail>>,
+export interface AggregateLetterPromise
+  extends Promise<AggregateLetter>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  lobId: () => Promise<AsyncIterator<String>>;
-  letter: <T = LetterSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  count: () => Promise<Int>;
 }
 
-export interface MailNullablePromise
-  extends Promise<Mail | null>,
+export interface AggregateLetterSubscription
+  extends Promise<AsyncIterator<AggregateLetter>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  lobId: () => Promise<String>;
-  letter: <T = LetterPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PaymentSubscriptionPayload {
+  mutation: MutationType;
+  node: Payment;
+  updatedFields: String[];
+  previousValues: PaymentPreviousValues;
+}
+
+export interface PaymentSubscriptionPayloadPromise
+  extends Promise<PaymentSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PaymentPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PaymentPreviousValuesPromise>() => T;
+}
+
+export interface PaymentSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PaymentSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PaymentSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PaymentPreviousValuesSubscription>() => T;
 }
 
 export interface BatchPayload {
@@ -894,6 +1005,23 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface PaymentEdge {
+  node: Payment;
+  cursor: String;
+}
+
+export interface PaymentEdgePromise extends Promise<PaymentEdge>, Fragmentable {
+  node: <T = PaymentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PaymentEdgeSubscription
+  extends Promise<AsyncIterator<PaymentEdge>>,
+    Fragmentable {
+  node: <T = PaymentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface MailSubscriptionPayload {
@@ -919,307 +1047,6 @@ export interface MailSubscriptionPayloadSubscription
   node: <T = MailSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = MailPreviousValuesSubscription>() => T;
-}
-
-export interface AggregatePayment {
-  count: Int;
-}
-
-export interface AggregatePaymentPromise
-  extends Promise<AggregatePayment>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregatePaymentSubscription
-  extends Promise<AsyncIterator<AggregatePayment>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface PaymentConnection {
-  pageInfo: PageInfo;
-  edges: PaymentEdge[];
-}
-
-export interface PaymentConnectionPromise
-  extends Promise<PaymentConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PaymentEdge>>() => T;
-  aggregate: <T = AggregatePaymentPromise>() => T;
-}
-
-export interface PaymentConnectionSubscription
-  extends Promise<AsyncIterator<PaymentConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PaymentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePaymentSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateMail {
-  count: Int;
-}
-
-export interface AggregateMailPromise
-  extends Promise<AggregateMail>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateMailSubscription
-  extends Promise<AsyncIterator<AggregateMail>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface LetterConnection {
-  pageInfo: PageInfo;
-  edges: LetterEdge[];
-}
-
-export interface LetterConnectionPromise
-  extends Promise<LetterConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LetterEdge>>() => T;
-  aggregate: <T = AggregateLetterPromise>() => T;
-}
-
-export interface LetterConnectionSubscription
-  extends Promise<AsyncIterator<LetterConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LetterEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLetterSubscription>() => T;
-}
-
-export interface MailConnection {
-  pageInfo: PageInfo;
-  edges: MailEdge[];
-}
-
-export interface MailConnectionPromise
-  extends Promise<MailConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MailEdge>>() => T;
-  aggregate: <T = AggregateMailPromise>() => T;
-}
-
-export interface MailConnectionSubscription
-  extends Promise<AsyncIterator<MailConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<MailEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateMailSubscription>() => T;
-}
-
-export interface MailPreviousValues {
-  id: ID_Output;
-  lobId: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface MailPreviousValuesPromise
-  extends Promise<MailPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  lobId: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface MailPreviousValuesSubscription
-  extends Promise<AsyncIterator<MailPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  lobId: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface LetterPreviousValues {
-  id: ID_Output;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface LetterPreviousValuesPromise
-  extends Promise<LetterPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  fromName: () => Promise<String>;
-  fromLine1: () => Promise<String>;
-  fromCity: () => Promise<String>;
-  fromState: () => Promise<String>;
-  fromZip: () => Promise<String>;
-  toName: () => Promise<String>;
-  toLine1: () => Promise<String>;
-  toCity: () => Promise<String>;
-  toState: () => Promise<String>;
-  toZip: () => Promise<String>;
-  content: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface LetterPreviousValuesSubscription
-  extends Promise<AsyncIterator<LetterPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  fromName: () => Promise<AsyncIterator<String>>;
-  fromLine1: () => Promise<AsyncIterator<String>>;
-  fromCity: () => Promise<AsyncIterator<String>>;
-  fromState: () => Promise<AsyncIterator<String>>;
-  fromZip: () => Promise<AsyncIterator<String>>;
-  toName: () => Promise<AsyncIterator<String>>;
-  toLine1: () => Promise<AsyncIterator<String>>;
-  toCity: () => Promise<AsyncIterator<String>>;
-  toState: () => Promise<AsyncIterator<String>>;
-  toZip: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface LetterSubscriptionPayload {
-  mutation: MutationType;
-  node: Letter;
-  updatedFields: String[];
-  previousValues: LetterPreviousValues;
-}
-
-export interface LetterSubscriptionPayloadPromise
-  extends Promise<LetterSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = LetterPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = LetterPreviousValuesPromise>() => T;
-}
-
-export interface LetterSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<LetterSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LetterSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LetterPreviousValuesSubscription>() => T;
-}
-
-export interface Letter {
-  id: ID_Output;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface LetterPromise extends Promise<Letter>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  fromName: () => Promise<String>;
-  fromLine1: () => Promise<String>;
-  fromCity: () => Promise<String>;
-  fromState: () => Promise<String>;
-  fromZip: () => Promise<String>;
-  toName: () => Promise<String>;
-  toLine1: () => Promise<String>;
-  toCity: () => Promise<String>;
-  toState: () => Promise<String>;
-  toZip: () => Promise<String>;
-  content: () => Promise<String>;
-  payment: <T = PaymentPromise>() => T;
-  mail: <T = MailPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface LetterSubscription
-  extends Promise<AsyncIterator<Letter>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  fromName: () => Promise<AsyncIterator<String>>;
-  fromLine1: () => Promise<AsyncIterator<String>>;
-  fromCity: () => Promise<AsyncIterator<String>>;
-  fromState: () => Promise<AsyncIterator<String>>;
-  fromZip: () => Promise<AsyncIterator<String>>;
-  toName: () => Promise<AsyncIterator<String>>;
-  toLine1: () => Promise<AsyncIterator<String>>;
-  toCity: () => Promise<AsyncIterator<String>>;
-  toState: () => Promise<AsyncIterator<String>>;
-  toZip: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  payment: <T = PaymentSubscription>() => T;
-  mail: <T = MailSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface LetterNullablePromise
-  extends Promise<Letter | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  fromName: () => Promise<String>;
-  fromLine1: () => Promise<String>;
-  fromCity: () => Promise<String>;
-  fromState: () => Promise<String>;
-  fromZip: () => Promise<String>;
-  toName: () => Promise<String>;
-  toLine1: () => Promise<String>;
-  toCity: () => Promise<String>;
-  toState: () => Promise<String>;
-  toZip: () => Promise<String>;
-  content: () => Promise<String>;
-  payment: <T = PaymentPromise>() => T;
-  mail: <T = MailPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface Payment {
@@ -1274,68 +1101,254 @@ export interface MailEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PaymentSubscriptionPayload {
+export interface LetterSubscriptionPayload {
   mutation: MutationType;
-  node: Payment;
+  node: Letter;
   updatedFields: String[];
-  previousValues: PaymentPreviousValues;
+  previousValues: LetterPreviousValues;
 }
 
-export interface PaymentSubscriptionPayloadPromise
-  extends Promise<PaymentSubscriptionPayload>,
+export interface LetterSubscriptionPayloadPromise
+  extends Promise<LetterSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = PaymentPromise>() => T;
+  node: <T = LetterPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = PaymentPreviousValuesPromise>() => T;
+  previousValues: <T = LetterPreviousValuesPromise>() => T;
 }
 
-export interface PaymentSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PaymentSubscriptionPayload>>,
+export interface LetterSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LetterSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PaymentSubscription>() => T;
+  node: <T = LetterSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PaymentPreviousValuesSubscription>() => T;
+  previousValues: <T = LetterPreviousValuesSubscription>() => T;
 }
 
-export interface PaymentEdge {
-  node: Payment;
-  cursor: String;
+export interface Letter {
+  id: ID_Output;
+  fromName: String;
+  fromLine1: String;
+  fromCity: String;
+  fromState: String;
+  fromZip: String;
+  toName: String;
+  toLine1: String;
+  toCity: String;
+  toState: String;
+  toZip: String;
+  content: Json;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
-export interface PaymentEdgePromise extends Promise<PaymentEdge>, Fragmentable {
-  node: <T = PaymentPromise>() => T;
-  cursor: () => Promise<String>;
+export interface LetterPromise extends Promise<Letter>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  fromName: () => Promise<String>;
+  fromLine1: () => Promise<String>;
+  fromCity: () => Promise<String>;
+  fromState: () => Promise<String>;
+  fromZip: () => Promise<String>;
+  toName: () => Promise<String>;
+  toLine1: () => Promise<String>;
+  toCity: () => Promise<String>;
+  toState: () => Promise<String>;
+  toZip: () => Promise<String>;
+  content: () => Promise<Json>;
+  payment: <T = PaymentPromise>() => T;
+  mail: <T = MailPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface PaymentEdgeSubscription
-  extends Promise<AsyncIterator<PaymentEdge>>,
+export interface LetterSubscription
+  extends Promise<AsyncIterator<Letter>>,
     Fragmentable {
-  node: <T = PaymentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  fromName: () => Promise<AsyncIterator<String>>;
+  fromLine1: () => Promise<AsyncIterator<String>>;
+  fromCity: () => Promise<AsyncIterator<String>>;
+  fromState: () => Promise<AsyncIterator<String>>;
+  fromZip: () => Promise<AsyncIterator<String>>;
+  toName: () => Promise<AsyncIterator<String>>;
+  toLine1: () => Promise<AsyncIterator<String>>;
+  toCity: () => Promise<AsyncIterator<String>>;
+  toState: () => Promise<AsyncIterator<String>>;
+  toZip: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<Json>>;
+  payment: <T = PaymentSubscription>() => T;
+  mail: <T = MailSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface AggregateLetter {
+export interface LetterNullablePromise
+  extends Promise<Letter | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  fromName: () => Promise<String>;
+  fromLine1: () => Promise<String>;
+  fromCity: () => Promise<String>;
+  fromState: () => Promise<String>;
+  fromZip: () => Promise<String>;
+  toName: () => Promise<String>;
+  toLine1: () => Promise<String>;
+  toCity: () => Promise<String>;
+  toState: () => Promise<String>;
+  toZip: () => Promise<String>;
+  content: () => Promise<Json>;
+  payment: <T = PaymentPromise>() => T;
+  mail: <T = MailPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface LetterConnection {
+  pageInfo: PageInfo;
+  edges: LetterEdge[];
+}
+
+export interface LetterConnectionPromise
+  extends Promise<LetterConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LetterEdge>>() => T;
+  aggregate: <T = AggregateLetterPromise>() => T;
+}
+
+export interface LetterConnectionSubscription
+  extends Promise<AsyncIterator<LetterConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LetterEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLetterSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Mail {
+  id: ID_Output;
+  lobId: String;
+  expectedDeliveryDate: DateTimeOutput;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface MailPromise extends Promise<Mail>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  lobId: () => Promise<String>;
+  letter: <T = LetterPromise>() => T;
+  expectedDeliveryDate: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface MailSubscription
+  extends Promise<AsyncIterator<Mail>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  lobId: () => Promise<AsyncIterator<String>>;
+  letter: <T = LetterSubscription>() => T;
+  expectedDeliveryDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface MailNullablePromise
+  extends Promise<Mail | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  lobId: () => Promise<String>;
+  letter: <T = LetterPromise>() => T;
+  expectedDeliveryDate: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AggregateMail {
   count: Int;
 }
 
-export interface AggregateLetterPromise
-  extends Promise<AggregateLetter>,
+export interface AggregateMailPromise
+  extends Promise<AggregateMail>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateLetterSubscription
-  extends Promise<AsyncIterator<AggregateLetter>>,
+export interface AggregateMailSubscription
+  extends Promise<AsyncIterator<AggregateMail>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PaymentConnection {
+  pageInfo: PageInfo;
+  edges: PaymentEdge[];
+}
+
+export interface PaymentConnectionPromise
+  extends Promise<PaymentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PaymentEdge>>() => T;
+  aggregate: <T = AggregatePaymentPromise>() => T;
+}
+
+export interface PaymentConnectionSubscription
+  extends Promise<AsyncIterator<PaymentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PaymentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePaymentSubscription>() => T;
+}
+
+export interface AggregatePayment {
+  count: Int;
+}
+
+export interface AggregatePaymentPromise
+  extends Promise<AggregatePayment>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePaymentSubscription
+  extends Promise<AsyncIterator<AggregatePayment>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+DateTime scalar input type, allowing Date
 */
-export type Boolean = boolean;
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 export type Long = string;
 
@@ -1350,15 +1363,12 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 */
 export type String = string;
 
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
+export type Json = any;
 
 /*
-DateTime scalar output type, which is always a string
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type DateTimeOutput = string;
+export type Boolean = boolean;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
