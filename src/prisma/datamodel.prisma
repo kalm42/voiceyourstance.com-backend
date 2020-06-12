@@ -10,7 +10,7 @@ type Letter {
   toCity: String!
   toState: String!
   toZip: String!
-  content: String!
+  content: Json!
   payment: Payment @relation(link: INLINE)
   mail: Mail @relation(link: INLINE)
   createdAt: DateTime! @createdAt
@@ -29,6 +29,7 @@ type Mail {
   id: ID! @id
   lobId: String!
   letter: Letter!
+  expectedDeliveryDate: DateTime!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt 
 }
