@@ -2,177 +2,141 @@
 // Please don't change this file manually but run `prisma generate` to update it.
 // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-import { DocumentNode } from "graphql";
-import {
-  makePrismaClientClass,
-  BaseClientOptions,
-  Model
-} from "prisma-client-lib";
-import { typeDefs } from "./prisma-schema";
+import { DocumentNode } from "graphql"
+import { makePrismaClientClass, BaseClientOptions, Model } from "prisma-client-lib"
+import { typeDefs } from "./prisma-schema"
 
-export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
-  U[keyof U];
+export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
 
-export type Maybe<T> = T | undefined | null;
+export type Maybe<T> = T | undefined | null
 
 export interface Exists {
-  letter: (where?: LetterWhereInput) => Promise<boolean>;
-  mail: (where?: MailWhereInput) => Promise<boolean>;
-  payment: (where?: PaymentWhereInput) => Promise<boolean>;
+  letter: (where?: LetterWhereInput) => Promise<boolean>
+  mail: (where?: MailWhereInput) => Promise<boolean>
+  payment: (where?: PaymentWhereInput) => Promise<boolean>
 }
 
 export interface Node {}
 
-export type FragmentableArray<T> = Promise<Array<T>> & Fragmentable;
+export type FragmentableArray<T> = Promise<Array<T>> & Fragmentable
 
 export interface Fragmentable {
-  $fragment<T>(fragment: string | DocumentNode): Promise<T>;
+  $fragment<T>(fragment: string | DocumentNode): Promise<T>
 }
 
 export interface Prisma {
-  $exists: Exists;
-  $graphql: <T = any>(
-    query: string,
-    variables?: { [key: string]: any }
-  ) => Promise<T>;
+  $exists: Exists
+  $graphql: <T = any>(query: string, variables?: { [key: string]: any }) => Promise<T>
 
   /**
    * Queries
    */
 
-  letter: (where: LetterWhereUniqueInput) => LetterNullablePromise;
+  letter: (where: LetterWhereUniqueInput) => LetterNullablePromise
   letters: (args?: {
-    where?: LetterWhereInput;
-    orderBy?: LetterOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Letter>;
+    where?: LetterWhereInput
+    orderBy?: LetterOrderByInput
+    skip?: Int
+    after?: String
+    before?: String
+    first?: Int
+    last?: Int
+  }) => FragmentableArray<Letter>
   lettersConnection: (args?: {
-    where?: LetterWhereInput;
-    orderBy?: LetterOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => LetterConnectionPromise;
-  mail: (where: MailWhereUniqueInput) => MailNullablePromise;
+    where?: LetterWhereInput
+    orderBy?: LetterOrderByInput
+    skip?: Int
+    after?: String
+    before?: String
+    first?: Int
+    last?: Int
+  }) => LetterConnectionPromise
+  mail: (where: MailWhereUniqueInput) => MailNullablePromise
   mails: (args?: {
-    where?: MailWhereInput;
-    orderBy?: MailOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Mail>;
+    where?: MailWhereInput
+    orderBy?: MailOrderByInput
+    skip?: Int
+    after?: String
+    before?: String
+    first?: Int
+    last?: Int
+  }) => FragmentableArray<Mail>
   mailsConnection: (args?: {
-    where?: MailWhereInput;
-    orderBy?: MailOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => MailConnectionPromise;
-  payment: (where: PaymentWhereUniqueInput) => PaymentNullablePromise;
+    where?: MailWhereInput
+    orderBy?: MailOrderByInput
+    skip?: Int
+    after?: String
+    before?: String
+    first?: Int
+    last?: Int
+  }) => MailConnectionPromise
+  payment: (where: PaymentWhereUniqueInput) => PaymentNullablePromise
   payments: (args?: {
-    where?: PaymentWhereInput;
-    orderBy?: PaymentOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Payment>;
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByInput
+    skip?: Int
+    after?: String
+    before?: String
+    first?: Int
+    last?: Int
+  }) => FragmentableArray<Payment>
   paymentsConnection: (args?: {
-    where?: PaymentWhereInput;
-    orderBy?: PaymentOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => PaymentConnectionPromise;
-  node: (args: { id: ID_Output }) => Node;
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByInput
+    skip?: Int
+    after?: String
+    before?: String
+    first?: Int
+    last?: Int
+  }) => PaymentConnectionPromise
+  node: (args: { id: ID_Output }) => Node
 
   /**
    * Mutations
    */
 
-  createLetter: (data: LetterCreateInput) => LetterPromise;
-  updateLetter: (args: {
-    data: LetterUpdateInput;
-    where: LetterWhereUniqueInput;
-  }) => LetterPromise;
-  updateManyLetters: (args: {
-    data: LetterUpdateManyMutationInput;
-    where?: LetterWhereInput;
-  }) => BatchPayloadPromise;
+  createLetter: (data: LetterCreateInput) => LetterPromise
+  updateLetter: (args: { data: LetterUpdateInput; where: LetterWhereUniqueInput }) => LetterPromise
+  updateManyLetters: (args: { data: LetterUpdateManyMutationInput; where?: LetterWhereInput }) => BatchPayloadPromise
   upsertLetter: (args: {
-    where: LetterWhereUniqueInput;
-    create: LetterCreateInput;
-    update: LetterUpdateInput;
-  }) => LetterPromise;
-  deleteLetter: (where: LetterWhereUniqueInput) => LetterPromise;
-  deleteManyLetters: (where?: LetterWhereInput) => BatchPayloadPromise;
-  createMail: (data: MailCreateInput) => MailPromise;
-  updateMail: (args: {
-    data: MailUpdateInput;
-    where: MailWhereUniqueInput;
-  }) => MailPromise;
-  updateManyMails: (args: {
-    data: MailUpdateManyMutationInput;
-    where?: MailWhereInput;
-  }) => BatchPayloadPromise;
-  upsertMail: (args: {
-    where: MailWhereUniqueInput;
-    create: MailCreateInput;
-    update: MailUpdateInput;
-  }) => MailPromise;
-  deleteMail: (where: MailWhereUniqueInput) => MailPromise;
-  deleteManyMails: (where?: MailWhereInput) => BatchPayloadPromise;
-  createPayment: (data: PaymentCreateInput) => PaymentPromise;
-  updatePayment: (args: {
-    data: PaymentUpdateInput;
-    where: PaymentWhereUniqueInput;
-  }) => PaymentPromise;
-  updateManyPayments: (args: {
-    data: PaymentUpdateManyMutationInput;
-    where?: PaymentWhereInput;
-  }) => BatchPayloadPromise;
+    where: LetterWhereUniqueInput
+    create: LetterCreateInput
+    update: LetterUpdateInput
+  }) => LetterPromise
+  deleteLetter: (where: LetterWhereUniqueInput) => LetterPromise
+  deleteManyLetters: (where?: LetterWhereInput) => BatchPayloadPromise
+  createMail: (data: MailCreateInput) => MailPromise
+  updateMail: (args: { data: MailUpdateInput; where: MailWhereUniqueInput }) => MailPromise
+  updateManyMails: (args: { data: MailUpdateManyMutationInput; where?: MailWhereInput }) => BatchPayloadPromise
+  upsertMail: (args: { where: MailWhereUniqueInput; create: MailCreateInput; update: MailUpdateInput }) => MailPromise
+  deleteMail: (where: MailWhereUniqueInput) => MailPromise
+  deleteManyMails: (where?: MailWhereInput) => BatchPayloadPromise
+  createPayment: (data: PaymentCreateInput) => PaymentPromise
+  updatePayment: (args: { data: PaymentUpdateInput; where: PaymentWhereUniqueInput }) => PaymentPromise
+  updateManyPayments: (args: { data: PaymentUpdateManyMutationInput; where?: PaymentWhereInput }) => BatchPayloadPromise
   upsertPayment: (args: {
-    where: PaymentWhereUniqueInput;
-    create: PaymentCreateInput;
-    update: PaymentUpdateInput;
-  }) => PaymentPromise;
-  deletePayment: (where: PaymentWhereUniqueInput) => PaymentPromise;
-  deleteManyPayments: (where?: PaymentWhereInput) => BatchPayloadPromise;
+    where: PaymentWhereUniqueInput
+    create: PaymentCreateInput
+    update: PaymentUpdateInput
+  }) => PaymentPromise
+  deletePayment: (where: PaymentWhereUniqueInput) => PaymentPromise
+  deleteManyPayments: (where?: PaymentWhereInput) => BatchPayloadPromise
 
   /**
    * Subscriptions
    */
 
-  $subscribe: Subscription;
+  $subscribe: Subscription
 }
 
 export interface Subscription {
-  letter: (
-    where?: LetterSubscriptionWhereInput
-  ) => LetterSubscriptionPayloadSubscription;
-  mail: (
-    where?: MailSubscriptionWhereInput
-  ) => MailSubscriptionPayloadSubscription;
-  payment: (
-    where?: PaymentSubscriptionWhereInput
-  ) => PaymentSubscriptionPayloadSubscription;
+  letter: (where?: LetterSubscriptionWhereInput) => LetterSubscriptionPayloadSubscription
+  mail: (where?: MailSubscriptionWhereInput) => MailSubscriptionPayloadSubscription
+  payment: (where?: PaymentSubscriptionWhereInput) => PaymentSubscriptionPayloadSubscription
 }
 
 export interface ClientConstructor<T> {
-  new (options?: BaseClientOptions): T;
+  new (options?: BaseClientOptions): T
 }
 
 /**
@@ -207,7 +171,7 @@ export type LetterOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
 
 export type MailOrderByInput =
   | "id_ASC"
@@ -219,7 +183,7 @@ export type MailOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
 
 export type PaymentOrderByInput =
   | "id_ASC"
@@ -229,1151 +193,1085 @@ export type PaymentOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+export type MutationType = "CREATED" | "UPDATED" | "DELETED"
 
 export interface PaymentUpdateOneWithoutLetterInput {
-  create?: Maybe<PaymentCreateWithoutLetterInput>;
-  update?: Maybe<PaymentUpdateWithoutLetterDataInput>;
-  upsert?: Maybe<PaymentUpsertWithoutLetterInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<PaymentWhereUniqueInput>;
+  create?: Maybe<PaymentCreateWithoutLetterInput>
+  update?: Maybe<PaymentUpdateWithoutLetterDataInput>
+  upsert?: Maybe<PaymentUpsertWithoutLetterInput>
+  delete?: Maybe<Boolean>
+  disconnect?: Maybe<Boolean>
+  connect?: Maybe<PaymentWhereUniqueInput>
 }
 
 export type LetterWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+  id: Maybe<ID_Input>
+}>
 
 export interface LetterUpsertWithoutMailInput {
-  update: LetterUpdateWithoutMailDataInput;
-  create: LetterCreateWithoutMailInput;
+  update: LetterUpdateWithoutMailDataInput
+  create: LetterCreateWithoutMailInput
 }
 
 export interface MailCreateInput {
-  id?: Maybe<ID_Input>;
-  lobId: String;
-  letter: LetterCreateOneWithoutMailInput;
-  expectedDeliveryDate: DateTimeInput;
+  id?: Maybe<ID_Input>
+  lobId: String
+  letter: LetterCreateOneWithoutMailInput
+  expectedDeliveryDate: DateTimeInput
 }
 
 export interface LetterUpdateWithoutMailDataInput {
-  fromName?: Maybe<String>;
-  fromLine1?: Maybe<String>;
-  fromCity?: Maybe<String>;
-  fromState?: Maybe<String>;
-  fromZip?: Maybe<String>;
-  toName?: Maybe<String>;
-  toLine1?: Maybe<String>;
-  toCity?: Maybe<String>;
-  toState?: Maybe<String>;
-  toZip?: Maybe<String>;
-  content?: Maybe<Json>;
-  payment?: Maybe<PaymentUpdateOneWithoutLetterInput>;
+  fromName?: Maybe<String>
+  fromLine1?: Maybe<String>
+  fromCity?: Maybe<String>
+  fromState?: Maybe<String>
+  fromZip?: Maybe<String>
+  toName?: Maybe<String>
+  toLine1?: Maybe<String>
+  toCity?: Maybe<String>
+  toState?: Maybe<String>
+  toZip?: Maybe<String>
+  content?: Maybe<Json>
+  payment?: Maybe<PaymentUpdateOneWithoutLetterInput>
 }
 
 export interface MailUpdateOneWithoutLetterInput {
-  create?: Maybe<MailCreateWithoutLetterInput>;
-  update?: Maybe<MailUpdateWithoutLetterDataInput>;
-  upsert?: Maybe<MailUpsertWithoutLetterInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<MailWhereUniqueInput>;
+  create?: Maybe<MailCreateWithoutLetterInput>
+  update?: Maybe<MailUpdateWithoutLetterDataInput>
+  upsert?: Maybe<MailUpsertWithoutLetterInput>
+  delete?: Maybe<Boolean>
+  disconnect?: Maybe<Boolean>
+  connect?: Maybe<MailWhereUniqueInput>
 }
 
 export interface LetterUpdateOneRequiredWithoutMailInput {
-  create?: Maybe<LetterCreateWithoutMailInput>;
-  update?: Maybe<LetterUpdateWithoutMailDataInput>;
-  upsert?: Maybe<LetterUpsertWithoutMailInput>;
-  connect?: Maybe<LetterWhereUniqueInput>;
+  create?: Maybe<LetterCreateWithoutMailInput>
+  update?: Maybe<LetterUpdateWithoutMailDataInput>
+  upsert?: Maybe<LetterUpsertWithoutMailInput>
+  connect?: Maybe<LetterWhereUniqueInput>
 }
 
 export interface PaymentWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  stripeId?: Maybe<String>;
-  stripeId_not?: Maybe<String>;
-  stripeId_in?: Maybe<String[] | String>;
-  stripeId_not_in?: Maybe<String[] | String>;
-  stripeId_lt?: Maybe<String>;
-  stripeId_lte?: Maybe<String>;
-  stripeId_gt?: Maybe<String>;
-  stripeId_gte?: Maybe<String>;
-  stripeId_contains?: Maybe<String>;
-  stripeId_not_contains?: Maybe<String>;
-  stripeId_starts_with?: Maybe<String>;
-  stripeId_not_starts_with?: Maybe<String>;
-  stripeId_ends_with?: Maybe<String>;
-  stripeId_not_ends_with?: Maybe<String>;
-  letter?: Maybe<LetterWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<PaymentWhereInput[] | PaymentWhereInput>;
-  OR?: Maybe<PaymentWhereInput[] | PaymentWhereInput>;
-  NOT?: Maybe<PaymentWhereInput[] | PaymentWhereInput>;
+  id?: Maybe<ID_Input>
+  id_not?: Maybe<ID_Input>
+  id_in?: Maybe<ID_Input[] | ID_Input>
+  id_not_in?: Maybe<ID_Input[] | ID_Input>
+  id_lt?: Maybe<ID_Input>
+  id_lte?: Maybe<ID_Input>
+  id_gt?: Maybe<ID_Input>
+  id_gte?: Maybe<ID_Input>
+  id_contains?: Maybe<ID_Input>
+  id_not_contains?: Maybe<ID_Input>
+  id_starts_with?: Maybe<ID_Input>
+  id_not_starts_with?: Maybe<ID_Input>
+  id_ends_with?: Maybe<ID_Input>
+  id_not_ends_with?: Maybe<ID_Input>
+  stripeId?: Maybe<String>
+  stripeId_not?: Maybe<String>
+  stripeId_in?: Maybe<String[] | String>
+  stripeId_not_in?: Maybe<String[] | String>
+  stripeId_lt?: Maybe<String>
+  stripeId_lte?: Maybe<String>
+  stripeId_gt?: Maybe<String>
+  stripeId_gte?: Maybe<String>
+  stripeId_contains?: Maybe<String>
+  stripeId_not_contains?: Maybe<String>
+  stripeId_starts_with?: Maybe<String>
+  stripeId_not_starts_with?: Maybe<String>
+  stripeId_ends_with?: Maybe<String>
+  stripeId_not_ends_with?: Maybe<String>
+  letter?: Maybe<LetterWhereInput>
+  createdAt?: Maybe<DateTimeInput>
+  createdAt_not?: Maybe<DateTimeInput>
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_lt?: Maybe<DateTimeInput>
+  createdAt_lte?: Maybe<DateTimeInput>
+  createdAt_gt?: Maybe<DateTimeInput>
+  createdAt_gte?: Maybe<DateTimeInput>
+  updatedAt?: Maybe<DateTimeInput>
+  updatedAt_not?: Maybe<DateTimeInput>
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_lt?: Maybe<DateTimeInput>
+  updatedAt_lte?: Maybe<DateTimeInput>
+  updatedAt_gt?: Maybe<DateTimeInput>
+  updatedAt_gte?: Maybe<DateTimeInput>
+  AND?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
+  OR?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
+  NOT?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
 }
 
 export interface PaymentSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PaymentWhereInput>;
-  AND?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
-  OR?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
-  NOT?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>;
+  mutation_in?: Maybe<MutationType[] | MutationType>
+  updatedFields_contains?: Maybe<String>
+  updatedFields_contains_every?: Maybe<String[] | String>
+  updatedFields_contains_some?: Maybe<String[] | String>
+  node?: Maybe<PaymentWhereInput>
+  AND?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>
+  OR?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>
+  NOT?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>
 }
 
 export interface LetterSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LetterWhereInput>;
-  AND?: Maybe<LetterSubscriptionWhereInput[] | LetterSubscriptionWhereInput>;
-  OR?: Maybe<LetterSubscriptionWhereInput[] | LetterSubscriptionWhereInput>;
-  NOT?: Maybe<LetterSubscriptionWhereInput[] | LetterSubscriptionWhereInput>;
+  mutation_in?: Maybe<MutationType[] | MutationType>
+  updatedFields_contains?: Maybe<String>
+  updatedFields_contains_every?: Maybe<String[] | String>
+  updatedFields_contains_some?: Maybe<String[] | String>
+  node?: Maybe<LetterWhereInput>
+  AND?: Maybe<LetterSubscriptionWhereInput[] | LetterSubscriptionWhereInput>
+  OR?: Maybe<LetterSubscriptionWhereInput[] | LetterSubscriptionWhereInput>
+  NOT?: Maybe<LetterSubscriptionWhereInput[] | LetterSubscriptionWhereInput>
 }
 
 export interface LetterCreateInput {
-  id?: Maybe<ID_Input>;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: Json;
-  payment?: Maybe<PaymentCreateOneWithoutLetterInput>;
-  mail?: Maybe<MailCreateOneWithoutLetterInput>;
+  id?: Maybe<ID_Input>
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: Json
+  payment?: Maybe<PaymentCreateOneWithoutLetterInput>
+  mail?: Maybe<MailCreateOneWithoutLetterInput>
 }
 
 export interface LetterUpsertWithoutPaymentInput {
-  update: LetterUpdateWithoutPaymentDataInput;
-  create: LetterCreateWithoutPaymentInput;
+  update: LetterUpdateWithoutPaymentDataInput
+  create: LetterCreateWithoutPaymentInput
 }
 
 export interface PaymentCreateOneWithoutLetterInput {
-  create?: Maybe<PaymentCreateWithoutLetterInput>;
-  connect?: Maybe<PaymentWhereUniqueInput>;
+  create?: Maybe<PaymentCreateWithoutLetterInput>
+  connect?: Maybe<PaymentWhereUniqueInput>
 }
 
 export interface LetterUpdateOneRequiredWithoutPaymentInput {
-  create?: Maybe<LetterCreateWithoutPaymentInput>;
-  update?: Maybe<LetterUpdateWithoutPaymentDataInput>;
-  upsert?: Maybe<LetterUpsertWithoutPaymentInput>;
-  connect?: Maybe<LetterWhereUniqueInput>;
+  create?: Maybe<LetterCreateWithoutPaymentInput>
+  update?: Maybe<LetterUpdateWithoutPaymentDataInput>
+  upsert?: Maybe<LetterUpsertWithoutPaymentInput>
+  connect?: Maybe<LetterWhereUniqueInput>
 }
 
 export interface PaymentCreateWithoutLetterInput {
-  id?: Maybe<ID_Input>;
-  stripeId: String;
+  id?: Maybe<ID_Input>
+  stripeId: String
 }
 
 export interface PaymentUpdateInput {
-  stripeId?: Maybe<String>;
-  letter?: Maybe<LetterUpdateOneRequiredWithoutPaymentInput>;
+  stripeId?: Maybe<String>
+  letter?: Maybe<LetterUpdateOneRequiredWithoutPaymentInput>
 }
 
 export interface MailCreateOneWithoutLetterInput {
-  create?: Maybe<MailCreateWithoutLetterInput>;
-  connect?: Maybe<MailWhereUniqueInput>;
+  create?: Maybe<MailCreateWithoutLetterInput>
+  connect?: Maybe<MailWhereUniqueInput>
 }
 
 export interface LetterCreateOneWithoutPaymentInput {
-  create?: Maybe<LetterCreateWithoutPaymentInput>;
-  connect?: Maybe<LetterWhereUniqueInput>;
+  create?: Maybe<LetterCreateWithoutPaymentInput>
+  connect?: Maybe<LetterWhereUniqueInput>
 }
 
 export interface MailCreateWithoutLetterInput {
-  id?: Maybe<ID_Input>;
-  lobId: String;
-  expectedDeliveryDate: DateTimeInput;
+  id?: Maybe<ID_Input>
+  lobId: String
+  expectedDeliveryDate: DateTimeInput
 }
 
 export type PaymentWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+  id: Maybe<ID_Input>
+}>
 
 export interface LetterUpdateInput {
-  fromName?: Maybe<String>;
-  fromLine1?: Maybe<String>;
-  fromCity?: Maybe<String>;
-  fromState?: Maybe<String>;
-  fromZip?: Maybe<String>;
-  toName?: Maybe<String>;
-  toLine1?: Maybe<String>;
-  toCity?: Maybe<String>;
-  toState?: Maybe<String>;
-  toZip?: Maybe<String>;
-  content?: Maybe<Json>;
-  payment?: Maybe<PaymentUpdateOneWithoutLetterInput>;
-  mail?: Maybe<MailUpdateOneWithoutLetterInput>;
+  fromName?: Maybe<String>
+  fromLine1?: Maybe<String>
+  fromCity?: Maybe<String>
+  fromState?: Maybe<String>
+  fromZip?: Maybe<String>
+  toName?: Maybe<String>
+  toLine1?: Maybe<String>
+  toCity?: Maybe<String>
+  toState?: Maybe<String>
+  toZip?: Maybe<String>
+  content?: Maybe<Json>
+  payment?: Maybe<PaymentUpdateOneWithoutLetterInput>
+  mail?: Maybe<MailUpdateOneWithoutLetterInput>
 }
 
 export interface LetterWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  fromName?: Maybe<String>;
-  fromName_not?: Maybe<String>;
-  fromName_in?: Maybe<String[] | String>;
-  fromName_not_in?: Maybe<String[] | String>;
-  fromName_lt?: Maybe<String>;
-  fromName_lte?: Maybe<String>;
-  fromName_gt?: Maybe<String>;
-  fromName_gte?: Maybe<String>;
-  fromName_contains?: Maybe<String>;
-  fromName_not_contains?: Maybe<String>;
-  fromName_starts_with?: Maybe<String>;
-  fromName_not_starts_with?: Maybe<String>;
-  fromName_ends_with?: Maybe<String>;
-  fromName_not_ends_with?: Maybe<String>;
-  fromLine1?: Maybe<String>;
-  fromLine1_not?: Maybe<String>;
-  fromLine1_in?: Maybe<String[] | String>;
-  fromLine1_not_in?: Maybe<String[] | String>;
-  fromLine1_lt?: Maybe<String>;
-  fromLine1_lte?: Maybe<String>;
-  fromLine1_gt?: Maybe<String>;
-  fromLine1_gte?: Maybe<String>;
-  fromLine1_contains?: Maybe<String>;
-  fromLine1_not_contains?: Maybe<String>;
-  fromLine1_starts_with?: Maybe<String>;
-  fromLine1_not_starts_with?: Maybe<String>;
-  fromLine1_ends_with?: Maybe<String>;
-  fromLine1_not_ends_with?: Maybe<String>;
-  fromCity?: Maybe<String>;
-  fromCity_not?: Maybe<String>;
-  fromCity_in?: Maybe<String[] | String>;
-  fromCity_not_in?: Maybe<String[] | String>;
-  fromCity_lt?: Maybe<String>;
-  fromCity_lte?: Maybe<String>;
-  fromCity_gt?: Maybe<String>;
-  fromCity_gte?: Maybe<String>;
-  fromCity_contains?: Maybe<String>;
-  fromCity_not_contains?: Maybe<String>;
-  fromCity_starts_with?: Maybe<String>;
-  fromCity_not_starts_with?: Maybe<String>;
-  fromCity_ends_with?: Maybe<String>;
-  fromCity_not_ends_with?: Maybe<String>;
-  fromState?: Maybe<String>;
-  fromState_not?: Maybe<String>;
-  fromState_in?: Maybe<String[] | String>;
-  fromState_not_in?: Maybe<String[] | String>;
-  fromState_lt?: Maybe<String>;
-  fromState_lte?: Maybe<String>;
-  fromState_gt?: Maybe<String>;
-  fromState_gte?: Maybe<String>;
-  fromState_contains?: Maybe<String>;
-  fromState_not_contains?: Maybe<String>;
-  fromState_starts_with?: Maybe<String>;
-  fromState_not_starts_with?: Maybe<String>;
-  fromState_ends_with?: Maybe<String>;
-  fromState_not_ends_with?: Maybe<String>;
-  fromZip?: Maybe<String>;
-  fromZip_not?: Maybe<String>;
-  fromZip_in?: Maybe<String[] | String>;
-  fromZip_not_in?: Maybe<String[] | String>;
-  fromZip_lt?: Maybe<String>;
-  fromZip_lte?: Maybe<String>;
-  fromZip_gt?: Maybe<String>;
-  fromZip_gte?: Maybe<String>;
-  fromZip_contains?: Maybe<String>;
-  fromZip_not_contains?: Maybe<String>;
-  fromZip_starts_with?: Maybe<String>;
-  fromZip_not_starts_with?: Maybe<String>;
-  fromZip_ends_with?: Maybe<String>;
-  fromZip_not_ends_with?: Maybe<String>;
-  toName?: Maybe<String>;
-  toName_not?: Maybe<String>;
-  toName_in?: Maybe<String[] | String>;
-  toName_not_in?: Maybe<String[] | String>;
-  toName_lt?: Maybe<String>;
-  toName_lte?: Maybe<String>;
-  toName_gt?: Maybe<String>;
-  toName_gte?: Maybe<String>;
-  toName_contains?: Maybe<String>;
-  toName_not_contains?: Maybe<String>;
-  toName_starts_with?: Maybe<String>;
-  toName_not_starts_with?: Maybe<String>;
-  toName_ends_with?: Maybe<String>;
-  toName_not_ends_with?: Maybe<String>;
-  toLine1?: Maybe<String>;
-  toLine1_not?: Maybe<String>;
-  toLine1_in?: Maybe<String[] | String>;
-  toLine1_not_in?: Maybe<String[] | String>;
-  toLine1_lt?: Maybe<String>;
-  toLine1_lte?: Maybe<String>;
-  toLine1_gt?: Maybe<String>;
-  toLine1_gte?: Maybe<String>;
-  toLine1_contains?: Maybe<String>;
-  toLine1_not_contains?: Maybe<String>;
-  toLine1_starts_with?: Maybe<String>;
-  toLine1_not_starts_with?: Maybe<String>;
-  toLine1_ends_with?: Maybe<String>;
-  toLine1_not_ends_with?: Maybe<String>;
-  toCity?: Maybe<String>;
-  toCity_not?: Maybe<String>;
-  toCity_in?: Maybe<String[] | String>;
-  toCity_not_in?: Maybe<String[] | String>;
-  toCity_lt?: Maybe<String>;
-  toCity_lte?: Maybe<String>;
-  toCity_gt?: Maybe<String>;
-  toCity_gte?: Maybe<String>;
-  toCity_contains?: Maybe<String>;
-  toCity_not_contains?: Maybe<String>;
-  toCity_starts_with?: Maybe<String>;
-  toCity_not_starts_with?: Maybe<String>;
-  toCity_ends_with?: Maybe<String>;
-  toCity_not_ends_with?: Maybe<String>;
-  toState?: Maybe<String>;
-  toState_not?: Maybe<String>;
-  toState_in?: Maybe<String[] | String>;
-  toState_not_in?: Maybe<String[] | String>;
-  toState_lt?: Maybe<String>;
-  toState_lte?: Maybe<String>;
-  toState_gt?: Maybe<String>;
-  toState_gte?: Maybe<String>;
-  toState_contains?: Maybe<String>;
-  toState_not_contains?: Maybe<String>;
-  toState_starts_with?: Maybe<String>;
-  toState_not_starts_with?: Maybe<String>;
-  toState_ends_with?: Maybe<String>;
-  toState_not_ends_with?: Maybe<String>;
-  toZip?: Maybe<String>;
-  toZip_not?: Maybe<String>;
-  toZip_in?: Maybe<String[] | String>;
-  toZip_not_in?: Maybe<String[] | String>;
-  toZip_lt?: Maybe<String>;
-  toZip_lte?: Maybe<String>;
-  toZip_gt?: Maybe<String>;
-  toZip_gte?: Maybe<String>;
-  toZip_contains?: Maybe<String>;
-  toZip_not_contains?: Maybe<String>;
-  toZip_starts_with?: Maybe<String>;
-  toZip_not_starts_with?: Maybe<String>;
-  toZip_ends_with?: Maybe<String>;
-  toZip_not_ends_with?: Maybe<String>;
-  payment?: Maybe<PaymentWhereInput>;
-  mail?: Maybe<MailWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<LetterWhereInput[] | LetterWhereInput>;
-  OR?: Maybe<LetterWhereInput[] | LetterWhereInput>;
-  NOT?: Maybe<LetterWhereInput[] | LetterWhereInput>;
+  id?: Maybe<ID_Input>
+  id_not?: Maybe<ID_Input>
+  id_in?: Maybe<ID_Input[] | ID_Input>
+  id_not_in?: Maybe<ID_Input[] | ID_Input>
+  id_lt?: Maybe<ID_Input>
+  id_lte?: Maybe<ID_Input>
+  id_gt?: Maybe<ID_Input>
+  id_gte?: Maybe<ID_Input>
+  id_contains?: Maybe<ID_Input>
+  id_not_contains?: Maybe<ID_Input>
+  id_starts_with?: Maybe<ID_Input>
+  id_not_starts_with?: Maybe<ID_Input>
+  id_ends_with?: Maybe<ID_Input>
+  id_not_ends_with?: Maybe<ID_Input>
+  fromName?: Maybe<String>
+  fromName_not?: Maybe<String>
+  fromName_in?: Maybe<String[] | String>
+  fromName_not_in?: Maybe<String[] | String>
+  fromName_lt?: Maybe<String>
+  fromName_lte?: Maybe<String>
+  fromName_gt?: Maybe<String>
+  fromName_gte?: Maybe<String>
+  fromName_contains?: Maybe<String>
+  fromName_not_contains?: Maybe<String>
+  fromName_starts_with?: Maybe<String>
+  fromName_not_starts_with?: Maybe<String>
+  fromName_ends_with?: Maybe<String>
+  fromName_not_ends_with?: Maybe<String>
+  fromLine1?: Maybe<String>
+  fromLine1_not?: Maybe<String>
+  fromLine1_in?: Maybe<String[] | String>
+  fromLine1_not_in?: Maybe<String[] | String>
+  fromLine1_lt?: Maybe<String>
+  fromLine1_lte?: Maybe<String>
+  fromLine1_gt?: Maybe<String>
+  fromLine1_gte?: Maybe<String>
+  fromLine1_contains?: Maybe<String>
+  fromLine1_not_contains?: Maybe<String>
+  fromLine1_starts_with?: Maybe<String>
+  fromLine1_not_starts_with?: Maybe<String>
+  fromLine1_ends_with?: Maybe<String>
+  fromLine1_not_ends_with?: Maybe<String>
+  fromCity?: Maybe<String>
+  fromCity_not?: Maybe<String>
+  fromCity_in?: Maybe<String[] | String>
+  fromCity_not_in?: Maybe<String[] | String>
+  fromCity_lt?: Maybe<String>
+  fromCity_lte?: Maybe<String>
+  fromCity_gt?: Maybe<String>
+  fromCity_gte?: Maybe<String>
+  fromCity_contains?: Maybe<String>
+  fromCity_not_contains?: Maybe<String>
+  fromCity_starts_with?: Maybe<String>
+  fromCity_not_starts_with?: Maybe<String>
+  fromCity_ends_with?: Maybe<String>
+  fromCity_not_ends_with?: Maybe<String>
+  fromState?: Maybe<String>
+  fromState_not?: Maybe<String>
+  fromState_in?: Maybe<String[] | String>
+  fromState_not_in?: Maybe<String[] | String>
+  fromState_lt?: Maybe<String>
+  fromState_lte?: Maybe<String>
+  fromState_gt?: Maybe<String>
+  fromState_gte?: Maybe<String>
+  fromState_contains?: Maybe<String>
+  fromState_not_contains?: Maybe<String>
+  fromState_starts_with?: Maybe<String>
+  fromState_not_starts_with?: Maybe<String>
+  fromState_ends_with?: Maybe<String>
+  fromState_not_ends_with?: Maybe<String>
+  fromZip?: Maybe<String>
+  fromZip_not?: Maybe<String>
+  fromZip_in?: Maybe<String[] | String>
+  fromZip_not_in?: Maybe<String[] | String>
+  fromZip_lt?: Maybe<String>
+  fromZip_lte?: Maybe<String>
+  fromZip_gt?: Maybe<String>
+  fromZip_gte?: Maybe<String>
+  fromZip_contains?: Maybe<String>
+  fromZip_not_contains?: Maybe<String>
+  fromZip_starts_with?: Maybe<String>
+  fromZip_not_starts_with?: Maybe<String>
+  fromZip_ends_with?: Maybe<String>
+  fromZip_not_ends_with?: Maybe<String>
+  toName?: Maybe<String>
+  toName_not?: Maybe<String>
+  toName_in?: Maybe<String[] | String>
+  toName_not_in?: Maybe<String[] | String>
+  toName_lt?: Maybe<String>
+  toName_lte?: Maybe<String>
+  toName_gt?: Maybe<String>
+  toName_gte?: Maybe<String>
+  toName_contains?: Maybe<String>
+  toName_not_contains?: Maybe<String>
+  toName_starts_with?: Maybe<String>
+  toName_not_starts_with?: Maybe<String>
+  toName_ends_with?: Maybe<String>
+  toName_not_ends_with?: Maybe<String>
+  toLine1?: Maybe<String>
+  toLine1_not?: Maybe<String>
+  toLine1_in?: Maybe<String[] | String>
+  toLine1_not_in?: Maybe<String[] | String>
+  toLine1_lt?: Maybe<String>
+  toLine1_lte?: Maybe<String>
+  toLine1_gt?: Maybe<String>
+  toLine1_gte?: Maybe<String>
+  toLine1_contains?: Maybe<String>
+  toLine1_not_contains?: Maybe<String>
+  toLine1_starts_with?: Maybe<String>
+  toLine1_not_starts_with?: Maybe<String>
+  toLine1_ends_with?: Maybe<String>
+  toLine1_not_ends_with?: Maybe<String>
+  toCity?: Maybe<String>
+  toCity_not?: Maybe<String>
+  toCity_in?: Maybe<String[] | String>
+  toCity_not_in?: Maybe<String[] | String>
+  toCity_lt?: Maybe<String>
+  toCity_lte?: Maybe<String>
+  toCity_gt?: Maybe<String>
+  toCity_gte?: Maybe<String>
+  toCity_contains?: Maybe<String>
+  toCity_not_contains?: Maybe<String>
+  toCity_starts_with?: Maybe<String>
+  toCity_not_starts_with?: Maybe<String>
+  toCity_ends_with?: Maybe<String>
+  toCity_not_ends_with?: Maybe<String>
+  toState?: Maybe<String>
+  toState_not?: Maybe<String>
+  toState_in?: Maybe<String[] | String>
+  toState_not_in?: Maybe<String[] | String>
+  toState_lt?: Maybe<String>
+  toState_lte?: Maybe<String>
+  toState_gt?: Maybe<String>
+  toState_gte?: Maybe<String>
+  toState_contains?: Maybe<String>
+  toState_not_contains?: Maybe<String>
+  toState_starts_with?: Maybe<String>
+  toState_not_starts_with?: Maybe<String>
+  toState_ends_with?: Maybe<String>
+  toState_not_ends_with?: Maybe<String>
+  toZip?: Maybe<String>
+  toZip_not?: Maybe<String>
+  toZip_in?: Maybe<String[] | String>
+  toZip_not_in?: Maybe<String[] | String>
+  toZip_lt?: Maybe<String>
+  toZip_lte?: Maybe<String>
+  toZip_gt?: Maybe<String>
+  toZip_gte?: Maybe<String>
+  toZip_contains?: Maybe<String>
+  toZip_not_contains?: Maybe<String>
+  toZip_starts_with?: Maybe<String>
+  toZip_not_starts_with?: Maybe<String>
+  toZip_ends_with?: Maybe<String>
+  toZip_not_ends_with?: Maybe<String>
+  payment?: Maybe<PaymentWhereInput>
+  mail?: Maybe<MailWhereInput>
+  createdAt?: Maybe<DateTimeInput>
+  createdAt_not?: Maybe<DateTimeInput>
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_lt?: Maybe<DateTimeInput>
+  createdAt_lte?: Maybe<DateTimeInput>
+  createdAt_gt?: Maybe<DateTimeInput>
+  createdAt_gte?: Maybe<DateTimeInput>
+  updatedAt?: Maybe<DateTimeInput>
+  updatedAt_not?: Maybe<DateTimeInput>
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_lt?: Maybe<DateTimeInput>
+  updatedAt_lte?: Maybe<DateTimeInput>
+  updatedAt_gt?: Maybe<DateTimeInput>
+  updatedAt_gte?: Maybe<DateTimeInput>
+  AND?: Maybe<LetterWhereInput[] | LetterWhereInput>
+  OR?: Maybe<LetterWhereInput[] | LetterWhereInput>
+  NOT?: Maybe<LetterWhereInput[] | LetterWhereInput>
 }
 
 export interface MailUpdateInput {
-  lobId?: Maybe<String>;
-  letter?: Maybe<LetterUpdateOneRequiredWithoutMailInput>;
-  expectedDeliveryDate?: Maybe<DateTimeInput>;
+  lobId?: Maybe<String>
+  letter?: Maybe<LetterUpdateOneRequiredWithoutMailInput>
+  expectedDeliveryDate?: Maybe<DateTimeInput>
 }
 
 export interface MailSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MailWhereInput>;
-  AND?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
-  OR?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
-  NOT?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>;
+  mutation_in?: Maybe<MutationType[] | MutationType>
+  updatedFields_contains?: Maybe<String>
+  updatedFields_contains_every?: Maybe<String[] | String>
+  updatedFields_contains_some?: Maybe<String[] | String>
+  node?: Maybe<MailWhereInput>
+  AND?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>
+  OR?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>
+  NOT?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>
 }
 
 export interface PaymentUpdateWithoutLetterDataInput {
-  stripeId?: Maybe<String>;
+  stripeId?: Maybe<String>
 }
 
 export interface LetterUpdateWithoutPaymentDataInput {
-  fromName?: Maybe<String>;
-  fromLine1?: Maybe<String>;
-  fromCity?: Maybe<String>;
-  fromState?: Maybe<String>;
-  fromZip?: Maybe<String>;
-  toName?: Maybe<String>;
-  toLine1?: Maybe<String>;
-  toCity?: Maybe<String>;
-  toState?: Maybe<String>;
-  toZip?: Maybe<String>;
-  content?: Maybe<Json>;
-  mail?: Maybe<MailUpdateOneWithoutLetterInput>;
+  fromName?: Maybe<String>
+  fromLine1?: Maybe<String>
+  fromCity?: Maybe<String>
+  fromState?: Maybe<String>
+  fromZip?: Maybe<String>
+  toName?: Maybe<String>
+  toLine1?: Maybe<String>
+  toCity?: Maybe<String>
+  toState?: Maybe<String>
+  toZip?: Maybe<String>
+  content?: Maybe<Json>
+  mail?: Maybe<MailUpdateOneWithoutLetterInput>
 }
 
 export interface PaymentUpsertWithoutLetterInput {
-  update: PaymentUpdateWithoutLetterDataInput;
-  create: PaymentCreateWithoutLetterInput;
+  update: PaymentUpdateWithoutLetterDataInput
+  create: PaymentCreateWithoutLetterInput
 }
 
 export interface LetterCreateWithoutPaymentInput {
-  id?: Maybe<ID_Input>;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: Json;
-  mail?: Maybe<MailCreateOneWithoutLetterInput>;
+  id?: Maybe<ID_Input>
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: Json
+  mail?: Maybe<MailCreateOneWithoutLetterInput>
 }
 
 export interface LetterCreateWithoutMailInput {
-  id?: Maybe<ID_Input>;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: Json;
-  payment?: Maybe<PaymentCreateOneWithoutLetterInput>;
+  id?: Maybe<ID_Input>
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: Json
+  payment?: Maybe<PaymentCreateOneWithoutLetterInput>
 }
 
 export interface MailUpdateManyMutationInput {
-  lobId?: Maybe<String>;
-  expectedDeliveryDate?: Maybe<DateTimeInput>;
+  lobId?: Maybe<String>
+  expectedDeliveryDate?: Maybe<DateTimeInput>
 }
 
 export interface LetterCreateOneWithoutMailInput {
-  create?: Maybe<LetterCreateWithoutMailInput>;
-  connect?: Maybe<LetterWhereUniqueInput>;
+  create?: Maybe<LetterCreateWithoutMailInput>
+  connect?: Maybe<LetterWhereUniqueInput>
 }
 
 export interface LetterUpdateManyMutationInput {
-  fromName?: Maybe<String>;
-  fromLine1?: Maybe<String>;
-  fromCity?: Maybe<String>;
-  fromState?: Maybe<String>;
-  fromZip?: Maybe<String>;
-  toName?: Maybe<String>;
-  toLine1?: Maybe<String>;
-  toCity?: Maybe<String>;
-  toState?: Maybe<String>;
-  toZip?: Maybe<String>;
-  content?: Maybe<Json>;
+  fromName?: Maybe<String>
+  fromLine1?: Maybe<String>
+  fromCity?: Maybe<String>
+  fromState?: Maybe<String>
+  fromZip?: Maybe<String>
+  toName?: Maybe<String>
+  toLine1?: Maybe<String>
+  toCity?: Maybe<String>
+  toState?: Maybe<String>
+  toZip?: Maybe<String>
+  content?: Maybe<Json>
 }
 
 export interface MailUpsertWithoutLetterInput {
-  update: MailUpdateWithoutLetterDataInput;
-  create: MailCreateWithoutLetterInput;
+  update: MailUpdateWithoutLetterDataInput
+  create: MailCreateWithoutLetterInput
 }
 
 export interface MailUpdateWithoutLetterDataInput {
-  lobId?: Maybe<String>;
-  expectedDeliveryDate?: Maybe<DateTimeInput>;
+  lobId?: Maybe<String>
+  expectedDeliveryDate?: Maybe<DateTimeInput>
 }
 
 export interface MailWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  lobId?: Maybe<String>;
-  lobId_not?: Maybe<String>;
-  lobId_in?: Maybe<String[] | String>;
-  lobId_not_in?: Maybe<String[] | String>;
-  lobId_lt?: Maybe<String>;
-  lobId_lte?: Maybe<String>;
-  lobId_gt?: Maybe<String>;
-  lobId_gte?: Maybe<String>;
-  lobId_contains?: Maybe<String>;
-  lobId_not_contains?: Maybe<String>;
-  lobId_starts_with?: Maybe<String>;
-  lobId_not_starts_with?: Maybe<String>;
-  lobId_ends_with?: Maybe<String>;
-  lobId_not_ends_with?: Maybe<String>;
-  letter?: Maybe<LetterWhereInput>;
-  expectedDeliveryDate?: Maybe<DateTimeInput>;
-  expectedDeliveryDate_not?: Maybe<DateTimeInput>;
-  expectedDeliveryDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  expectedDeliveryDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  expectedDeliveryDate_lt?: Maybe<DateTimeInput>;
-  expectedDeliveryDate_lte?: Maybe<DateTimeInput>;
-  expectedDeliveryDate_gt?: Maybe<DateTimeInput>;
-  expectedDeliveryDate_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<MailWhereInput[] | MailWhereInput>;
-  OR?: Maybe<MailWhereInput[] | MailWhereInput>;
-  NOT?: Maybe<MailWhereInput[] | MailWhereInput>;
+  id?: Maybe<ID_Input>
+  id_not?: Maybe<ID_Input>
+  id_in?: Maybe<ID_Input[] | ID_Input>
+  id_not_in?: Maybe<ID_Input[] | ID_Input>
+  id_lt?: Maybe<ID_Input>
+  id_lte?: Maybe<ID_Input>
+  id_gt?: Maybe<ID_Input>
+  id_gte?: Maybe<ID_Input>
+  id_contains?: Maybe<ID_Input>
+  id_not_contains?: Maybe<ID_Input>
+  id_starts_with?: Maybe<ID_Input>
+  id_not_starts_with?: Maybe<ID_Input>
+  id_ends_with?: Maybe<ID_Input>
+  id_not_ends_with?: Maybe<ID_Input>
+  lobId?: Maybe<String>
+  lobId_not?: Maybe<String>
+  lobId_in?: Maybe<String[] | String>
+  lobId_not_in?: Maybe<String[] | String>
+  lobId_lt?: Maybe<String>
+  lobId_lte?: Maybe<String>
+  lobId_gt?: Maybe<String>
+  lobId_gte?: Maybe<String>
+  lobId_contains?: Maybe<String>
+  lobId_not_contains?: Maybe<String>
+  lobId_starts_with?: Maybe<String>
+  lobId_not_starts_with?: Maybe<String>
+  lobId_ends_with?: Maybe<String>
+  lobId_not_ends_with?: Maybe<String>
+  letter?: Maybe<LetterWhereInput>
+  expectedDeliveryDate?: Maybe<DateTimeInput>
+  expectedDeliveryDate_not?: Maybe<DateTimeInput>
+  expectedDeliveryDate_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  expectedDeliveryDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  expectedDeliveryDate_lt?: Maybe<DateTimeInput>
+  expectedDeliveryDate_lte?: Maybe<DateTimeInput>
+  expectedDeliveryDate_gt?: Maybe<DateTimeInput>
+  expectedDeliveryDate_gte?: Maybe<DateTimeInput>
+  createdAt?: Maybe<DateTimeInput>
+  createdAt_not?: Maybe<DateTimeInput>
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_lt?: Maybe<DateTimeInput>
+  createdAt_lte?: Maybe<DateTimeInput>
+  createdAt_gt?: Maybe<DateTimeInput>
+  createdAt_gte?: Maybe<DateTimeInput>
+  updatedAt?: Maybe<DateTimeInput>
+  updatedAt_not?: Maybe<DateTimeInput>
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_lt?: Maybe<DateTimeInput>
+  updatedAt_lte?: Maybe<DateTimeInput>
+  updatedAt_gt?: Maybe<DateTimeInput>
+  updatedAt_gte?: Maybe<DateTimeInput>
+  AND?: Maybe<MailWhereInput[] | MailWhereInput>
+  OR?: Maybe<MailWhereInput[] | MailWhereInput>
+  NOT?: Maybe<MailWhereInput[] | MailWhereInput>
 }
 
 export interface PaymentCreateInput {
-  id?: Maybe<ID_Input>;
-  stripeId: String;
-  letter: LetterCreateOneWithoutPaymentInput;
+  id?: Maybe<ID_Input>
+  stripeId: String
+  letter: LetterCreateOneWithoutPaymentInput
 }
 
 export type MailWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+  id: Maybe<ID_Input>
+}>
 
 export interface PaymentUpdateManyMutationInput {
-  stripeId?: Maybe<String>;
+  stripeId?: Maybe<String>
 }
 
 export interface NodeNode {
-  id: ID_Output;
+  id: ID_Output
 }
 
 export interface PaymentPreviousValues {
-  id: ID_Output;
-  stripeId: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+  id: ID_Output
+  stripeId: String
+  createdAt: DateTimeOutput
+  updatedAt: DateTimeOutput
 }
 
-export interface PaymentPreviousValuesPromise
-  extends Promise<PaymentPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  stripeId: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface PaymentPreviousValuesPromise extends Promise<PaymentPreviousValues>, Fragmentable {
+  id: () => Promise<ID_Output>
+  stripeId: () => Promise<String>
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
-export interface PaymentPreviousValuesSubscription
-  extends Promise<AsyncIterator<PaymentPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  stripeId: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+export interface PaymentPreviousValuesSubscription extends Promise<AsyncIterator<PaymentPreviousValues>>, Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>
+  stripeId: () => Promise<AsyncIterator<String>>
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
 export interface MailConnection {
-  pageInfo: PageInfo;
-  edges: MailEdge[];
+  pageInfo: PageInfo
+  edges: MailEdge[]
 }
 
-export interface MailConnectionPromise
-  extends Promise<MailConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MailEdge>>() => T;
-  aggregate: <T = AggregateMailPromise>() => T;
+export interface MailConnectionPromise extends Promise<MailConnection>, Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T
+  edges: <T = FragmentableArray<MailEdge>>() => T
+  aggregate: <T = AggregateMailPromise>() => T
 }
 
-export interface MailConnectionSubscription
-  extends Promise<AsyncIterator<MailConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<MailEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateMailSubscription>() => T;
+export interface MailConnectionSubscription extends Promise<AsyncIterator<MailConnection>>, Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T
+  edges: <T = Promise<AsyncIterator<MailEdgeSubscription>>>() => T
+  aggregate: <T = AggregateMailSubscription>() => T
 }
 
 export interface LetterPreviousValues {
-  id: ID_Output;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: Json;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+  id: ID_Output
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: Json
+  createdAt: DateTimeOutput
+  updatedAt: DateTimeOutput
 }
 
-export interface LetterPreviousValuesPromise
-  extends Promise<LetterPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  fromName: () => Promise<String>;
-  fromLine1: () => Promise<String>;
-  fromCity: () => Promise<String>;
-  fromState: () => Promise<String>;
-  fromZip: () => Promise<String>;
-  toName: () => Promise<String>;
-  toLine1: () => Promise<String>;
-  toCity: () => Promise<String>;
-  toState: () => Promise<String>;
-  toZip: () => Promise<String>;
-  content: () => Promise<Json>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface LetterPreviousValuesPromise extends Promise<LetterPreviousValues>, Fragmentable {
+  id: () => Promise<ID_Output>
+  fromName: () => Promise<String>
+  fromLine1: () => Promise<String>
+  fromCity: () => Promise<String>
+  fromState: () => Promise<String>
+  fromZip: () => Promise<String>
+  toName: () => Promise<String>
+  toLine1: () => Promise<String>
+  toCity: () => Promise<String>
+  toState: () => Promise<String>
+  toZip: () => Promise<String>
+  content: () => Promise<Json>
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
-export interface LetterPreviousValuesSubscription
-  extends Promise<AsyncIterator<LetterPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  fromName: () => Promise<AsyncIterator<String>>;
-  fromLine1: () => Promise<AsyncIterator<String>>;
-  fromCity: () => Promise<AsyncIterator<String>>;
-  fromState: () => Promise<AsyncIterator<String>>;
-  fromZip: () => Promise<AsyncIterator<String>>;
-  toName: () => Promise<AsyncIterator<String>>;
-  toLine1: () => Promise<AsyncIterator<String>>;
-  toCity: () => Promise<AsyncIterator<String>>;
-  toState: () => Promise<AsyncIterator<String>>;
-  toZip: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<Json>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+export interface LetterPreviousValuesSubscription extends Promise<AsyncIterator<LetterPreviousValues>>, Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>
+  fromName: () => Promise<AsyncIterator<String>>
+  fromLine1: () => Promise<AsyncIterator<String>>
+  fromCity: () => Promise<AsyncIterator<String>>
+  fromState: () => Promise<AsyncIterator<String>>
+  fromZip: () => Promise<AsyncIterator<String>>
+  toName: () => Promise<AsyncIterator<String>>
+  toLine1: () => Promise<AsyncIterator<String>>
+  toCity: () => Promise<AsyncIterator<String>>
+  toState: () => Promise<AsyncIterator<String>>
+  toZip: () => Promise<AsyncIterator<String>>
+  content: () => Promise<AsyncIterator<Json>>
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
 export interface MailPreviousValues {
-  id: ID_Output;
-  lobId: String;
-  expectedDeliveryDate: DateTimeOutput;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+  id: ID_Output
+  lobId: String
+  expectedDeliveryDate: DateTimeOutput
+  createdAt: DateTimeOutput
+  updatedAt: DateTimeOutput
 }
 
-export interface MailPreviousValuesPromise
-  extends Promise<MailPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  lobId: () => Promise<String>;
-  expectedDeliveryDate: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface MailPreviousValuesPromise extends Promise<MailPreviousValues>, Fragmentable {
+  id: () => Promise<ID_Output>
+  lobId: () => Promise<String>
+  expectedDeliveryDate: () => Promise<DateTimeOutput>
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
-export interface MailPreviousValuesSubscription
-  extends Promise<AsyncIterator<MailPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  lobId: () => Promise<AsyncIterator<String>>;
-  expectedDeliveryDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+export interface MailPreviousValuesSubscription extends Promise<AsyncIterator<MailPreviousValues>>, Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>
+  lobId: () => Promise<AsyncIterator<String>>
+  expectedDeliveryDate: () => Promise<AsyncIterator<DateTimeOutput>>
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
 export interface LetterEdge {
-  node: Letter;
-  cursor: String;
+  node: Letter
+  cursor: String
 }
 
 export interface LetterEdgePromise extends Promise<LetterEdge>, Fragmentable {
-  node: <T = LetterPromise>() => T;
-  cursor: () => Promise<String>;
+  node: <T = LetterPromise>() => T
+  cursor: () => Promise<String>
 }
 
-export interface LetterEdgeSubscription
-  extends Promise<AsyncIterator<LetterEdge>>,
-    Fragmentable {
-  node: <T = LetterSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+export interface LetterEdgeSubscription extends Promise<AsyncIterator<LetterEdge>>, Fragmentable {
+  node: <T = LetterSubscription>() => T
+  cursor: () => Promise<AsyncIterator<String>>
 }
 
 export interface AggregateLetter {
-  count: Int;
+  count: Int
 }
 
-export interface AggregateLetterPromise
-  extends Promise<AggregateLetter>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface AggregateLetterPromise extends Promise<AggregateLetter>, Fragmentable {
+  count: () => Promise<Int>
 }
 
-export interface AggregateLetterSubscription
-  extends Promise<AsyncIterator<AggregateLetter>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+export interface AggregateLetterSubscription extends Promise<AsyncIterator<AggregateLetter>>, Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>
 }
 
 export interface PaymentSubscriptionPayload {
-  mutation: MutationType;
-  node: Payment;
-  updatedFields: String[];
-  previousValues: PaymentPreviousValues;
+  mutation: MutationType
+  node: Payment
+  updatedFields: String[]
+  previousValues: PaymentPreviousValues
 }
 
-export interface PaymentSubscriptionPayloadPromise
-  extends Promise<PaymentSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PaymentPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PaymentPreviousValuesPromise>() => T;
+export interface PaymentSubscriptionPayloadPromise extends Promise<PaymentSubscriptionPayload>, Fragmentable {
+  mutation: () => Promise<MutationType>
+  node: <T = PaymentPromise>() => T
+  updatedFields: () => Promise<String[]>
+  previousValues: <T = PaymentPreviousValuesPromise>() => T
 }
 
 export interface PaymentSubscriptionPayloadSubscription
   extends Promise<AsyncIterator<PaymentSubscriptionPayload>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PaymentSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PaymentPreviousValuesSubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>
+  node: <T = PaymentSubscription>() => T
+  updatedFields: () => Promise<AsyncIterator<String[]>>
+  previousValues: <T = PaymentPreviousValuesSubscription>() => T
 }
 
 export interface BatchPayload {
-  count: Long;
+  count: Long
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
+export interface BatchPayloadPromise extends Promise<BatchPayload>, Fragmentable {
+  count: () => Promise<Long>
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+export interface BatchPayloadSubscription extends Promise<AsyncIterator<BatchPayload>>, Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>
 }
 
 export interface PaymentEdge {
-  node: Payment;
-  cursor: String;
+  node: Payment
+  cursor: String
 }
 
 export interface PaymentEdgePromise extends Promise<PaymentEdge>, Fragmentable {
-  node: <T = PaymentPromise>() => T;
-  cursor: () => Promise<String>;
+  node: <T = PaymentPromise>() => T
+  cursor: () => Promise<String>
 }
 
-export interface PaymentEdgeSubscription
-  extends Promise<AsyncIterator<PaymentEdge>>,
-    Fragmentable {
-  node: <T = PaymentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+export interface PaymentEdgeSubscription extends Promise<AsyncIterator<PaymentEdge>>, Fragmentable {
+  node: <T = PaymentSubscription>() => T
+  cursor: () => Promise<AsyncIterator<String>>
 }
 
 export interface MailSubscriptionPayload {
-  mutation: MutationType;
-  node: Mail;
-  updatedFields: String[];
-  previousValues: MailPreviousValues;
+  mutation: MutationType
+  node: Mail
+  updatedFields: String[]
+  previousValues: MailPreviousValues
 }
 
-export interface MailSubscriptionPayloadPromise
-  extends Promise<MailSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = MailPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = MailPreviousValuesPromise>() => T;
+export interface MailSubscriptionPayloadPromise extends Promise<MailSubscriptionPayload>, Fragmentable {
+  mutation: () => Promise<MutationType>
+  node: <T = MailPromise>() => T
+  updatedFields: () => Promise<String[]>
+  previousValues: <T = MailPreviousValuesPromise>() => T
 }
 
 export interface MailSubscriptionPayloadSubscription
   extends Promise<AsyncIterator<MailSubscriptionPayload>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = MailSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = MailPreviousValuesSubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>
+  node: <T = MailSubscription>() => T
+  updatedFields: () => Promise<AsyncIterator<String[]>>
+  previousValues: <T = MailPreviousValuesSubscription>() => T
 }
 
 export interface Payment {
-  id: ID_Output;
-  stripeId: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+  id: ID_Output
+  stripeId: String
+  createdAt: DateTimeOutput
+  updatedAt: DateTimeOutput
 }
 
 export interface PaymentPromise extends Promise<Payment>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  stripeId: () => Promise<String>;
-  letter: <T = LetterPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  id: () => Promise<ID_Output>
+  stripeId: () => Promise<String>
+  letter: <T = LetterPromise>() => T
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
-export interface PaymentSubscription
-  extends Promise<AsyncIterator<Payment>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  stripeId: () => Promise<AsyncIterator<String>>;
-  letter: <T = LetterSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+export interface PaymentSubscription extends Promise<AsyncIterator<Payment>>, Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>
+  stripeId: () => Promise<AsyncIterator<String>>
+  letter: <T = LetterSubscription>() => T
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
-export interface PaymentNullablePromise
-  extends Promise<Payment | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  stripeId: () => Promise<String>;
-  letter: <T = LetterPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface PaymentNullablePromise extends Promise<Payment | null>, Fragmentable {
+  id: () => Promise<ID_Output>
+  stripeId: () => Promise<String>
+  letter: <T = LetterPromise>() => T
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
 export interface MailEdge {
-  node: Mail;
-  cursor: String;
+  node: Mail
+  cursor: String
 }
 
 export interface MailEdgePromise extends Promise<MailEdge>, Fragmentable {
-  node: <T = MailPromise>() => T;
-  cursor: () => Promise<String>;
+  node: <T = MailPromise>() => T
+  cursor: () => Promise<String>
 }
 
-export interface MailEdgeSubscription
-  extends Promise<AsyncIterator<MailEdge>>,
-    Fragmentable {
-  node: <T = MailSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+export interface MailEdgeSubscription extends Promise<AsyncIterator<MailEdge>>, Fragmentable {
+  node: <T = MailSubscription>() => T
+  cursor: () => Promise<AsyncIterator<String>>
 }
 
 export interface LetterSubscriptionPayload {
-  mutation: MutationType;
-  node: Letter;
-  updatedFields: String[];
-  previousValues: LetterPreviousValues;
+  mutation: MutationType
+  node: Letter
+  updatedFields: String[]
+  previousValues: LetterPreviousValues
 }
 
-export interface LetterSubscriptionPayloadPromise
-  extends Promise<LetterSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = LetterPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = LetterPreviousValuesPromise>() => T;
+export interface LetterSubscriptionPayloadPromise extends Promise<LetterSubscriptionPayload>, Fragmentable {
+  mutation: () => Promise<MutationType>
+  node: <T = LetterPromise>() => T
+  updatedFields: () => Promise<String[]>
+  previousValues: <T = LetterPreviousValuesPromise>() => T
 }
 
 export interface LetterSubscriptionPayloadSubscription
   extends Promise<AsyncIterator<LetterSubscriptionPayload>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LetterSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LetterPreviousValuesSubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>
+  node: <T = LetterSubscription>() => T
+  updatedFields: () => Promise<AsyncIterator<String[]>>
+  previousValues: <T = LetterPreviousValuesSubscription>() => T
 }
 
 export interface Letter {
-  id: ID_Output;
-  fromName: String;
-  fromLine1: String;
-  fromCity: String;
-  fromState: String;
-  fromZip: String;
-  toName: String;
-  toLine1: String;
-  toCity: String;
-  toState: String;
-  toZip: String;
-  content: Json;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+  id: ID_Output
+  fromName: String
+  fromLine1: String
+  fromCity: String
+  fromState: String
+  fromZip: String
+  toName: String
+  toLine1: String
+  toCity: String
+  toState: String
+  toZip: String
+  content: Json
+  createdAt: DateTimeOutput
+  updatedAt: DateTimeOutput
 }
 
 export interface LetterPromise extends Promise<Letter>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  fromName: () => Promise<String>;
-  fromLine1: () => Promise<String>;
-  fromCity: () => Promise<String>;
-  fromState: () => Promise<String>;
-  fromZip: () => Promise<String>;
-  toName: () => Promise<String>;
-  toLine1: () => Promise<String>;
-  toCity: () => Promise<String>;
-  toState: () => Promise<String>;
-  toZip: () => Promise<String>;
-  content: () => Promise<Json>;
-  payment: <T = PaymentPromise>() => T;
-  mail: <T = MailPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  id: () => Promise<ID_Output>
+  fromName: () => Promise<String>
+  fromLine1: () => Promise<String>
+  fromCity: () => Promise<String>
+  fromState: () => Promise<String>
+  fromZip: () => Promise<String>
+  toName: () => Promise<String>
+  toLine1: () => Promise<String>
+  toCity: () => Promise<String>
+  toState: () => Promise<String>
+  toZip: () => Promise<String>
+  content: () => Promise<Json>
+  payment: <T = PaymentPromise>() => T
+  mail: <T = MailPromise>() => T
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
-export interface LetterSubscription
-  extends Promise<AsyncIterator<Letter>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  fromName: () => Promise<AsyncIterator<String>>;
-  fromLine1: () => Promise<AsyncIterator<String>>;
-  fromCity: () => Promise<AsyncIterator<String>>;
-  fromState: () => Promise<AsyncIterator<String>>;
-  fromZip: () => Promise<AsyncIterator<String>>;
-  toName: () => Promise<AsyncIterator<String>>;
-  toLine1: () => Promise<AsyncIterator<String>>;
-  toCity: () => Promise<AsyncIterator<String>>;
-  toState: () => Promise<AsyncIterator<String>>;
-  toZip: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<Json>>;
-  payment: <T = PaymentSubscription>() => T;
-  mail: <T = MailSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+export interface LetterSubscription extends Promise<AsyncIterator<Letter>>, Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>
+  fromName: () => Promise<AsyncIterator<String>>
+  fromLine1: () => Promise<AsyncIterator<String>>
+  fromCity: () => Promise<AsyncIterator<String>>
+  fromState: () => Promise<AsyncIterator<String>>
+  fromZip: () => Promise<AsyncIterator<String>>
+  toName: () => Promise<AsyncIterator<String>>
+  toLine1: () => Promise<AsyncIterator<String>>
+  toCity: () => Promise<AsyncIterator<String>>
+  toState: () => Promise<AsyncIterator<String>>
+  toZip: () => Promise<AsyncIterator<String>>
+  content: () => Promise<AsyncIterator<Json>>
+  payment: <T = PaymentSubscription>() => T
+  mail: <T = MailSubscription>() => T
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
-export interface LetterNullablePromise
-  extends Promise<Letter | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  fromName: () => Promise<String>;
-  fromLine1: () => Promise<String>;
-  fromCity: () => Promise<String>;
-  fromState: () => Promise<String>;
-  fromZip: () => Promise<String>;
-  toName: () => Promise<String>;
-  toLine1: () => Promise<String>;
-  toCity: () => Promise<String>;
-  toState: () => Promise<String>;
-  toZip: () => Promise<String>;
-  content: () => Promise<Json>;
-  payment: <T = PaymentPromise>() => T;
-  mail: <T = MailPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface LetterNullablePromise extends Promise<Letter | null>, Fragmentable {
+  id: () => Promise<ID_Output>
+  fromName: () => Promise<String>
+  fromLine1: () => Promise<String>
+  fromCity: () => Promise<String>
+  fromState: () => Promise<String>
+  fromZip: () => Promise<String>
+  toName: () => Promise<String>
+  toLine1: () => Promise<String>
+  toCity: () => Promise<String>
+  toState: () => Promise<String>
+  toZip: () => Promise<String>
+  content: () => Promise<Json>
+  payment: <T = PaymentPromise>() => T
+  mail: <T = MailPromise>() => T
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
 export interface LetterConnection {
-  pageInfo: PageInfo;
-  edges: LetterEdge[];
+  pageInfo: PageInfo
+  edges: LetterEdge[]
 }
 
-export interface LetterConnectionPromise
-  extends Promise<LetterConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LetterEdge>>() => T;
-  aggregate: <T = AggregateLetterPromise>() => T;
+export interface LetterConnectionPromise extends Promise<LetterConnection>, Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T
+  edges: <T = FragmentableArray<LetterEdge>>() => T
+  aggregate: <T = AggregateLetterPromise>() => T
 }
 
-export interface LetterConnectionSubscription
-  extends Promise<AsyncIterator<LetterConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LetterEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLetterSubscription>() => T;
+export interface LetterConnectionSubscription extends Promise<AsyncIterator<LetterConnection>>, Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T
+  edges: <T = Promise<AsyncIterator<LetterEdgeSubscription>>>() => T
+  aggregate: <T = AggregateLetterSubscription>() => T
 }
 
 export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
 }
 
 export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
+  hasNextPage: () => Promise<Boolean>
+  hasPreviousPage: () => Promise<Boolean>
+  startCursor: () => Promise<String>
+  endCursor: () => Promise<String>
 }
 
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+export interface PageInfoSubscription extends Promise<AsyncIterator<PageInfo>>, Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>
+  startCursor: () => Promise<AsyncIterator<String>>
+  endCursor: () => Promise<AsyncIterator<String>>
 }
 
 export interface Mail {
-  id: ID_Output;
-  lobId: String;
-  expectedDeliveryDate: DateTimeOutput;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+  id: ID_Output
+  lobId: String
+  expectedDeliveryDate: DateTimeOutput
+  createdAt: DateTimeOutput
+  updatedAt: DateTimeOutput
 }
 
 export interface MailPromise extends Promise<Mail>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  lobId: () => Promise<String>;
-  letter: <T = LetterPromise>() => T;
-  expectedDeliveryDate: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  id: () => Promise<ID_Output>
+  lobId: () => Promise<String>
+  letter: <T = LetterPromise>() => T
+  expectedDeliveryDate: () => Promise<DateTimeOutput>
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
-export interface MailSubscription
-  extends Promise<AsyncIterator<Mail>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  lobId: () => Promise<AsyncIterator<String>>;
-  letter: <T = LetterSubscription>() => T;
-  expectedDeliveryDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+export interface MailSubscription extends Promise<AsyncIterator<Mail>>, Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>
+  lobId: () => Promise<AsyncIterator<String>>
+  letter: <T = LetterSubscription>() => T
+  expectedDeliveryDate: () => Promise<AsyncIterator<DateTimeOutput>>
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
 
-export interface MailNullablePromise
-  extends Promise<Mail | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  lobId: () => Promise<String>;
-  letter: <T = LetterPromise>() => T;
-  expectedDeliveryDate: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface MailNullablePromise extends Promise<Mail | null>, Fragmentable {
+  id: () => Promise<ID_Output>
+  lobId: () => Promise<String>
+  letter: <T = LetterPromise>() => T
+  expectedDeliveryDate: () => Promise<DateTimeOutput>
+  createdAt: () => Promise<DateTimeOutput>
+  updatedAt: () => Promise<DateTimeOutput>
 }
 
 export interface AggregateMail {
-  count: Int;
+  count: Int
 }
 
-export interface AggregateMailPromise
-  extends Promise<AggregateMail>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface AggregateMailPromise extends Promise<AggregateMail>, Fragmentable {
+  count: () => Promise<Int>
 }
 
-export interface AggregateMailSubscription
-  extends Promise<AsyncIterator<AggregateMail>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+export interface AggregateMailSubscription extends Promise<AsyncIterator<AggregateMail>>, Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>
 }
 
 export interface PaymentConnection {
-  pageInfo: PageInfo;
-  edges: PaymentEdge[];
+  pageInfo: PageInfo
+  edges: PaymentEdge[]
 }
 
-export interface PaymentConnectionPromise
-  extends Promise<PaymentConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PaymentEdge>>() => T;
-  aggregate: <T = AggregatePaymentPromise>() => T;
+export interface PaymentConnectionPromise extends Promise<PaymentConnection>, Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T
+  edges: <T = FragmentableArray<PaymentEdge>>() => T
+  aggregate: <T = AggregatePaymentPromise>() => T
 }
 
-export interface PaymentConnectionSubscription
-  extends Promise<AsyncIterator<PaymentConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PaymentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePaymentSubscription>() => T;
+export interface PaymentConnectionSubscription extends Promise<AsyncIterator<PaymentConnection>>, Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T
+  edges: <T = Promise<AsyncIterator<PaymentEdgeSubscription>>>() => T
+  aggregate: <T = AggregatePaymentSubscription>() => T
 }
 
 export interface AggregatePayment {
-  count: Int;
+  count: Int
 }
 
-export interface AggregatePaymentPromise
-  extends Promise<AggregatePayment>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface AggregatePaymentPromise extends Promise<AggregatePayment>, Fragmentable {
+  count: () => Promise<Int>
 }
 
-export interface AggregatePaymentSubscription
-  extends Promise<AsyncIterator<AggregatePayment>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+export interface AggregatePaymentSubscription extends Promise<AsyncIterator<AggregatePayment>>, Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>
 }
 
 /*
 DateTime scalar input type, allowing Date
 */
-export type DateTimeInput = Date | string;
+export type DateTimeInput = Date | string
 
 /*
 DateTime scalar output type, which is always a string
 */
-export type DateTimeOutput = string;
+export type DateTimeOutput = string
 
-export type Long = string;
+export type Long = string
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type ID_Input = string | number
+export type ID_Output = string
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type String = string;
+export type String = string
 
-export type Json = any;
+export type Json = any
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
-export type Boolean = boolean;
+export type Boolean = boolean
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
-export type Int = number;
+export type Int = number
 
 /**
  * Model Metadata
@@ -1382,25 +1280,25 @@ export type Int = number;
 export const models: Model[] = [
   {
     name: "Letter",
-    embedded: false
+    embedded: false,
   },
   {
     name: "Payment",
-    embedded: false
+    embedded: false,
   },
   {
     name: "Mail",
-    embedded: false
-  }
-];
+    embedded: false,
+  },
+]
 
 /**
  * Type Defs
  */
-
+const endpoint = process.env.PRISMA_ENDPOINT
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/kyle-melton/vys-backend/dev`
-});
-export const prisma = new Prisma();
+  endpoint,
+})
+export const prisma = new Prisma()
