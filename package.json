@@ -6,7 +6,10 @@
   "scripts": {
     "build": "webpack --config webpack.$NODE_ENV.js",
     "build:dev": "NODE_ENV=development yarn build",
-    "start": "node --require dotenv/config dist/server"
+    "start": "node dist/server"
+  },
+  "engines": {
+    "node": "12.x"
   },
   "dependencies": {
     "apollo-server-express": "^2.14.2",
