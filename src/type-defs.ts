@@ -9,6 +9,7 @@ export default gql`
   }
   type Mutation {
     createLetter(letter: LetterInput): Letter!
+    updateLetter(letterId: String!, letter: AddressInput): Letter!
     mailLetter(letterId: String!, stripeId: String!): Mail!
   }
   input LetterInput {
@@ -26,9 +27,13 @@ export default gql`
     fromAddressZip: String!
     content: Json!
   }
-  """
-
-  """
+  input AddressInput {
+    fromName: String!
+    fromAddressLine1: String!
+    fromAddressCity: String!
+    fromAddressState: String!
+    fromAddressZip: String!
+  }
   type Letter {
     id: ID!
     fromName: String!

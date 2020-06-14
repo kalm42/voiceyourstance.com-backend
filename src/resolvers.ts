@@ -25,6 +25,13 @@ interface LetterInput {
   fromAddressZip: string
   content: string
 }
+interface AddressInput {
+  fromName: string
+  fromAddressLine1: string
+  fromAddressCity: string
+  fromAddressState: string
+  fromAddressZip: string
+}
 
 interface CreateLetterArgs {
   letter: LetterInput
@@ -32,6 +39,10 @@ interface CreateLetterArgs {
 interface MailLetterArgs {
   letterId: string
   stripeId: string
+}
+interface UpdateLetterArgs {
+  letterId: string
+  letter: AddressInput
 }
 interface Context {
   db: Prisma
@@ -71,6 +82,18 @@ export default {
         toName: toName,
         toState: toAddressState,
         toZip: toAddressZip,
+      })
+    },
+    updateLetter: (parent, args: UpdateLetterArgs, context: Context) => {
+      return context.db.updateLetter({
+        where: { id: args.letterId },
+        data: {
+          fromName: args.letter.fromName,
+          fromLine1: args.letter.fromAddressLine1,
+          fromCity: args.letter.fromAddressCity,
+          fromState: args.letter.fromAddressState,
+          fromZip: args.letter.fromAddressZip,
+        },
       })
     },
     mailLetter: async (parent, args: MailLetterArgs, context: Context) => {
