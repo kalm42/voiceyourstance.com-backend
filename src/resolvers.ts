@@ -115,6 +115,12 @@ export default {
         data: { payment: { create: { stripeId: charge.id } } },
       })
 
+      // Verify the letter hasn't been mailed before
+      const mailed = await context.db.mails({ where: { letter: { id: letter.id } } })
+      if (mailed.length) {
+        throw new Error("This letter has already been sent.")
+      }
+
       const HTML = generateHTML(letter.content)
 
       const mail = await lob.letters.create({
