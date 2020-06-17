@@ -7,7 +7,9 @@
     "build": "webpack --config webpack.$NODE_ENV.js",
     "build:dev": "NODE_ENV=development yarn build",
     "start": "node dist/server",
-    "start:dev": "node --require dotenv/config dist/server"
+    "start:dev": "node --require dotenv/config dist/server",
+    "clean": "rm -rf node_modules",
+    "clean:git": "git branch | grep -v \"master|development\" | xargs git branch -d"
   },
   "engines": {
     "node": "10.x"
