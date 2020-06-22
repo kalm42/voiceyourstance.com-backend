@@ -5,7 +5,7 @@ export interface TypedLob {
 /**
  * Addresses API
  */
-interface Address {
+interface LobAddress {
   id: string
   description: string | null
   name: string | null

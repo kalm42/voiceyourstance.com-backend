@@ -1,18 +1,16 @@
 import express from "express"
-import bodyParser from "body-parser"
+//import bodyParser from "body-parser"
 import { ApolloServer } from "apollo-server-express"
 import Stripe from "stripe"
+import cookieParser from "cookie-parser"
+import jwt from "jsonwebtoken"
 import { environment } from "./environment"
 import resolvers from "./resolvers"
 import typeDefs from "./type-defs"
 import cors from "cors"
 import { prisma } from "./prisma/generated/prisma-client"
-
-const FRONTEND = process.env.FRONTEND
-const key = process.env.STRIPE_KEY
-const stripe = new Stripe(key, {
-  apiVersion: "2020-03-02",
-})
+import { EnhancedRequest, JWTToken } from "./types"
+import stripe from "./apis/stripe"
 
 const server = new ApolloServer({
   resolvers,
@@ -20,13 +18,48 @@ const server = new ApolloServer({
   introspection: environment.apollo.introspection,
   playground: environment.apollo.playground,
   context: ({ req }) => ({
+    ...req,
     db: prisma,
   }),
 })
 
 const app = express()
 
+// Setup CORS for the frontend since it'll be a different subdomain
+const FRONTEND = process.env.FRONTEND
 app.use(cors({ origin: FRONTEND }))
+
+// Parse cookies for the jwt
+app.use(cookieParser())
+
+// Check for a jwt, if there is one, validate it and attach the userid to the request object
+app.use((req: EnhancedRequest, res, next) => {
+  const { token } = req.cookies
+  if (token) {
+    const decodedToken = jwt.verify(token, process.env.APP_SECRET)
+    const { userId } = (decodedToken as unknown) as JWTToken
+    req.userId = userId
+    next()
+  }
+})
+
+// If there's a userId on the request object, attach the full user
+app.use(async (req: EnhancedRequest, res, next) => {
+  if (!req.userId) {
+    return next()
+  }
+
+  try {
+    // const user = await prisma.user({where: {id: req.userId}}, '{id, email}')
+    // req.user = user
+    // TODO: must update datamodel first
+    next()
+  } catch (error) {
+    // TODO: report error
+    console.log(error)
+    next()
+  }
+})
 
 app.use(express.json())
 
