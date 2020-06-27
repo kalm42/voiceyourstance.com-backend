@@ -4,13 +4,6 @@ import { Context } from "../types"
 import crypto from "crypto"
 import jwt from "jsonwebtoken"
 
-export function isLoggedInUser(ctx: Context) {
-  if (!ctx.userId) {
-    throw new Error("You must be logged in to perform this action!")
-  }
-  return true
-}
-
 export function requireLoggedInUser(ctx: Context) {
   if (!ctx.user) {
     throw new Error("You must be logged in to perform this action.")

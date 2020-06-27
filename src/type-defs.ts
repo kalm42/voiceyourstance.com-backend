@@ -116,7 +116,7 @@ export default gql`
   type Template {
     id: ID!
     title: String!
-    tags: [String!]!
+    tags: String!
     content: Json!
     user: User!
     createdAt: String!

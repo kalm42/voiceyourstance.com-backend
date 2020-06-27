@@ -1019,7 +1019,7 @@ type Subscription {
 type Template {
   id: ID!
   title: String!
-  tags: [String!]!
+  tags: String!
   content: Json!
   user: User!
   createdAt: DateTime!
@@ -1035,7 +1035,7 @@ type TemplateConnection {
 input TemplateCreateInput {
   id: ID
   title: String!
-  tags: TemplateCreatetagsInput
+  tags: String!
   content: Json!
   user: UserCreateOneWithoutTemplatesInput!
 }
@@ -1050,14 +1050,10 @@ input TemplateCreateOneInput {
   connect: TemplateWhereUniqueInput
 }
 
-input TemplateCreatetagsInput {
-  set: [String!]
-}
-
 input TemplateCreateWithoutUserInput {
   id: ID
   title: String!
-  tags: TemplateCreatetagsInput
+  tags: String!
   content: Json!
 }
 
@@ -1071,6 +1067,8 @@ enum TemplateOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  tags_ASC
+  tags_DESC
   content_ASC
   content_DESC
   createdAt_ASC
@@ -1082,7 +1080,7 @@ enum TemplateOrderByInput {
 type TemplatePreviousValues {
   id: ID!
   title: String!
-  tags: [String!]!
+  tags: String!
   content: Json!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1117,6 +1115,20 @@ input TemplateScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  tags: String
+  tags_not: String
+  tags_in: [String!]
+  tags_not_in: [String!]
+  tags_lt: String
+  tags_lte: String
+  tags_gt: String
+  tags_gte: String
+  tags_contains: String
+  tags_not_contains: String
+  tags_starts_with: String
+  tags_not_starts_with: String
+  tags_ends_with: String
+  tags_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1158,27 +1170,27 @@ input TemplateSubscriptionWhereInput {
 
 input TemplateUpdateDataInput {
   title: String
-  tags: TemplateUpdatetagsInput
+  tags: String
   content: Json
   user: UserUpdateOneRequiredWithoutTemplatesInput
 }
 
 input TemplateUpdateInput {
   title: String
-  tags: TemplateUpdatetagsInput
+  tags: String
   content: Json
   user: UserUpdateOneRequiredWithoutTemplatesInput
 }
 
 input TemplateUpdateManyDataInput {
   title: String
-  tags: TemplateUpdatetagsInput
+  tags: String
   content: Json
 }
 
 input TemplateUpdateManyMutationInput {
   title: String
-  tags: TemplateUpdatetagsInput
+  tags: String
   content: Json
 }
 
@@ -1208,13 +1220,9 @@ input TemplateUpdateOneInput {
   connect: TemplateWhereUniqueInput
 }
 
-input TemplateUpdatetagsInput {
-  set: [String!]
-}
-
 input TemplateUpdateWithoutUserDataInput {
   title: String
-  tags: TemplateUpdatetagsInput
+  tags: String
   content: Json
 }
 
@@ -1263,6 +1271,20 @@ input TemplateWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  tags: String
+  tags_not: String
+  tags_in: [String!]
+  tags_not_in: [String!]
+  tags_lt: String
+  tags_lte: String
+  tags_gt: String
+  tags_gte: String
+  tags_contains: String
+  tags_not_contains: String
+  tags_starts_with: String
+  tags_not_starts_with: String
+  tags_ends_with: String
+  tags_not_ends_with: String
   user: UserWhereInput
   createdAt: DateTime
   createdAt_not: DateTime

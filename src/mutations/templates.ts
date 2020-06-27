@@ -1,5 +1,5 @@
 import { Context, CreateTemplateArgs } from "../types"
-import { isLoggedInUser, requireLoggedInUser } from "../utilities"
+import { requireLoggedInUser, filterValidTags } from "../utilities"
 
 // createTemplate(template: TemplateInput!): Template!
 
@@ -12,14 +12,14 @@ export function createTemplate(parent, args: CreateTemplateArgs, ctx: Context) {
   const { content, tags, title } = args
 
   // validate tags are formated properly ex: "#text #text2"
-  const regex = /(#\S*)*/ // Matches all words beinging with a '#' and followed by non-white space characters
-  const filteredTags = tags.filter((tag) => regex.test(tag))
+  const filteredTags = filterValidTags(tags)
 
   if (!filteredTags.length) {
     throw new Error("No valid tags were provided.")
   }
+  const joinedTags = filteredTags.join(" ")
 
-  return ctx.db.createTemplate({ content, title, tags: { set: filteredTags }, user: { connect: { id: ctx.user.id } } })
+  return ctx.db.createTemplate({ content, title, tags: joinedTags, user: { connect: { id: ctx.user.id } } })
 }
 
 // updateTemplate(template: TemplateInput!, id: String!): Template!
@@ -36,11 +36,11 @@ export async function updateTemplate(parent, args, ctx: Context) {
   }
 
   // validate tags are formated properly ex: "#text #text2"
-  const regex = /(#\S*)*/ // Matches all words beinging with a '#' and followed by non-white space characters
-  const filteredTags = tags.filter((tag) => regex.test(tag))
+  const filteredTags = filterValidTags(tags)
   if (!filteredTags.length) {
     throw new Error("No valid tags were provided.")
   }
+  const joinedTags = filteredTags.join(" ")
 
-  return ctx.db.updateTemplate({ where: { id }, data: { title, content, tags: { set: filteredTags } } })
+  return ctx.db.updateTemplate({ where: { id }, data: { title, content, tags: joinedTags } })
 }

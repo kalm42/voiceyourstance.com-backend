@@ -4,6 +4,7 @@ import { User } from "./db"
 export * from "./lob"
 export * from "./db"
 export * from "./mutations"
+export * from "./queries"
 
 export interface Context extends EnhancedRequest {
   db: Prisma

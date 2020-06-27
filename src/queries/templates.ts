@@ -1,10 +1,12 @@
-import { Context } from "../types"
+import { Context, TemplatesArgs } from "../types"
 
-interface TemplatesArgs {
-  title?: string
-  tags?: string[]
-}
 // templates(where: TemplateSearchInput): [Template]!
-export function templates(parent, args: TemplatesArgs, context: Context) {
-  return context.db.templates({ where: { ...args } })
+/**
+ * Find all relevant templates
+ *
+ * templates(where: TemplateSearchInput): [Template]!
+ */
+export function templates(parent, args: TemplatesArgs, ctx: Context) {
+  const { text } = args
+  return ctx.db.templates({ where: { OR: [{ title_contains: text, tags_contains: text }, {}] } })
 }
