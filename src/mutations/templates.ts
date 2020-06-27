@@ -1,25 +1,46 @@
-import { Context } from "../types"
-import { isLoggedInUser } from "../utilities"
+import { Context, CreateTemplateArgs } from "../types"
+import { isLoggedInUser, requireLoggedInUser } from "../utilities"
 
 // createTemplate(template: TemplateInput!): Template!
-export function createTemplate(parent, args, context: Context) {
-  if (!isLoggedInUser(context)) {
-    throw new Error("You must be logged in to perform this action.")
+
+/**
+ * Save a new template to the registry
+ */
+export function createTemplate(parent, args: CreateTemplateArgs, ctx: Context) {
+  requireLoggedInUser(ctx)
+
+  const { content, tags, title } = args
+
+  // validate tags are formated properly ex: "#text #text2"
+  const regex = /(#\S*)*/ // Matches all words beinging with a '#' and followed by non-white space characters
+  const filteredTags = tags.filter((tag) => regex.test(tag))
+
+  if (!filteredTags.length) {
+    throw new Error("No valid tags were provided.")
   }
 
-  // They're authorized to make a template.
-  // TODO: after the datamodel is updated, pass it through to make the template
+  return ctx.db.createTemplate({ content, title, tags: { set: filteredTags }, user: { connect: { id: ctx.user.id } } })
 }
 
 // updateTemplate(template: TemplateInput!, id: String!): Template!
-export function updateTemplate(parent, args, context: Context) {
-  if (!isLoggedInUser(context)) {
-    throw new Error("You must be logged in to perform this action.")
+export async function updateTemplate(parent, args, ctx: Context) {
+  requireLoggedInUser(ctx)
+
+  // Extract args
+  const { content, tags, title, id } = args
+
+  // Validate current logged in user is template owner
+  const templateOwnerId = await ctx.db.template({ id }).user().id()
+  if (templateOwnerId !== ctx.user.id) {
+    throw new Error("You cannot edit someone else's template")
   }
-  // TODO: all below, after the datamodel is updated
-  // find the template
-  // get the userid for the associated user
-  // confirm that the logged in user is the user who created the template
-  // if not then throw an error
-  // else update the template
+
+  // validate tags are formated properly ex: "#text #text2"
+  const regex = /(#\S*)*/ // Matches all words beinging with a '#' and followed by non-white space characters
+  const filteredTags = tags.filter((tag) => regex.test(tag))
+  if (!filteredTags.length) {
+    throw new Error("No valid tags were provided.")
+  }
+
+  return ctx.db.updateTemplate({ where: { id }, data: { title, content, tags: { set: filteredTags } } })
 }

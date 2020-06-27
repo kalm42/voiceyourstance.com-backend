@@ -1,65 +1,105 @@
 import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
-import { Context } from "../types"
+import { Context, SignUpArgs, RequestResetArgs, ResetPasswordArgs, SigninArgs } from "../types"
+import { isPwndPassword, promiseRandomBytes, makeAResponsiveEmail, transport, createJWT, setCookie } from "../utilities"
 
-interface SigninArgs {
-  email: string
-  password: string
-}
-// signin(email: String!, password: String!): User!
-export async function signin(parent, args: SigninArgs, ctx: Context) {
-  // find the user by the email address provided
-  // if no user is found throw a generic error
-  const user = await ctx.db.user({ where: { email: args.email } })
+/**
+ * Signin takes the email address and password finds the corresponding user and if the supplied password matches the
+ * hash of the saved password then create a jwt and attach it to an httponly cookie. While not the most secure method
+ * for right now it's secure enough.
+ *
+ * signin(email: String!, password: String!): User!
+ */
+export async function signin(parent, args: SigninArgs, ctx: Context, info) {
+  const { email, password } = args
+  const user = await ctx.db.user({ email })
   if (!user) {
-    throw new Error(`No such user found for email ${args.email}.`)
+    throw new Error(`No such user found for email ${email}.`)
   }
-  const valid = await bcrypt.compare(args.password, user.password)
+  const valid = await bcrypt.compare(password, user.password)
   if (!valid) {
     throw new Error("Invalid password")
   }
-  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
-  ctx.response.cookie("token", token, {
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
-  })
+  const token = createJWT(user.id)
+  setCookie(token, ctx)
+
   return user
 }
 
-// signout: SuccessMessage
+/**
+ * Signout clears the cookies from the response and by extension removes it from the client side.
+ *
+ * signout: SuccessMessage
+ */
 export function signout(parent, args, ctx: Context) {
-  ctx.response.clearCookie("token")
+  ctx.res.clearCookie("token")
   return { message: "Goodbye" }
 }
 
-//signup(email: String!, password: String!): User!
-export function signup(parent, args, context: Context) {
-  // check that user isn't already signed up
-  // validate that password is not pwned
-  // TODO: after datamodel is updated, register the user
-}
+/**
+ * Sign up a new user.
+ *
+ * signup(email: String!, password: String!): User!
+ */
+export async function signup(parent, args: SignUpArgs, context: Context, info) {
+  const { email, password } = args
 
-interface RequestResetArgs {
-  email: string
-}
-//requestRest(email: String!): SuccessMessage
-export async function requestReset(parent, args: RequestResetArgs, ctx: Context) {
-  const user = await ctx.db.user({ where: { email: args.email } })
-  if (!user) {
-    throw new Error(`No such user found for email ${args.email}.`)
+  // Validate user is not already registered
+  const userExists = await context.db.$exists.user({ email })
+  if (userExists) {
+    throw new Error("You already have an account. Maybe reset your password and consider using a password manager.")
   }
 
-  const resetToken = (await promisify(randomBytes)(20)).toString("hex")
-  const resetTokenExpiry = Date.now() + 1000 * 60 * 60 // one hour
-  await ctx.db.updateUser({
-    data: { resetToken, resetTokenExpiry },
-    where: { email: args.email },
+  // validate that password is not pwned
+  if (isPwndPassword(password)) {
+    throw new Error("This password has been compromised and is insecure. Consider using a password manager.")
+  }
+
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  // Save the user in the database
+  const savedUser = await context.db.createUser({
+    email: email.toLowerCase(),
+    password: hashedPassword,
   })
 
+  // Create jwt token
+  const token = createJWT(savedUser.id)
+
+  // Set the jwt token cookie on the response
+  setCookie(token, context)
+
+  return savedUser
+}
+
+/**
+ * Set the reset token and exipiry information in the user's record and let the user know that it's been emailed to them.
+ *
+ * requestRest(email: String!): SuccessMessage
+ */
+export async function requestReset(parent, args: RequestResetArgs, ctx: Context) {
+  const { email } = args
+
+  // Validate that the user exists
+  const user = await ctx.db.user({ email })
+  if (!user) {
+    throw new Error(`No such user found for email ${email}.`)
+  }
+
+  // Create token and expiry timestamp
+  const resetToken = await promiseRandomBytes(20)
+  const resetTokenExpiry = Date.now() + 1000 * 60 * 60 // one hour
+  await ctx.db.updateUser({
+    data: { resetToken, resetExpiry: resetTokenExpiry },
+    where: { id: user.id },
+  })
+
+  // Make the email
   const { html } = makeAResponsiveEmail(
     `Your password reset token is here! \n\n <a href="${process.env.FRONTEND}/password-reset?resetToken=${resetToken}">Click Here to reset your password</a>`,
   )
 
+  // Send the email
   const mailResponse = await transport.sendMail({
     from: "donotreply@voiceyourstance.com",
     to: user.email,
@@ -73,5 +113,42 @@ export async function requestReset(parent, args: RequestResetArgs, ctx: Context)
   return { message: "Reset token set" }
 }
 
-// resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
-export function resetPassword(parent, args, context: Context) {}
+/**
+ * Reset the user's password
+ *
+ * resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
+ */
+export async function resetPassword(parent, args: ResetPasswordArgs, ctx: Context, info) {
+  const { resetToken, password, confirmPassword } = args
+
+  // Find the user by token
+  const [user] = await ctx.db.users({ where: { resetToken, resetExpiry_gte: Date.now() } })
+  if (!user) {
+    throw new Error("Invalid reset token")
+  }
+
+  // Validate the two passwords match
+  if (password !== confirmPassword) {
+    throw new Error("Passwords do not match")
+  }
+
+  // Validate password is not pwned
+  if (isPwndPassword(password)) {
+    throw new Error("This password has been compromised and is insecure. Consider using a password manager.")
+  }
+
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  // Update the user's record with the new password
+  ctx.db.updateUser({ where: { id: user.id }, data: { password: hashedPassword, resetToken: null, resetExpiry: null } })
+
+  // create the jwt
+  const token = createJWT(user.id)
+
+  // set the cookie in the response
+  setCookie(token, ctx)
+
+  // return the user
+  return ctx.db.user({ id: user.id })
+}

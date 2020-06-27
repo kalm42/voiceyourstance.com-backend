@@ -33,8 +33,8 @@ export interface User {
   password: string
   resetToken?: string
   resetExpiry?: number
-  letters: Letter[]
-  templates: Template[]
+  letters?: Letter[]
+  templates?: Template[]
   createdAt: string
   updatedAt: string
 }

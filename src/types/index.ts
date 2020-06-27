@@ -3,6 +3,7 @@ import { Request } from "express"
 import { User } from "./db"
 export * from "./lob"
 export * from "./db"
+export * from "./mutations"
 
 export interface Context extends EnhancedRequest {
   db: Prisma

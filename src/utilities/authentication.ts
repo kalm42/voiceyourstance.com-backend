@@ -1,12 +1,20 @@
 import { createHash } from "crypto"
 import fetch from "node-fetch"
 import { Context } from "../types"
+import crypto from "crypto"
+import jwt from "jsonwebtoken"
 
 export function isLoggedInUser(ctx: Context) {
   if (!ctx.userId) {
     throw new Error("You must be logged in to perform this action!")
   }
   return true
+}
+
+export function requireLoggedInUser(ctx: Context) {
+  if (!ctx.user) {
+    throw new Error("You must be logged in to perform this action.")
+  }
 }
 
 export async function isPwndPassword(password: string) {
@@ -42,7 +50,28 @@ export async function isPwndPassword(password: string) {
     }
     return false
   } catch (error) {
-    // TODO: report error
     throw error
   }
+}
+
+export function promiseRandomBytes(bytes: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    crypto.randomBytes(bytes, (err, buf) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(buf.toString("hex"))
+    })
+  })
+}
+
+export function createJWT(userId: string) {
+  return jwt.sign({ userId }, process.env.APP_SECRET)
+}
+
+export function setCookie(token: string, ctx: Context) {
+  ctx.res.cookie("token", token, {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
+  })
 }

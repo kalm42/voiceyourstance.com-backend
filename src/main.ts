@@ -17,8 +17,9 @@ const server = new ApolloServer({
   typeDefs,
   introspection: environment.apollo.introspection,
   playground: environment.apollo.playground,
-  context: ({ req }) => ({
+  context: ({ req, res }) => ({
     ...req,
+    res,
     db: prisma,
   }),
 })
@@ -45,17 +46,18 @@ app.use((req: EnhancedRequest, res, next) => {
 
 // If there's a userId on the request object, attach the full user
 app.use(async (req: EnhancedRequest, res, next) => {
+  // If the user id is not set then move on
   if (!req.userId) {
     return next()
   }
 
+  // else find the user and attach the full user to the request object
   try {
-    // const user = await prisma.user({where: {id: req.userId}}, '{id, email}')
-    // req.user = user
-    // TODO: must update datamodel first
+    const user = await prisma.user({ id: req.userId })
+    req.user = user
     next()
   } catch (error) {
-    // TODO: report error
+    req.userId = undefined // user isn't in the database and so the user id is invalid
     console.log(error)
     next()
   }
