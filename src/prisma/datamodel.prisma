@@ -1,11 +1,12 @@
 type Letter {
   id: ID! @id
-  fromAddress: Address! @relation(link: INLINE)
-  toAddress: Address! @relation(link: INLINE)
+  fromAddress: Address! @relation(name: "FromAddress")
+  toAddress: Address! @relation(name: "ToAddress")
   content: Json!
   payment: Payment @relation(link: INLINE)
   mail: Mail @relation(link: INLINE)
   user: User @elation(link: INLINE)
+  template: Template @relation(link: INLINE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt 
 }
@@ -55,7 +56,7 @@ type Address {
 type Template {
   id: ID! @id
   title: String!
-  tags: [String!]!
+  tags: [String!]! @scalarList(strategy: RELATION)
   content: Json!
   user: User! @relation(link: INLINE)
   createdAt: DateTime! @createdAt
