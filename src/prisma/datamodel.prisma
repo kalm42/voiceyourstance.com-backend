@@ -59,7 +59,8 @@ type Template {
   title: String!
   tags: String!
   content: Json!
-  user: User! @relation(link: INLINE)
+  user: User @relation(link: INLINE)
+  isSearchable: Boolean! @default(value: false)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt 
 }

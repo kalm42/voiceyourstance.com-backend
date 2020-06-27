@@ -1030,7 +1030,8 @@ type Template {
   title: String!
   tags: String!
   content: Json!
-  user: User!
+  user: User
+  isSearchable: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1046,7 +1047,8 @@ input TemplateCreateInput {
   title: String!
   tags: String!
   content: Json!
-  user: UserCreateOneWithoutTemplatesInput!
+  user: UserCreateOneWithoutTemplatesInput
+  isSearchable: Boolean
 }
 
 input TemplateCreateManyWithoutUserInput {
@@ -1064,6 +1066,7 @@ input TemplateCreateWithoutUserInput {
   title: String!
   tags: String!
   content: Json!
+  isSearchable: Boolean
 }
 
 type TemplateEdge {
@@ -1080,6 +1083,8 @@ enum TemplateOrderByInput {
   tags_DESC
   content_ASC
   content_DESC
+  isSearchable_ASC
+  isSearchable_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1091,6 +1096,7 @@ type TemplatePreviousValues {
   title: String!
   tags: String!
   content: Json!
+  isSearchable: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1138,6 +1144,8 @@ input TemplateScalarWhereInput {
   tags_not_starts_with: String
   tags_ends_with: String
   tags_not_ends_with: String
+  isSearchable: Boolean
+  isSearchable_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1181,26 +1189,30 @@ input TemplateUpdateDataInput {
   title: String
   tags: String
   content: Json
-  user: UserUpdateOneRequiredWithoutTemplatesInput
+  user: UserUpdateOneWithoutTemplatesInput
+  isSearchable: Boolean
 }
 
 input TemplateUpdateInput {
   title: String
   tags: String
   content: Json
-  user: UserUpdateOneRequiredWithoutTemplatesInput
+  user: UserUpdateOneWithoutTemplatesInput
+  isSearchable: Boolean
 }
 
 input TemplateUpdateManyDataInput {
   title: String
   tags: String
   content: Json
+  isSearchable: Boolean
 }
 
 input TemplateUpdateManyMutationInput {
   title: String
   tags: String
   content: Json
+  isSearchable: Boolean
 }
 
 input TemplateUpdateManyWithoutUserInput {
@@ -1233,6 +1245,7 @@ input TemplateUpdateWithoutUserDataInput {
   title: String
   tags: String
   content: Json
+  isSearchable: Boolean
 }
 
 input TemplateUpdateWithWhereUniqueWithoutUserInput {
@@ -1295,6 +1308,8 @@ input TemplateWhereInput {
   tags_ends_with: String
   tags_not_ends_with: String
   user: UserWhereInput
+  isSearchable: Boolean
+  isSearchable_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1447,17 +1462,19 @@ input UserUpdateManyMutationInput {
   resetExpiry: Float
 }
 
-input UserUpdateOneRequiredWithoutTemplatesInput {
-  create: UserCreateWithoutTemplatesInput
-  update: UserUpdateWithoutTemplatesDataInput
-  upsert: UserUpsertWithoutTemplatesInput
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneWithoutLettersInput {
   create: UserCreateWithoutLettersInput
   update: UserUpdateWithoutLettersDataInput
   upsert: UserUpsertWithoutLettersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutTemplatesInput {
+  create: UserCreateWithoutTemplatesInput
+  update: UserUpdateWithoutTemplatesDataInput
+  upsert: UserUpsertWithoutTemplatesInput
   delete: Boolean
   disconnect: Boolean
   connect: UserWhereUniqueInput

@@ -257,6 +257,8 @@ export type TemplateOrderByInput =
   | "tags_DESC"
   | "content_ASC"
   | "content_DESC"
+  | "isSearchable_ASC"
+  | "isSearchable_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -619,6 +621,8 @@ export interface TemplateWhereInput {
   tags_ends_with?: Maybe<String>
   tags_not_ends_with?: Maybe<String>
   user?: Maybe<UserWhereInput>
+  isSearchable?: Maybe<Boolean>
+  isSearchable_not?: Maybe<Boolean>
   createdAt?: Maybe<DateTimeInput>
   createdAt_not?: Maybe<DateTimeInput>
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
@@ -645,12 +649,14 @@ export interface TemplateCreateWithoutUserInput {
   title: String
   tags: String
   content: Json
+  isSearchable?: Maybe<Boolean>
 }
 
 export interface TemplateUpdateManyMutationInput {
   title?: Maybe<String>
   tags?: Maybe<String>
   content?: Maybe<Json>
+  isSearchable?: Maybe<Boolean>
 }
 
 export interface TemplateCreateOneInput {
@@ -667,7 +673,8 @@ export interface TemplateCreateInput {
   title: String
   tags: String
   content: Json
-  user: UserCreateOneWithoutTemplatesInput
+  user?: Maybe<UserCreateOneWithoutTemplatesInput>
+  isSearchable?: Maybe<Boolean>
 }
 
 export interface LetterUpdateWithoutPaymentDataInput {
@@ -1123,7 +1130,8 @@ export interface TemplateUpdateInput {
   title?: Maybe<String>
   tags?: Maybe<String>
   content?: Maybe<Json>
-  user?: Maybe<UserUpdateOneRequiredWithoutTemplatesInput>
+  user?: Maybe<UserUpdateOneWithoutTemplatesInput>
+  isSearchable?: Maybe<Boolean>
 }
 
 export interface AddressUpdateOneInput {
@@ -1175,6 +1183,7 @@ export interface TemplateUpdateWithoutUserDataInput {
   title?: Maybe<String>
   tags?: Maybe<String>
   content?: Maybe<Json>
+  isSearchable?: Maybe<Boolean>
 }
 
 export interface LetterUpdateOneRequiredWithoutMailInput {
@@ -1238,6 +1247,8 @@ export interface TemplateScalarWhereInput {
   tags_not_starts_with?: Maybe<String>
   tags_ends_with?: Maybe<String>
   tags_not_ends_with?: Maybe<String>
+  isSearchable?: Maybe<Boolean>
+  isSearchable_not?: Maybe<Boolean>
   createdAt?: Maybe<DateTimeInput>
   createdAt_not?: Maybe<DateTimeInput>
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
@@ -1284,6 +1295,7 @@ export interface TemplateUpdateManyDataInput {
   title?: Maybe<String>
   tags?: Maybe<String>
   content?: Maybe<Json>
+  isSearchable?: Maybe<Boolean>
 }
 
 export interface AddressSubscriptionWhereInput {
@@ -1333,17 +1345,20 @@ export interface TemplateUpdateDataInput {
   title?: Maybe<String>
   tags?: Maybe<String>
   content?: Maybe<Json>
-  user?: Maybe<UserUpdateOneRequiredWithoutTemplatesInput>
+  user?: Maybe<UserUpdateOneWithoutTemplatesInput>
+  isSearchable?: Maybe<Boolean>
 }
 
 export type TemplateWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>
 }>
 
-export interface UserUpdateOneRequiredWithoutTemplatesInput {
+export interface UserUpdateOneWithoutTemplatesInput {
   create?: Maybe<UserCreateWithoutTemplatesInput>
   update?: Maybe<UserUpdateWithoutTemplatesDataInput>
   upsert?: Maybe<UserUpsertWithoutTemplatesInput>
+  delete?: Maybe<Boolean>
+  disconnect?: Maybe<Boolean>
   connect?: Maybe<UserWhereUniqueInput>
 }
 
@@ -1587,6 +1602,7 @@ export interface Template {
   title: String
   tags: String
   content: Json
+  isSearchable: Boolean
   createdAt: DateTimeOutput
   updatedAt: DateTimeOutput
 }
@@ -1597,6 +1613,7 @@ export interface TemplatePromise extends Promise<Template>, Fragmentable {
   tags: () => Promise<String>
   content: () => Promise<Json>
   user: <T = UserPromise>() => T
+  isSearchable: () => Promise<Boolean>
   createdAt: () => Promise<DateTimeOutput>
   updatedAt: () => Promise<DateTimeOutput>
 }
@@ -1607,6 +1624,7 @@ export interface TemplateSubscription extends Promise<AsyncIterator<Template>>, 
   tags: () => Promise<AsyncIterator<String>>
   content: () => Promise<AsyncIterator<Json>>
   user: <T = UserSubscription>() => T
+  isSearchable: () => Promise<AsyncIterator<Boolean>>
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
@@ -1617,6 +1635,7 @@ export interface TemplateNullablePromise extends Promise<Template | null>, Fragm
   tags: () => Promise<String>
   content: () => Promise<Json>
   user: <T = UserPromise>() => T
+  isSearchable: () => Promise<Boolean>
   createdAt: () => Promise<DateTimeOutput>
   updatedAt: () => Promise<DateTimeOutput>
 }
@@ -1638,6 +1657,7 @@ export interface TemplatePreviousValues {
   title: String
   tags: String
   content: Json
+  isSearchable: Boolean
   createdAt: DateTimeOutput
   updatedAt: DateTimeOutput
 }
@@ -1647,6 +1667,7 @@ export interface TemplatePreviousValuesPromise extends Promise<TemplatePreviousV
   title: () => Promise<String>
   tags: () => Promise<String>
   content: () => Promise<Json>
+  isSearchable: () => Promise<Boolean>
   createdAt: () => Promise<DateTimeOutput>
   updatedAt: () => Promise<DateTimeOutput>
 }
@@ -1658,6 +1679,7 @@ export interface TemplatePreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>
   tags: () => Promise<AsyncIterator<String>>
   content: () => Promise<AsyncIterator<Json>>
+  isSearchable: () => Promise<AsyncIterator<Boolean>>
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
 }
