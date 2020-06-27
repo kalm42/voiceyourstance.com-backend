@@ -1,3 +1,5 @@
+import { LetterInput, AddressInput } from "."
+
 export interface SignUpArgs {
   email: string
   password: string
@@ -29,4 +31,18 @@ export interface UpdateTemplateArgs {
   title: string
   tags: string[]
   content: string
+}
+
+export interface CreateLetterArgs {
+  letter: LetterInput
+}
+
+export interface UpdateLetterArgs {
+  letterId: string
+  from: AddressInput
+}
+
+export interface MailLetterArgs {
+  letterId: string
+  stripeId: string
 }

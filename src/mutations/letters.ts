@@ -1,13 +1,13 @@
-import { Context, LetterInput, AddressInput } from "../types"
+import crypto from "crypto"
+import { Context, AddressInput, CreateLetterArgs, UpdateLetterArgs, MailLetterArgs } from "../types"
 import stripe from "../apis/stripe"
 import lob from "../apis/lob"
-import { generateHTML } from "../utilities"
+import { generateHTML, saveAddressIfNew } from "../utilities"
 
-interface CreateLetterArgs {
-  letter: LetterInput
-}
-
-export function createLetter(parent, args: CreateLetterArgs, context: Context) {
+/**
+ * Save a new letter to the database
+ */
+export async function createLetter(parent, args: CreateLetterArgs, ctx: Context) {
   const {
     letter: {
       content,
@@ -21,38 +21,43 @@ export function createLetter(parent, args: CreateLetterArgs, context: Context) {
       toName,
       toAddressState,
       toAddressZip,
+      templateId,
     },
   } = args
 
-  return context.db.createLetter({
-    content: content,
-    fromCity: fromAddressCity,
-    fromLine1: fromAddressLine1,
-    fromName: fromName,
-    fromState: fromAddressState,
-    fromZip: fromAddressZip,
-    toCity: toAddressCity,
-    toLine1: toAddressLine1,
-    toName: toName,
-    toState: toAddressState,
-    toZip: toAddressZip,
+  // To Address
+  const toHash = saveAddressIfNew(ctx, toName, toAddressLine1, toAddressCity, toAddressState, toAddressZip)
+
+  // From Address
+  const fromHash = saveAddressIfNew(ctx, fromName, fromAddressLine1, fromAddressCity, fromAddressState, fromAddressZip)
+
+  // save the letter
+  return ctx.db.createLetter({
+    content,
+    fromAddress: { connect: { hash: fromHash } },
+    toAddress: { connect: { hash: toHash } },
+    user: ctx.userId && { connect: { id: ctx.user.id } },
+    template: templateId && { connect: { id: templateId } },
   })
 }
 
-interface UpdateLetterArgs {
-  letterId: string
-  letter: AddressInput
-}
-
-export function updateLetter(parent, args: UpdateLetterArgs, context: Context) {
-  return context.db.updateLetter({
-    where: { id: args.letterId },
+/**
+ * Update the from information for a letter
+ */
+export function updateLetter(parent, args: UpdateLetterArgs, ctx: Context) {
+  const { from, letterId } = args
+  const fromHash = saveAddressIfNew(
+    ctx,
+    from.fromName,
+    from.fromAddressLine1,
+    from.fromAddressCity,
+    from.fromAddressState,
+    from.fromAddressZip,
+  )
+  return ctx.db.updateLetter({
+    where: { id: letterId },
     data: {
-      fromName: args.letter.fromName,
-      fromLine1: args.letter.fromAddressLine1,
-      fromCity: args.letter.fromAddressCity,
-      fromState: args.letter.fromAddressState,
-      fromZip: args.letter.fromAddressZip,
+      fromAddress: { connect: { hash: fromHash } },
     },
   })
 }
@@ -61,12 +66,7 @@ export function updateLetter(parent, args: UpdateLetterArgs, context: Context) {
  * mailLetter
  * Actually mail the letter.
  */
-interface MailLetterArgs {
-  letterId: string
-  stripeId: string
-}
-
-export async function mailLetter(parent, args: MailLetterArgs, context: Context) {
+export async function mailLetter(parent, args: MailLetterArgs, ctx: Context) {
   const { letterId, stripeId } = args
   // Verify that the stripe id is accurate
   const charge = await stripe.paymentIntents.retrieve(stripeId)
@@ -74,43 +74,43 @@ export async function mailLetter(parent, args: MailLetterArgs, context: Context)
     throw new Error("Payment failed")
   }
 
-  const letter = await context.db.letter({ id: letterId })
-  context.db.updateLetter({
-    where: { id: letter.id },
-    data: { payment: { create: { stripeId: charge.id } } },
-  })
+  ctx.db.createPayment({ stripeId, letter: { connect: { id: letterId } } })
 
   // Verify the letter hasn't been mailed before
-  const mailed = await context.db.mails({ where: { letter: { id: letter.id } } })
-  if (mailed.length) {
+  const hasBeenMailed = await ctx.db.$exists.mail({ letter: { id: letterId } })
+  if (hasBeenMailed) {
     throw new Error("This letter has already been sent.")
   }
 
+  // Prepare letter for mailing
+  const letter = await ctx.db.letter({ id: letterId })
+  const from = await ctx.db.letter({ id: letterId }).fromAddress()
+  const to = await ctx.db.letter({ id: letterId }).toAddress()
   const HTML = generateHTML(letter.content)
 
   const mail = await lob.letters.create({
-    description: `${letter.fromName}'s letter to ${letter.toName}`,
+    description: `${from.name}'s letter to ${to.name}`,
     to: {
-      name: letter.toName,
-      address_line1: letter.toLine1,
+      name: to.name,
+      address_line1: to.line1,
       address_line2: "",
-      address_city: letter.toCity,
-      address_state: letter.toState,
-      address_zip: letter.toZip,
+      address_city: to.city,
+      address_state: to.state,
+      address_zip: to.zip,
     },
     from: {
-      name: letter.fromName,
-      address_line1: letter.fromLine1,
+      name: from.name,
+      address_line1: from.line1,
       address_line2: "",
-      address_city: letter.fromCity,
-      address_state: letter.fromState,
-      address_zip: letter.fromZip,
+      address_city: from.city,
+      address_state: from.state,
+      address_zip: from.zip,
     },
     file: HTML,
     color: false,
   })
 
-  return context.db.createMail({
+  return ctx.db.createMail({
     expectedDeliveryDate: mail.expected_delivery_date,
     lobId: mail.id,
     letter: {

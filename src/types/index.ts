@@ -24,6 +24,7 @@ export interface LetterInput {
   fromAddressState: string
   fromAddressZip: string
   content: string
+  templateId?: string
 }
 
 export interface AddressInput {

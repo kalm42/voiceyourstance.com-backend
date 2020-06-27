@@ -2,10 +2,11 @@ export interface Letter {
   id: string
   fromAddress: Address
   toAddress: Address
-  content: object
+  content: string
   payment?: Payment
   mail?: Mail
   user?: User
+  template?: Template
   createdAt: string
   updatedAt: string
 }
@@ -55,7 +56,7 @@ export interface Address {
 export interface Template {
   id: string
   title: string
-  tags: string[]
+  tags: string
   content: string
   user: User
   createdAt: string

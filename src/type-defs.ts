@@ -14,7 +14,7 @@ export default gql`
     signin(email: String!, password: String!): User!
     signout: SuccessMessage
     signup(email: String!, password: String!): User!
-    requestRest(email: String!): SuccessMessage
+    requestReset(email: String!): SuccessMessage
     resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
     createTemplate(template: TemplateInput!): Template!
     updateTemplate(template: TemplateInput!, id: String!): Template!
