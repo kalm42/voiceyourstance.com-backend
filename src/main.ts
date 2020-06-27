@@ -1,7 +1,5 @@
 import express from "express"
-//import bodyParser from "body-parser"
 import { ApolloServer } from "apollo-server-express"
-import Stripe from "stripe"
 import cookieParser from "cookie-parser"
 import jwt from "jsonwebtoken"
 import { environment } from "./environment"
@@ -40,8 +38,8 @@ app.use((req: EnhancedRequest, res, next) => {
     const decodedToken = jwt.verify(token, process.env.APP_SECRET)
     const { userId } = (decodedToken as unknown) as JWTToken
     req.userId = userId
-    next()
   }
+  next()
 })
 
 // If there's a userId on the request object, attach the full user

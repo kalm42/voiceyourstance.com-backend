@@ -126,6 +126,15 @@ input AddressUpdateManyMutationInput {
   zip: String
 }
 
+input AddressUpdateOneInput {
+  create: AddressCreateInput
+  update: AddressUpdateDataInput
+  upsert: AddressUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: AddressWhereUniqueInput
+}
+
 input AddressUpdateOneRequiredInput {
   create: AddressCreateInput
   update: AddressUpdateDataInput
@@ -1317,6 +1326,7 @@ type User {
   password: String!
   resetToken: String
   resetExpiry: Float
+  address: Address
   letters(where: LetterWhereInput, orderBy: LetterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Letter!]
   templates(where: TemplateWhereInput, orderBy: TemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Template!]
   createdAt: DateTime!
@@ -1335,6 +1345,7 @@ input UserCreateInput {
   password: String!
   resetToken: String
   resetExpiry: Float
+  address: AddressCreateOneInput
   letters: LetterCreateManyWithoutUserInput
   templates: TemplateCreateManyWithoutUserInput
 }
@@ -1355,6 +1366,7 @@ input UserCreateWithoutLettersInput {
   password: String!
   resetToken: String
   resetExpiry: Float
+  address: AddressCreateOneInput
   templates: TemplateCreateManyWithoutUserInput
 }
 
@@ -1364,6 +1376,7 @@ input UserCreateWithoutTemplatesInput {
   password: String!
   resetToken: String
   resetExpiry: Float
+  address: AddressCreateOneInput
   letters: LetterCreateManyWithoutUserInput
 }
 
@@ -1422,6 +1435,7 @@ input UserUpdateInput {
   password: String
   resetToken: String
   resetExpiry: Float
+  address: AddressUpdateOneInput
   letters: LetterUpdateManyWithoutUserInput
   templates: TemplateUpdateManyWithoutUserInput
 }
@@ -1454,6 +1468,7 @@ input UserUpdateWithoutLettersDataInput {
   password: String
   resetToken: String
   resetExpiry: Float
+  address: AddressUpdateOneInput
   templates: TemplateUpdateManyWithoutUserInput
 }
 
@@ -1462,6 +1477,7 @@ input UserUpdateWithoutTemplatesDataInput {
   password: String
   resetToken: String
   resetExpiry: Float
+  address: AddressUpdateOneInput
   letters: LetterUpdateManyWithoutUserInput
 }
 
@@ -1540,6 +1556,7 @@ input UserWhereInput {
   resetExpiry_lte: Float
   resetExpiry_gt: Float
   resetExpiry_gte: Float
+  address: AddressWhereInput
   letters_every: LetterWhereInput
   letters_some: LetterWhereInput
   letters_none: LetterWhereInput

@@ -336,9 +336,15 @@ export type AddressWhereUniqueInput = AtLeastOne<{
   hash?: Maybe<String>
 }>
 
-export interface UserUpsertWithoutTemplatesInput {
-  update: UserUpdateWithoutTemplatesDataInput
-  create: UserCreateWithoutTemplatesInput
+export interface LetterCreateInput {
+  id?: Maybe<ID_Input>
+  fromAddress: AddressCreateOneInput
+  toAddress: AddressCreateOneInput
+  content: Json
+  payment?: Maybe<PaymentCreateOneWithoutLetterInput>
+  mail?: Maybe<MailCreateOneWithoutLetterInput>
+  user?: Maybe<UserCreateOneWithoutLettersInput>
+  template?: Maybe<TemplateCreateOneInput>
 }
 
 export interface LetterScalarWhereInput {
@@ -377,24 +383,19 @@ export interface LetterScalarWhereInput {
   NOT?: Maybe<LetterScalarWhereInput[] | LetterScalarWhereInput>
 }
 
-export interface LetterCreateInput {
-  id?: Maybe<ID_Input>
-  fromAddress: AddressCreateOneInput
-  toAddress: AddressCreateOneInput
-  content: Json
-  payment?: Maybe<PaymentCreateOneWithoutLetterInput>
-  mail?: Maybe<MailCreateOneWithoutLetterInput>
-  user?: Maybe<UserCreateOneWithoutLettersInput>
-  template?: Maybe<TemplateCreateOneInput>
-}
-
-export interface PaymentUpdateWithoutLetterDataInput {
-  stripeId?: Maybe<String>
-}
-
 export interface AddressCreateOneInput {
   create?: Maybe<AddressCreateInput>
   connect?: Maybe<AddressWhereUniqueInput>
+}
+
+export interface PaymentUpsertWithoutLetterInput {
+  update: PaymentUpdateWithoutLetterDataInput
+  create: PaymentCreateWithoutLetterInput
+}
+
+export interface PaymentCreateOneWithoutLetterInput {
+  create?: Maybe<PaymentCreateWithoutLetterInput>
+  connect?: Maybe<PaymentWhereUniqueInput>
 }
 
 export interface TemplateSubscriptionWhereInput {
@@ -408,9 +409,9 @@ export interface TemplateSubscriptionWhereInput {
   NOT?: Maybe<TemplateSubscriptionWhereInput[] | TemplateSubscriptionWhereInput>
 }
 
-export interface PaymentCreateOneWithoutLetterInput {
-  create?: Maybe<PaymentCreateWithoutLetterInput>
-  connect?: Maybe<PaymentWhereUniqueInput>
+export interface PaymentCreateWithoutLetterInput {
+  id?: Maybe<ID_Input>
+  stripeId: String
 }
 
 export interface PaymentSubscriptionWhereInput {
@@ -424,9 +425,9 @@ export interface PaymentSubscriptionWhereInput {
   NOT?: Maybe<PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput>
 }
 
-export interface PaymentCreateWithoutLetterInput {
-  id?: Maybe<ID_Input>
-  stripeId: String
+export interface MailCreateOneWithoutLetterInput {
+  create?: Maybe<MailCreateWithoutLetterInput>
+  connect?: Maybe<MailWhereUniqueInput>
 }
 
 export interface LetterSubscriptionWhereInput {
@@ -440,9 +441,10 @@ export interface LetterSubscriptionWhereInput {
   NOT?: Maybe<LetterSubscriptionWhereInput[] | LetterSubscriptionWhereInput>
 }
 
-export interface MailCreateOneWithoutLetterInput {
-  create?: Maybe<MailCreateWithoutLetterInput>
-  connect?: Maybe<MailWhereUniqueInput>
+export interface MailCreateWithoutLetterInput {
+  id?: Maybe<ID_Input>
+  lobId: String
+  expectedDeliveryDate: DateTimeInput
 }
 
 export interface UserUpdateManyMutationInput {
@@ -452,10 +454,9 @@ export interface UserUpdateManyMutationInput {
   resetExpiry?: Maybe<Float>
 }
 
-export interface MailCreateWithoutLetterInput {
-  id?: Maybe<ID_Input>
-  lobId: String
-  expectedDeliveryDate: DateTimeInput
+export interface UserCreateOneWithoutLettersInput {
+  create?: Maybe<UserCreateWithoutLettersInput>
+  connect?: Maybe<UserWhereUniqueInput>
 }
 
 export interface LetterWhereInput {
@@ -500,9 +501,14 @@ export interface LetterWhereInput {
   NOT?: Maybe<LetterWhereInput[] | LetterWhereInput>
 }
 
-export interface UserCreateOneWithoutLettersInput {
-  create?: Maybe<UserCreateWithoutLettersInput>
-  connect?: Maybe<UserWhereUniqueInput>
+export interface UserCreateWithoutLettersInput {
+  id?: Maybe<ID_Input>
+  email: String
+  password: String
+  resetToken?: Maybe<String>
+  resetExpiry?: Maybe<Float>
+  address?: Maybe<AddressCreateOneInput>
+  templates?: Maybe<TemplateCreateManyWithoutUserInput>
 }
 
 export interface MailWhereInput {
@@ -564,13 +570,9 @@ export interface MailWhereInput {
   NOT?: Maybe<MailWhereInput[] | MailWhereInput>
 }
 
-export interface UserCreateWithoutLettersInput {
-  id?: Maybe<ID_Input>
-  email: String
-  password: String
-  resetToken?: Maybe<String>
-  resetExpiry?: Maybe<Float>
-  templates?: Maybe<TemplateCreateManyWithoutUserInput>
+export interface TemplateCreateManyWithoutUserInput {
+  create?: Maybe<TemplateCreateWithoutUserInput[] | TemplateCreateWithoutUserInput>
+  connect?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
 }
 
 export interface TemplateWhereInput {
@@ -638,9 +640,11 @@ export interface TemplateWhereInput {
   NOT?: Maybe<TemplateWhereInput[] | TemplateWhereInput>
 }
 
-export interface TemplateCreateManyWithoutUserInput {
-  create?: Maybe<TemplateCreateWithoutUserInput[] | TemplateCreateWithoutUserInput>
-  connect?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
+export interface TemplateCreateWithoutUserInput {
+  id?: Maybe<ID_Input>
+  title: String
+  tags: String
+  content: Json
 }
 
 export interface TemplateUpdateManyMutationInput {
@@ -649,20 +653,21 @@ export interface TemplateUpdateManyMutationInput {
   content?: Maybe<Json>
 }
 
-export interface TemplateCreateWithoutUserInput {
-  id?: Maybe<ID_Input>
-  title: String
-  tags: String
-  content: Json
+export interface TemplateCreateOneInput {
+  create?: Maybe<TemplateCreateInput>
+  connect?: Maybe<TemplateWhereUniqueInput>
 }
 
 export interface PaymentUpdateManyMutationInput {
   stripeId?: Maybe<String>
 }
 
-export interface TemplateCreateOneInput {
-  create?: Maybe<TemplateCreateInput>
-  connect?: Maybe<TemplateWhereUniqueInput>
+export interface TemplateCreateInput {
+  id?: Maybe<ID_Input>
+  title: String
+  tags: String
+  content: Json
+  user: UserCreateOneWithoutTemplatesInput
 }
 
 export interface LetterUpdateWithoutPaymentDataInput {
@@ -674,12 +679,9 @@ export interface LetterUpdateWithoutPaymentDataInput {
   template?: Maybe<TemplateUpdateOneInput>
 }
 
-export interface TemplateCreateInput {
-  id?: Maybe<ID_Input>
-  title: String
-  tags: String
-  content: Json
-  user: UserCreateOneWithoutTemplatesInput
+export interface UserCreateOneWithoutTemplatesInput {
+  create?: Maybe<UserCreateWithoutTemplatesInput>
+  connect?: Maybe<UserWhereUniqueInput>
 }
 
 export interface AddressWhereInput {
@@ -816,9 +818,14 @@ export interface AddressWhereInput {
   NOT?: Maybe<AddressWhereInput[] | AddressWhereInput>
 }
 
-export interface UserCreateOneWithoutTemplatesInput {
-  create?: Maybe<UserCreateWithoutTemplatesInput>
-  connect?: Maybe<UserWhereUniqueInput>
+export interface UserCreateWithoutTemplatesInput {
+  id?: Maybe<ID_Input>
+  email: String
+  password: String
+  resetToken?: Maybe<String>
+  resetExpiry?: Maybe<Float>
+  address?: Maybe<AddressCreateOneInput>
+  letters?: Maybe<LetterCreateManyWithoutUserInput>
 }
 
 export interface PaymentUpdateInput {
@@ -826,29 +833,14 @@ export interface PaymentUpdateInput {
   letter?: Maybe<LetterUpdateOneRequiredWithoutPaymentInput>
 }
 
-export interface UserCreateWithoutTemplatesInput {
-  id?: Maybe<ID_Input>
-  email: String
-  password: String
-  resetToken?: Maybe<String>
-  resetExpiry?: Maybe<Float>
-  letters?: Maybe<LetterCreateManyWithoutUserInput>
-}
-
-export type PaymentWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>
-}>
-
 export interface LetterCreateManyWithoutUserInput {
   create?: Maybe<LetterCreateWithoutUserInput[] | LetterCreateWithoutUserInput>
   connect?: Maybe<LetterWhereUniqueInput[] | LetterWhereUniqueInput>
 }
 
-export interface PaymentCreateInput {
-  id?: Maybe<ID_Input>
-  stripeId: String
-  letter: LetterCreateOneWithoutPaymentInput
-}
+export type PaymentWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>
+}>
 
 export interface LetterCreateWithoutUserInput {
   id?: Maybe<ID_Input>
@@ -860,9 +852,10 @@ export interface LetterCreateWithoutUserInput {
   template?: Maybe<TemplateCreateOneInput>
 }
 
-export interface LetterUpsertWithoutMailInput {
-  update: LetterUpdateWithoutMailDataInput
-  create: LetterCreateWithoutMailInput
+export interface PaymentCreateInput {
+  id?: Maybe<ID_Input>
+  stripeId: String
+  letter: LetterCreateOneWithoutPaymentInput
 }
 
 export interface LetterUpdateInput {
@@ -875,6 +868,15 @@ export interface LetterUpdateInput {
   template?: Maybe<TemplateUpdateOneInput>
 }
 
+export interface LetterUpsertWithoutMailInput {
+  update: LetterUpdateWithoutMailDataInput
+  create: LetterCreateWithoutMailInput
+}
+
+export interface LetterUpdateManyDataInput {
+  content?: Maybe<Json>
+}
+
 export interface LetterUpdateWithoutMailDataInput {
   fromAddress?: Maybe<AddressUpdateOneRequiredInput>
   toAddress?: Maybe<AddressUpdateOneRequiredInput>
@@ -882,16 +884,6 @@ export interface LetterUpdateWithoutMailDataInput {
   payment?: Maybe<PaymentUpdateOneWithoutLetterInput>
   user?: Maybe<UserUpdateOneWithoutLettersInput>
   template?: Maybe<TemplateUpdateOneInput>
-}
-
-export interface LetterUpdateManyDataInput {
-  content?: Maybe<Json>
-}
-
-export interface MailUpdateInput {
-  lobId?: Maybe<String>
-  letter?: Maybe<LetterUpdateOneRequiredWithoutMailInput>
-  expectedDeliveryDate?: Maybe<DateTimeInput>
 }
 
 export interface AddressUpdateDataInput {
@@ -904,6 +896,17 @@ export interface AddressUpdateDataInput {
   zip?: Maybe<String>
 }
 
+export interface MailUpdateInput {
+  lobId?: Maybe<String>
+  letter?: Maybe<LetterUpdateOneRequiredWithoutMailInput>
+  expectedDeliveryDate?: Maybe<DateTimeInput>
+}
+
+export interface AddressUpsertNestedInput {
+  update: AddressUpdateDataInput
+  create: AddressCreateInput
+}
+
 export interface LetterCreateWithoutMailInput {
   id?: Maybe<ID_Input>
   fromAddress: AddressCreateOneInput
@@ -914,9 +917,13 @@ export interface LetterCreateWithoutMailInput {
   template?: Maybe<TemplateCreateOneInput>
 }
 
-export interface AddressUpsertNestedInput {
-  update: AddressUpdateDataInput
-  create: AddressCreateInput
+export interface PaymentUpdateOneWithoutLetterInput {
+  create?: Maybe<PaymentCreateWithoutLetterInput>
+  update?: Maybe<PaymentUpdateWithoutLetterDataInput>
+  upsert?: Maybe<PaymentUpsertWithoutLetterInput>
+  delete?: Maybe<Boolean>
+  disconnect?: Maybe<Boolean>
+  connect?: Maybe<PaymentWhereUniqueInput>
 }
 
 export interface MailCreateInput {
@@ -926,13 +933,8 @@ export interface MailCreateInput {
   expectedDeliveryDate: DateTimeInput
 }
 
-export interface PaymentUpdateOneWithoutLetterInput {
-  create?: Maybe<PaymentCreateWithoutLetterInput>
-  update?: Maybe<PaymentUpdateWithoutLetterDataInput>
-  upsert?: Maybe<PaymentUpsertWithoutLetterInput>
-  delete?: Maybe<Boolean>
-  disconnect?: Maybe<Boolean>
-  connect?: Maybe<PaymentWhereUniqueInput>
+export interface PaymentUpdateWithoutLetterDataInput {
+  stripeId?: Maybe<String>
 }
 
 export interface AddressUpdateInput {
@@ -955,15 +957,6 @@ export interface TemplateUpsertNestedInput {
   create: TemplateCreateInput
 }
 
-export interface PaymentUpsertWithoutLetterInput {
-  update: PaymentUpdateWithoutLetterDataInput
-  create: PaymentCreateWithoutLetterInput
-}
-
-export type LetterWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>
-}>
-
 export interface MailUpdateOneWithoutLetterInput {
   create?: Maybe<MailCreateWithoutLetterInput>
   update?: Maybe<MailUpdateWithoutLetterDataInput>
@@ -973,241 +966,20 @@ export interface MailUpdateOneWithoutLetterInput {
   connect?: Maybe<MailWhereUniqueInput>
 }
 
-export interface AddressSubscriptionWhereInput {
+export interface UserSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>
   updatedFields_contains?: Maybe<String>
   updatedFields_contains_every?: Maybe<String[] | String>
   updatedFields_contains_some?: Maybe<String[] | String>
-  node?: Maybe<AddressWhereInput>
-  AND?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>
-  OR?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>
-  NOT?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>
+  node?: Maybe<UserWhereInput>
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
 }
 
 export interface MailUpdateWithoutLetterDataInput {
   lobId?: Maybe<String>
   expectedDeliveryDate?: Maybe<DateTimeInput>
-}
-
-export interface PaymentWhereInput {
-  id?: Maybe<ID_Input>
-  id_not?: Maybe<ID_Input>
-  id_in?: Maybe<ID_Input[] | ID_Input>
-  id_not_in?: Maybe<ID_Input[] | ID_Input>
-  id_lt?: Maybe<ID_Input>
-  id_lte?: Maybe<ID_Input>
-  id_gt?: Maybe<ID_Input>
-  id_gte?: Maybe<ID_Input>
-  id_contains?: Maybe<ID_Input>
-  id_not_contains?: Maybe<ID_Input>
-  id_starts_with?: Maybe<ID_Input>
-  id_not_starts_with?: Maybe<ID_Input>
-  id_ends_with?: Maybe<ID_Input>
-  id_not_ends_with?: Maybe<ID_Input>
-  stripeId?: Maybe<String>
-  stripeId_not?: Maybe<String>
-  stripeId_in?: Maybe<String[] | String>
-  stripeId_not_in?: Maybe<String[] | String>
-  stripeId_lt?: Maybe<String>
-  stripeId_lte?: Maybe<String>
-  stripeId_gt?: Maybe<String>
-  stripeId_gte?: Maybe<String>
-  stripeId_contains?: Maybe<String>
-  stripeId_not_contains?: Maybe<String>
-  stripeId_starts_with?: Maybe<String>
-  stripeId_not_starts_with?: Maybe<String>
-  stripeId_ends_with?: Maybe<String>
-  stripeId_not_ends_with?: Maybe<String>
-  letter?: Maybe<LetterWhereInput>
-  createdAt?: Maybe<DateTimeInput>
-  createdAt_not?: Maybe<DateTimeInput>
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_lt?: Maybe<DateTimeInput>
-  createdAt_lte?: Maybe<DateTimeInput>
-  createdAt_gt?: Maybe<DateTimeInput>
-  createdAt_gte?: Maybe<DateTimeInput>
-  updatedAt?: Maybe<DateTimeInput>
-  updatedAt_not?: Maybe<DateTimeInput>
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_lt?: Maybe<DateTimeInput>
-  updatedAt_lte?: Maybe<DateTimeInput>
-  updatedAt_gt?: Maybe<DateTimeInput>
-  updatedAt_gte?: Maybe<DateTimeInput>
-  AND?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
-  OR?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
-  NOT?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
-}
-
-export interface MailUpsertWithoutLetterInput {
-  update: MailUpdateWithoutLetterDataInput
-  create: MailCreateWithoutLetterInput
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>
-  email: String
-  password: String
-  resetToken?: Maybe<String>
-  resetExpiry?: Maybe<Float>
-  letters?: Maybe<LetterCreateManyWithoutUserInput>
-  templates?: Maybe<TemplateCreateManyWithoutUserInput>
-}
-
-export interface UserUpdateOneWithoutLettersInput {
-  create?: Maybe<UserCreateWithoutLettersInput>
-  update?: Maybe<UserUpdateWithoutLettersDataInput>
-  upsert?: Maybe<UserUpsertWithoutLettersInput>
-  delete?: Maybe<Boolean>
-  disconnect?: Maybe<Boolean>
-  connect?: Maybe<UserWhereUniqueInput>
-}
-
-export interface LetterUpsertWithoutPaymentInput {
-  update: LetterUpdateWithoutPaymentDataInput
-  create: LetterCreateWithoutPaymentInput
-}
-
-export interface UserUpdateWithoutLettersDataInput {
-  email?: Maybe<String>
-  password?: Maybe<String>
-  resetToken?: Maybe<String>
-  resetExpiry?: Maybe<Float>
-  templates?: Maybe<TemplateUpdateManyWithoutUserInput>
-}
-
-export interface LetterUpdateOneRequiredWithoutPaymentInput {
-  create?: Maybe<LetterCreateWithoutPaymentInput>
-  update?: Maybe<LetterUpdateWithoutPaymentDataInput>
-  upsert?: Maybe<LetterUpsertWithoutPaymentInput>
-  connect?: Maybe<LetterWhereUniqueInput>
-}
-
-export interface TemplateUpdateManyWithoutUserInput {
-  create?: Maybe<TemplateCreateWithoutUserInput[] | TemplateCreateWithoutUserInput>
-  delete?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
-  connect?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
-  set?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
-  disconnect?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
-  update?: Maybe<TemplateUpdateWithWhereUniqueWithoutUserInput[] | TemplateUpdateWithWhereUniqueWithoutUserInput>
-  upsert?: Maybe<TemplateUpsertWithWhereUniqueWithoutUserInput[] | TemplateUpsertWithWhereUniqueWithoutUserInput>
-  deleteMany?: Maybe<TemplateScalarWhereInput[] | TemplateScalarWhereInput>
-  updateMany?: Maybe<TemplateUpdateManyWithWhereNestedInput[] | TemplateUpdateManyWithWhereNestedInput>
-}
-
-export interface LetterCreateOneWithoutPaymentInput {
-  create?: Maybe<LetterCreateWithoutPaymentInput>
-  connect?: Maybe<LetterWhereUniqueInput>
-}
-
-export interface TemplateUpdateWithWhereUniqueWithoutUserInput {
-  where: TemplateWhereUniqueInput
-  data: TemplateUpdateWithoutUserDataInput
-}
-
-export type TemplateWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>
-}>
-
-export interface TemplateUpdateWithoutUserDataInput {
-  title?: Maybe<String>
-  tags?: Maybe<String>
-  content?: Maybe<Json>
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>
-  email?: Maybe<String>
-}>
-
-export interface TemplateUpsertWithWhereUniqueWithoutUserInput {
-  where: TemplateWhereUniqueInput
-  update: TemplateUpdateWithoutUserDataInput
-  create: TemplateCreateWithoutUserInput
-}
-
-export interface LetterUpdateManyMutationInput {
-  content?: Maybe<Json>
-}
-
-export interface TemplateScalarWhereInput {
-  id?: Maybe<ID_Input>
-  id_not?: Maybe<ID_Input>
-  id_in?: Maybe<ID_Input[] | ID_Input>
-  id_not_in?: Maybe<ID_Input[] | ID_Input>
-  id_lt?: Maybe<ID_Input>
-  id_lte?: Maybe<ID_Input>
-  id_gt?: Maybe<ID_Input>
-  id_gte?: Maybe<ID_Input>
-  id_contains?: Maybe<ID_Input>
-  id_not_contains?: Maybe<ID_Input>
-  id_starts_with?: Maybe<ID_Input>
-  id_not_starts_with?: Maybe<ID_Input>
-  id_ends_with?: Maybe<ID_Input>
-  id_not_ends_with?: Maybe<ID_Input>
-  title?: Maybe<String>
-  title_not?: Maybe<String>
-  title_in?: Maybe<String[] | String>
-  title_not_in?: Maybe<String[] | String>
-  title_lt?: Maybe<String>
-  title_lte?: Maybe<String>
-  title_gt?: Maybe<String>
-  title_gte?: Maybe<String>
-  title_contains?: Maybe<String>
-  title_not_contains?: Maybe<String>
-  title_starts_with?: Maybe<String>
-  title_not_starts_with?: Maybe<String>
-  title_ends_with?: Maybe<String>
-  title_not_ends_with?: Maybe<String>
-  tags?: Maybe<String>
-  tags_not?: Maybe<String>
-  tags_in?: Maybe<String[] | String>
-  tags_not_in?: Maybe<String[] | String>
-  tags_lt?: Maybe<String>
-  tags_lte?: Maybe<String>
-  tags_gt?: Maybe<String>
-  tags_gte?: Maybe<String>
-  tags_contains?: Maybe<String>
-  tags_not_contains?: Maybe<String>
-  tags_starts_with?: Maybe<String>
-  tags_not_starts_with?: Maybe<String>
-  tags_ends_with?: Maybe<String>
-  tags_not_ends_with?: Maybe<String>
-  createdAt?: Maybe<DateTimeInput>
-  createdAt_not?: Maybe<DateTimeInput>
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_lt?: Maybe<DateTimeInput>
-  createdAt_lte?: Maybe<DateTimeInput>
-  createdAt_gt?: Maybe<DateTimeInput>
-  createdAt_gte?: Maybe<DateTimeInput>
-  updatedAt?: Maybe<DateTimeInput>
-  updatedAt_not?: Maybe<DateTimeInput>
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_lt?: Maybe<DateTimeInput>
-  updatedAt_lte?: Maybe<DateTimeInput>
-  updatedAt_gt?: Maybe<DateTimeInput>
-  updatedAt_gte?: Maybe<DateTimeInput>
-  AND?: Maybe<TemplateScalarWhereInput[] | TemplateScalarWhereInput>
-  OR?: Maybe<TemplateScalarWhereInput[] | TemplateScalarWhereInput>
-  NOT?: Maybe<TemplateScalarWhereInput[] | TemplateScalarWhereInput>
-}
-
-export interface AddressUpdateManyMutationInput {
-  hash?: Maybe<String>
-  name?: Maybe<String>
-  line1?: Maybe<String>
-  line2?: Maybe<String>
-  city?: Maybe<String>
-  state?: Maybe<String>
-  zip?: Maybe<String>
-}
-
-export interface TemplateUpdateManyWithWhereNestedInput {
-  where: TemplateScalarWhereInput
-  data: TemplateUpdateManyDataInput
 }
 
 export interface MailSubscriptionWhereInput {
@@ -1221,10 +993,28 @@ export interface MailSubscriptionWhereInput {
   NOT?: Maybe<MailSubscriptionWhereInput[] | MailSubscriptionWhereInput>
 }
 
-export interface TemplateUpdateManyDataInput {
-  title?: Maybe<String>
-  tags?: Maybe<String>
-  content?: Maybe<Json>
+export interface MailUpsertWithoutLetterInput {
+  update: MailUpdateWithoutLetterDataInput
+  create: MailCreateWithoutLetterInput
+}
+
+export interface UserUpdateInput {
+  email?: Maybe<String>
+  password?: Maybe<String>
+  resetToken?: Maybe<String>
+  resetExpiry?: Maybe<Float>
+  address?: Maybe<AddressUpdateOneInput>
+  letters?: Maybe<LetterUpdateManyWithoutUserInput>
+  templates?: Maybe<TemplateUpdateManyWithoutUserInput>
+}
+
+export interface UserUpdateOneWithoutLettersInput {
+  create?: Maybe<UserCreateWithoutLettersInput>
+  update?: Maybe<UserUpdateWithoutLettersDataInput>
+  upsert?: Maybe<UserUpsertWithoutLettersInput>
+  delete?: Maybe<Boolean>
+  disconnect?: Maybe<Boolean>
+  connect?: Maybe<UserWhereUniqueInput>
 }
 
 export interface UserWhereInput {
@@ -1292,6 +1082,7 @@ export interface UserWhereInput {
   resetExpiry_lte?: Maybe<Float>
   resetExpiry_gt?: Maybe<Float>
   resetExpiry_gte?: Maybe<Float>
+  address?: Maybe<AddressWhereInput>
   letters_every?: Maybe<LetterWhereInput>
   letters_some?: Maybe<LetterWhereInput>
   letters_none?: Maybe<LetterWhereInput>
@@ -1319,14 +1110,208 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>
 }
 
-export interface UserUpsertWithoutLettersInput {
-  update: UserUpdateWithoutLettersDataInput
-  create: UserCreateWithoutLettersInput
+export interface UserUpdateWithoutLettersDataInput {
+  email?: Maybe<String>
+  password?: Maybe<String>
+  resetToken?: Maybe<String>
+  resetExpiry?: Maybe<Float>
+  address?: Maybe<AddressUpdateOneInput>
+  templates?: Maybe<TemplateUpdateManyWithoutUserInput>
+}
+
+export interface TemplateUpdateInput {
+  title?: Maybe<String>
+  tags?: Maybe<String>
+  content?: Maybe<Json>
+  user?: Maybe<UserUpdateOneRequiredWithoutTemplatesInput>
+}
+
+export interface AddressUpdateOneInput {
+  create?: Maybe<AddressCreateInput>
+  update?: Maybe<AddressUpdateDataInput>
+  upsert?: Maybe<AddressUpsertNestedInput>
+  delete?: Maybe<Boolean>
+  disconnect?: Maybe<Boolean>
+  connect?: Maybe<AddressWhereUniqueInput>
 }
 
 export type MailWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>
 }>
+
+export interface TemplateUpdateManyWithoutUserInput {
+  create?: Maybe<TemplateCreateWithoutUserInput[] | TemplateCreateWithoutUserInput>
+  delete?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
+  connect?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
+  set?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
+  disconnect?: Maybe<TemplateWhereUniqueInput[] | TemplateWhereUniqueInput>
+  update?: Maybe<TemplateUpdateWithWhereUniqueWithoutUserInput[] | TemplateUpdateWithWhereUniqueWithoutUserInput>
+  upsert?: Maybe<TemplateUpsertWithWhereUniqueWithoutUserInput[] | TemplateUpsertWithWhereUniqueWithoutUserInput>
+  deleteMany?: Maybe<TemplateScalarWhereInput[] | TemplateScalarWhereInput>
+  updateMany?: Maybe<TemplateUpdateManyWithWhereNestedInput[] | TemplateUpdateManyWithWhereNestedInput>
+}
+
+export interface LetterCreateWithoutPaymentInput {
+  id?: Maybe<ID_Input>
+  fromAddress: AddressCreateOneInput
+  toAddress: AddressCreateOneInput
+  content: Json
+  mail?: Maybe<MailCreateOneWithoutLetterInput>
+  user?: Maybe<UserCreateOneWithoutLettersInput>
+  template?: Maybe<TemplateCreateOneInput>
+}
+
+export interface TemplateUpdateWithWhereUniqueWithoutUserInput {
+  where: TemplateWhereUniqueInput
+  data: TemplateUpdateWithoutUserDataInput
+}
+
+export interface MailUpdateManyMutationInput {
+  lobId?: Maybe<String>
+  expectedDeliveryDate?: Maybe<DateTimeInput>
+}
+
+export interface TemplateUpdateWithoutUserDataInput {
+  title?: Maybe<String>
+  tags?: Maybe<String>
+  content?: Maybe<Json>
+}
+
+export interface LetterUpdateOneRequiredWithoutMailInput {
+  create?: Maybe<LetterCreateWithoutMailInput>
+  update?: Maybe<LetterUpdateWithoutMailDataInput>
+  upsert?: Maybe<LetterUpsertWithoutMailInput>
+  connect?: Maybe<LetterWhereUniqueInput>
+}
+
+export interface TemplateUpsertWithWhereUniqueWithoutUserInput {
+  where: TemplateWhereUniqueInput
+  update: TemplateUpdateWithoutUserDataInput
+  create: TemplateCreateWithoutUserInput
+}
+
+export interface LetterCreateOneWithoutMailInput {
+  create?: Maybe<LetterCreateWithoutMailInput>
+  connect?: Maybe<LetterWhereUniqueInput>
+}
+
+export interface TemplateScalarWhereInput {
+  id?: Maybe<ID_Input>
+  id_not?: Maybe<ID_Input>
+  id_in?: Maybe<ID_Input[] | ID_Input>
+  id_not_in?: Maybe<ID_Input[] | ID_Input>
+  id_lt?: Maybe<ID_Input>
+  id_lte?: Maybe<ID_Input>
+  id_gt?: Maybe<ID_Input>
+  id_gte?: Maybe<ID_Input>
+  id_contains?: Maybe<ID_Input>
+  id_not_contains?: Maybe<ID_Input>
+  id_starts_with?: Maybe<ID_Input>
+  id_not_starts_with?: Maybe<ID_Input>
+  id_ends_with?: Maybe<ID_Input>
+  id_not_ends_with?: Maybe<ID_Input>
+  title?: Maybe<String>
+  title_not?: Maybe<String>
+  title_in?: Maybe<String[] | String>
+  title_not_in?: Maybe<String[] | String>
+  title_lt?: Maybe<String>
+  title_lte?: Maybe<String>
+  title_gt?: Maybe<String>
+  title_gte?: Maybe<String>
+  title_contains?: Maybe<String>
+  title_not_contains?: Maybe<String>
+  title_starts_with?: Maybe<String>
+  title_not_starts_with?: Maybe<String>
+  title_ends_with?: Maybe<String>
+  title_not_ends_with?: Maybe<String>
+  tags?: Maybe<String>
+  tags_not?: Maybe<String>
+  tags_in?: Maybe<String[] | String>
+  tags_not_in?: Maybe<String[] | String>
+  tags_lt?: Maybe<String>
+  tags_lte?: Maybe<String>
+  tags_gt?: Maybe<String>
+  tags_gte?: Maybe<String>
+  tags_contains?: Maybe<String>
+  tags_not_contains?: Maybe<String>
+  tags_starts_with?: Maybe<String>
+  tags_not_starts_with?: Maybe<String>
+  tags_ends_with?: Maybe<String>
+  tags_not_ends_with?: Maybe<String>
+  createdAt?: Maybe<DateTimeInput>
+  createdAt_not?: Maybe<DateTimeInput>
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_lt?: Maybe<DateTimeInput>
+  createdAt_lte?: Maybe<DateTimeInput>
+  createdAt_gt?: Maybe<DateTimeInput>
+  createdAt_gte?: Maybe<DateTimeInput>
+  updatedAt?: Maybe<DateTimeInput>
+  updatedAt_not?: Maybe<DateTimeInput>
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_lt?: Maybe<DateTimeInput>
+  updatedAt_lte?: Maybe<DateTimeInput>
+  updatedAt_gt?: Maybe<DateTimeInput>
+  updatedAt_gte?: Maybe<DateTimeInput>
+  AND?: Maybe<TemplateScalarWhereInput[] | TemplateScalarWhereInput>
+  OR?: Maybe<TemplateScalarWhereInput[] | TemplateScalarWhereInput>
+  NOT?: Maybe<TemplateScalarWhereInput[] | TemplateScalarWhereInput>
+}
+
+export interface AddressCreateInput {
+  id?: Maybe<ID_Input>
+  hash: String
+  name: String
+  line1: String
+  line2?: Maybe<String>
+  city: String
+  state: String
+  zip: String
+}
+
+export interface TemplateUpdateManyWithWhereNestedInput {
+  where: TemplateScalarWhereInput
+  data: TemplateUpdateManyDataInput
+}
+
+export interface UserUpsertWithoutTemplatesInput {
+  update: UserUpdateWithoutTemplatesDataInput
+  create: UserCreateWithoutTemplatesInput
+}
+
+export interface TemplateUpdateManyDataInput {
+  title?: Maybe<String>
+  tags?: Maybe<String>
+  content?: Maybe<Json>
+}
+
+export interface AddressSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>
+  updatedFields_contains?: Maybe<String>
+  updatedFields_contains_every?: Maybe<String[] | String>
+  updatedFields_contains_some?: Maybe<String[] | String>
+  node?: Maybe<AddressWhereInput>
+  AND?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>
+  OR?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>
+  NOT?: Maybe<AddressSubscriptionWhereInput[] | AddressSubscriptionWhereInput>
+}
+
+export interface UserUpsertWithoutLettersInput {
+  update: UserUpdateWithoutLettersDataInput
+  create: UserCreateWithoutLettersInput
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>
+  email: String
+  password: String
+  resetToken?: Maybe<String>
+  resetExpiry?: Maybe<Float>
+  address?: Maybe<AddressCreateOneInput>
+  letters?: Maybe<LetterCreateManyWithoutUserInput>
+  templates?: Maybe<TemplateCreateManyWithoutUserInput>
+}
 
 export interface TemplateUpdateOneInput {
   create?: Maybe<TemplateCreateInput>
@@ -1337,9 +1322,11 @@ export interface TemplateUpdateOneInput {
   connect?: Maybe<TemplateWhereUniqueInput>
 }
 
-export interface MailUpdateManyMutationInput {
-  lobId?: Maybe<String>
-  expectedDeliveryDate?: Maybe<DateTimeInput>
+export interface LetterUpdateOneRequiredWithoutPaymentInput {
+  create?: Maybe<LetterCreateWithoutPaymentInput>
+  update?: Maybe<LetterUpdateWithoutPaymentDataInput>
+  upsert?: Maybe<LetterUpsertWithoutPaymentInput>
+  connect?: Maybe<LetterWhereUniqueInput>
 }
 
 export interface TemplateUpdateDataInput {
@@ -1349,10 +1336,9 @@ export interface TemplateUpdateDataInput {
   user?: Maybe<UserUpdateOneRequiredWithoutTemplatesInput>
 }
 
-export interface LetterCreateOneWithoutMailInput {
-  create?: Maybe<LetterCreateWithoutMailInput>
-  connect?: Maybe<LetterWhereUniqueInput>
-}
+export type TemplateWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>
+}>
 
 export interface UserUpdateOneRequiredWithoutTemplatesInput {
   create?: Maybe<UserCreateWithoutTemplatesInput>
@@ -1361,15 +1347,8 @@ export interface UserUpdateOneRequiredWithoutTemplatesInput {
   connect?: Maybe<UserWhereUniqueInput>
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>
-  updatedFields_contains?: Maybe<String>
-  updatedFields_contains_every?: Maybe<String[] | String>
-  updatedFields_contains_some?: Maybe<String[] | String>
-  node?: Maybe<UserWhereInput>
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
+export interface LetterUpdateManyMutationInput {
+  content?: Maybe<Json>
 }
 
 export interface UserUpdateWithoutTemplatesDataInput {
@@ -1377,15 +1356,13 @@ export interface UserUpdateWithoutTemplatesDataInput {
   password?: Maybe<String>
   resetToken?: Maybe<String>
   resetExpiry?: Maybe<Float>
+  address?: Maybe<AddressUpdateOneInput>
   letters?: Maybe<LetterUpdateManyWithoutUserInput>
 }
 
-export interface TemplateUpdateInput {
-  title?: Maybe<String>
-  tags?: Maybe<String>
-  content?: Maybe<Json>
-  user?: Maybe<UserUpdateOneRequiredWithoutTemplatesInput>
-}
+export type LetterWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>
+}>
 
 export interface LetterUpsertWithWhereUniqueWithoutUserInput {
   where: LetterWhereUniqueInput
@@ -1419,41 +1396,80 @@ export interface LetterUpdateManyWithoutUserInput {
   updateMany?: Maybe<LetterUpdateManyWithWhereNestedInput[] | LetterUpdateManyWithWhereNestedInput>
 }
 
-export interface LetterCreateWithoutPaymentInput {
+export interface PaymentWhereInput {
   id?: Maybe<ID_Input>
-  fromAddress: AddressCreateOneInput
-  toAddress: AddressCreateOneInput
-  content: Json
-  mail?: Maybe<MailCreateOneWithoutLetterInput>
-  user?: Maybe<UserCreateOneWithoutLettersInput>
-  template?: Maybe<TemplateCreateOneInput>
+  id_not?: Maybe<ID_Input>
+  id_in?: Maybe<ID_Input[] | ID_Input>
+  id_not_in?: Maybe<ID_Input[] | ID_Input>
+  id_lt?: Maybe<ID_Input>
+  id_lte?: Maybe<ID_Input>
+  id_gt?: Maybe<ID_Input>
+  id_gte?: Maybe<ID_Input>
+  id_contains?: Maybe<ID_Input>
+  id_not_contains?: Maybe<ID_Input>
+  id_starts_with?: Maybe<ID_Input>
+  id_not_starts_with?: Maybe<ID_Input>
+  id_ends_with?: Maybe<ID_Input>
+  id_not_ends_with?: Maybe<ID_Input>
+  stripeId?: Maybe<String>
+  stripeId_not?: Maybe<String>
+  stripeId_in?: Maybe<String[] | String>
+  stripeId_not_in?: Maybe<String[] | String>
+  stripeId_lt?: Maybe<String>
+  stripeId_lte?: Maybe<String>
+  stripeId_gt?: Maybe<String>
+  stripeId_gte?: Maybe<String>
+  stripeId_contains?: Maybe<String>
+  stripeId_not_contains?: Maybe<String>
+  stripeId_starts_with?: Maybe<String>
+  stripeId_not_starts_with?: Maybe<String>
+  stripeId_ends_with?: Maybe<String>
+  stripeId_not_ends_with?: Maybe<String>
+  letter?: Maybe<LetterWhereInput>
+  createdAt?: Maybe<DateTimeInput>
+  createdAt_not?: Maybe<DateTimeInput>
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  createdAt_lt?: Maybe<DateTimeInput>
+  createdAt_lte?: Maybe<DateTimeInput>
+  createdAt_gt?: Maybe<DateTimeInput>
+  createdAt_gte?: Maybe<DateTimeInput>
+  updatedAt?: Maybe<DateTimeInput>
+  updatedAt_not?: Maybe<DateTimeInput>
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
+  updatedAt_lt?: Maybe<DateTimeInput>
+  updatedAt_lte?: Maybe<DateTimeInput>
+  updatedAt_gt?: Maybe<DateTimeInput>
+  updatedAt_gte?: Maybe<DateTimeInput>
+  AND?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
+  OR?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
+  NOT?: Maybe<PaymentWhereInput[] | PaymentWhereInput>
 }
 
-export interface UserUpdateInput {
-  email?: Maybe<String>
-  password?: Maybe<String>
-  resetToken?: Maybe<String>
-  resetExpiry?: Maybe<Float>
-  letters?: Maybe<LetterUpdateManyWithoutUserInput>
-  templates?: Maybe<TemplateUpdateManyWithoutUserInput>
-}
-
-export interface AddressCreateInput {
-  id?: Maybe<ID_Input>
-  hash: String
-  name: String
-  line1: String
+export interface AddressUpdateManyMutationInput {
+  hash?: Maybe<String>
+  name?: Maybe<String>
+  line1?: Maybe<String>
   line2?: Maybe<String>
-  city: String
-  state: String
-  zip: String
+  city?: Maybe<String>
+  state?: Maybe<String>
+  zip?: Maybe<String>
 }
 
-export interface LetterUpdateOneRequiredWithoutMailInput {
-  create?: Maybe<LetterCreateWithoutMailInput>
-  update?: Maybe<LetterUpdateWithoutMailDataInput>
-  upsert?: Maybe<LetterUpsertWithoutMailInput>
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>
+  email?: Maybe<String>
+}>
+
+export interface LetterCreateOneWithoutPaymentInput {
+  create?: Maybe<LetterCreateWithoutPaymentInput>
   connect?: Maybe<LetterWhereUniqueInput>
+}
+
+export interface LetterUpsertWithoutPaymentInput {
+  update: LetterUpdateWithoutPaymentDataInput
+  create: LetterCreateWithoutPaymentInput
 }
 
 export interface NodeNode {
@@ -1784,6 +1800,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   password: () => Promise<String>
   resetToken: () => Promise<String>
   resetExpiry: () => Promise<Float>
+  address: <T = AddressPromise>() => T
   letters: <T = FragmentableArray<Letter>>(args?: {
     where?: LetterWhereInput
     orderBy?: LetterOrderByInput
@@ -1812,6 +1829,7 @@ export interface UserSubscription extends Promise<AsyncIterator<User>>, Fragment
   password: () => Promise<AsyncIterator<String>>
   resetToken: () => Promise<AsyncIterator<String>>
   resetExpiry: () => Promise<AsyncIterator<Float>>
+  address: <T = AddressSubscription>() => T
   letters: <T = Promise<AsyncIterator<LetterSubscription>>>(args?: {
     where?: LetterWhereInput
     orderBy?: LetterOrderByInput
@@ -1840,6 +1858,7 @@ export interface UserNullablePromise extends Promise<User | null>, Fragmentable 
   password: () => Promise<String>
   resetToken: () => Promise<String>
   resetExpiry: () => Promise<Float>
+  address: <T = AddressPromise>() => T
   letters: <T = FragmentableArray<Letter>>(args?: {
     where?: LetterWhereInput
     orderBy?: LetterOrderByInput

@@ -50,7 +50,7 @@ export async function signup(parent, args: SignUpArgs, context: Context, info) {
   }
 
   // validate that password is not pwned
-  if (isPwndPassword(password)) {
+  if (await isPwndPassword(password)) {
     throw new Error("This password has been compromised and is insecure. Consider using a password manager.")
   }
 

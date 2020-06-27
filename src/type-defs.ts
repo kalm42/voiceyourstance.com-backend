@@ -91,9 +91,6 @@ export default gql`
   type User {
     id: ID!
     email: String!
-    password: String!
-    resetToken: String
-    resetExpiry: Float
     letters: [Letter!]!
     templates: [Template!]!
     createdAt: String!

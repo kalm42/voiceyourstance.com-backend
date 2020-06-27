@@ -34,6 +34,7 @@ type User {
   password: String!
   resetToken: String
   resetExpiry: Float
+  address: Address @relation(link: INLINE)
   letters: [Letter!]!
   templates: [Template!]!
   createdAt: DateTime! @createdAt
