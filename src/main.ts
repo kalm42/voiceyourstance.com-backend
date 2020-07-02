@@ -26,7 +26,9 @@ const app = express()
 
 // Setup CORS for the frontend since it'll be a different subdomain
 const FRONTEND = process.env.FRONTEND
-app.use(cors({ origin: FRONTEND }))
+console.log("Frontend Origin: ", FRONTEND)
+
+app.use(cors({ origin: FRONTEND, credentials: true }))
 
 // Parse cookies for the jwt
 app.use(cookieParser())

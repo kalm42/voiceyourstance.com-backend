@@ -8,7 +8,7 @@ export default gql`
   }
   type Mutation {
     createLetter(letter: LetterInput): Letter!
-    updateLetter(letterId: String!, letter: AddressInput): Letter!
+    updateLetter(letterId: String!, from: AddressInput, content: Json): Letter!
     mailLetter(letterId: String!, stripeId: String!): Mail!
     # new
     signin(email: String!, password: String!): User!

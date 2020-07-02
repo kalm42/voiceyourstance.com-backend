@@ -42,22 +42,26 @@ export async function createLetter(parent, args: CreateLetterArgs, ctx: Context)
 }
 
 /**
- * Update the from information for a letter
+ * Update the from information or the content of a letter
  */
 export function updateLetter(parent, args: UpdateLetterArgs, ctx: Context) {
-  const { from, letterId } = args
-  const fromHash = saveAddressIfNew(
-    ctx,
-    from.fromName,
-    from.fromAddressLine1,
-    from.fromAddressCity,
-    from.fromAddressState,
-    from.fromAddressZip,
-  )
+  const { from, letterId, content } = args
+  let fromHash = ""
+  if (from) {
+    fromHash = saveAddressIfNew(
+      ctx,
+      from.fromName,
+      from.fromAddressLine1,
+      from.fromAddressCity,
+      from.fromAddressState,
+      from.fromAddressZip,
+    )
+  }
   return ctx.db.updateLetter({
     where: { id: letterId },
     data: {
-      fromAddress: { connect: { hash: fromHash } },
+      fromAddress: from && { connect: { hash: fromHash } },
+      content: content,
     },
   })
 }

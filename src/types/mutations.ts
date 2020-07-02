@@ -39,7 +39,8 @@ export interface CreateLetterArgs {
 
 export interface UpdateLetterArgs {
   letterId: string
-  from: AddressInput
+  from?: AddressInput
+  content?: string
 }
 
 export interface MailLetterArgs {
