@@ -26,10 +26,17 @@ export async function createLetter(parent, args: CreateLetterArgs, ctx: Context)
   } = args
 
   // To Address
-  const toHash = saveAddressIfNew(ctx, toName, toAddressLine1, toAddressCity, toAddressState, toAddressZip)
+  const toHash = await saveAddressIfNew(ctx, toName, toAddressLine1, toAddressCity, toAddressState, toAddressZip)
 
   // From Address
-  const fromHash = saveAddressIfNew(ctx, fromName, fromAddressLine1, fromAddressCity, fromAddressState, fromAddressZip)
+  const fromHash = await saveAddressIfNew(
+    ctx,
+    fromName,
+    fromAddressLine1,
+    fromAddressCity,
+    fromAddressState,
+    fromAddressZip,
+  )
 
   // save the letter
   return ctx.db.createLetter({
@@ -44,11 +51,11 @@ export async function createLetter(parent, args: CreateLetterArgs, ctx: Context)
 /**
  * Update the from information or the content of a letter
  */
-export function updateLetter(parent, args: UpdateLetterArgs, ctx: Context) {
+export async function updateLetter(parent, args: UpdateLetterArgs, ctx: Context) {
   const { from, letterId, content } = args
   let fromHash = ""
   if (from) {
-    fromHash = saveAddressIfNew(
+    fromHash = await saveAddressIfNew(
       ctx,
       from.fromName,
       from.fromAddressLine1,

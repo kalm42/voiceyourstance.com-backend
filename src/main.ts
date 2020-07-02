@@ -58,14 +58,13 @@ app.use(async (req: EnhancedRequest, res, next) => {
     next()
   } catch (error) {
     req.userId = undefined // user isn't in the database and so the user id is invalid
-    console.log(error)
     next()
   }
 })
 
 app.use(express.json())
 
-server.applyMiddleware({ app })
+server.applyMiddleware({ app, cors: false })
 
 app.get("/secret", async (req, res) => {
   const intent = await stripe.paymentIntents.create({

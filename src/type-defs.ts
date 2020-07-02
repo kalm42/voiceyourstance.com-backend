@@ -93,6 +93,7 @@ export default gql`
     email: String!
     letters: [Letter!]!
     templates: [Template!]!
+    address: Address
     createdAt: String!
     updatedAt: String!
   }
