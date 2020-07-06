@@ -75,6 +75,6 @@ export const makeANiceEmail = (text) => `
   ">
     <h2>Hello There</h2>
     <p>${text}</p>
-    <p>😘, Kyle</p>
+    <p>Thank you,<br />Kyle</p>
   </div>
 `

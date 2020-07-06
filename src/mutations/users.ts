@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 import { Context, SignUpArgs, RequestResetArgs, ResetPasswordArgs, SigninArgs } from "../types"
-import { isPwndPassword, promiseRandomBytes, makeAResponsiveEmail, transport, createJWT, setCookie } from "../utilities"
+import { isPwndPassword, promiseRandomBytes, transport, createJWT, setCookie, makeANiceEmail } from "../utilities"
 
 /**
  * Signin takes the email address and password finds the corresponding user and if the supplied password matches the
@@ -95,7 +95,7 @@ export async function requestReset(parent, args: RequestResetArgs, ctx: Context)
   })
 
   // Make the email
-  const { html } = makeAResponsiveEmail(
+  const html = makeANiceEmail(
     `Your password reset token is here! \n\n <a href="${process.env.FRONTEND}/password-reset?resetToken=${resetToken}">Click Here to reset your password</a>`,
   )
 
