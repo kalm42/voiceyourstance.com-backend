@@ -133,7 +133,7 @@ export async function resetPassword(parent, args: ResetPasswordArgs, ctx: Contex
   }
 
   // Validate password is not pwned
-  if (isPwndPassword(password)) {
+  if (await isPwndPassword(password)) {
     throw new Error("This password has been compromised and is insecure. Consider using a password manager.")
   }
 
