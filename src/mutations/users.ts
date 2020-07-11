@@ -96,7 +96,11 @@ export async function requestReset(parent, args: RequestResetArgs, ctx: Context)
 
   // Make the email
   const html = makeANiceEmail(
-    `Your password reset token is here! \n\n <a href="${process.env.FRONTEND}/password-reset?resetToken=${resetToken}">Click Here to reset your password</a>`,
+    `Your password reset token is here! <br />
+    <a href="${process.env.FRONTEND}/password-reset?resetToken=${resetToken}">Click Here to reset your password</a><br /><br />
+    Or copy and paste this into the browser of your choice.<br />
+    ${process.env.FRONTEND}/password-reset?resetToken=${resetToken}
+    `,
   )
 
   // Send the email
