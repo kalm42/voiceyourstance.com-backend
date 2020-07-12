@@ -9,7 +9,9 @@ import { requireLoggedInUser, filterValidTags } from "../utilities"
 export function createTemplate(parent, args: CreateTemplateArgs, ctx: Context) {
   requireLoggedInUser(ctx)
 
-  const { content, tags, title } = args
+  const {
+    template: { content, tags, title },
+  } = args
 
   // validate tags are formated properly ex: "#text #text2"
   const filteredTags = filterValidTags(tags)
