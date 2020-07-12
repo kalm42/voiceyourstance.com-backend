@@ -21,9 +21,11 @@ export interface SigninArgs {
 }
 
 export interface CreateTemplateArgs {
-  title: string
-  tags: string[]
-  content: string
+  template: {
+    title: string
+    tags: string[]
+    content: string
+  }
 }
 
 export interface UpdateTemplateArgs {
