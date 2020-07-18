@@ -1,29 +1,40 @@
-import { Context } from "../types"
+import { Context, GetLetterByIdArgs } from "../types"
 import { requireLoggedInUser } from "../utilities"
+
+const withAddress = `
+  fragment LetterWithAddresses on Letter {
+    id
+    updatedAt
+    content
+    toAddress {
+      id
+      hash
+      name
+      line1
+      line2
+      city
+      state
+      zip
+    }
+  }
+`
 
 /**
  * Returns a user's unsent letters
  */
 export function getDraftLetters(parent, args, ctx: Context) {
   requireLoggedInUser(ctx)
-  const fragment = `
-    fragment LetterWithAddresses on Letter {
-      id
-      updatedAt
-      content
-      toAddress {
-        id
-        hash
-        name
-        line1
-        line2
-        city
-        state
-        zip
-      }
-    }
-  `
   return ctx.db
     .letters({ where: { AND: [{ user: { id: ctx.userId } }, { mail: null }] }, orderBy: "updatedAt_DESC" })
-    .$fragment(fragment)
+    .$fragment(withAddress)
+}
+
+export async function getLetterById(parent, args: GetLetterByIdArgs, ctx: Context) {
+  requireLoggedInUser(ctx)
+  const letterOwner = await ctx.db.letter({ id: args.id }).user()
+  if (letterOwner.id !== ctx.userId) {
+    // current user is not owner
+    throw new Error("Not authorized")
+  }
+  return ctx.db.letter({ id: args.id }).$fragment(withAddress)
 }
