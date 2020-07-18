@@ -5,6 +5,7 @@ export default gql`
     # new
     me: User
     templates(where: TemplateSearchInput): [Template]!
+    getDraftLetters: [Letter!]!
   }
   type Mutation {
     createLetter(letter: LetterInput): Letter!
