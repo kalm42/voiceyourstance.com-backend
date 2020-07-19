@@ -9,3 +9,7 @@ export interface GetTemplateByIdArgs {
 export interface GetLetterByIdArgs {
   id: string
 }
+
+export interface GetAddressByIdArgs {
+  id: string
+}

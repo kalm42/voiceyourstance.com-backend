@@ -8,6 +8,7 @@ export default gql`
     getLetterById(id: String!): Letter!
     getSentLetters: [Letter!]!
     getTemplateById(id: String!): Template!
+    getAddressById(id: String!): Address!
   }
   type Mutation {
     createLetter(letter: LetterInput): Letter!
