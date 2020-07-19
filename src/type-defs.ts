@@ -9,6 +9,7 @@ export default gql`
     getSentLetters: [Letter!]!
     getTemplateById(id: String!): Template!
     getAddressById(id: String!): Address!
+    getUsersTemplates: [Template!]!
   }
   type Mutation {
     createLetter(letter: LetterInput): Letter!
