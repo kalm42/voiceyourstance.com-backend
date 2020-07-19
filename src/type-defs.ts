@@ -2,12 +2,12 @@ import { gql } from "apollo-server-express"
 
 export default gql`
   type Query {
-    # new
     me: User
     templates(where: TemplateSearchInput): [Template]!
     getDraftLetters: [Letter!]!
     getLetterById(id: String!): Letter!
     getSentLetters: [Letter!]!
+    getTemplateById(id: String!): Template!
   }
   type Mutation {
     createLetter(letter: LetterInput): Letter!
