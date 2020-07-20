@@ -1,6 +1,7 @@
 import { Prisma } from "../prisma/generated/prisma-client"
 import { Request } from "express"
 import { User } from "./db"
+import { RawDraftContentState } from "draft-js"
 export * from "./lob"
 export * from "./db"
 export * from "./mutations"
@@ -33,6 +34,13 @@ export interface AddressInput {
   fromAddressCity: string
   fromAddressState: string
   fromAddressZip: string
+}
+
+export interface TemplateInput {
+  title: string
+  tags: string[]
+  content: RawDraftContentState
+  isSearchable: boolean
 }
 
 export interface JWTToken {

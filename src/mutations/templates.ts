@@ -1,4 +1,4 @@
-import { Context, CreateTemplateArgs } from "../types"
+import { Context, CreateTemplateArgs, UpdateTemplateArgs } from "../types"
 import { requireLoggedInUser, filterValidTags } from "../utilities"
 
 // createTemplate(template: TemplateInput!): Template!
@@ -25,24 +25,26 @@ export function createTemplate(parent, args: CreateTemplateArgs, ctx: Context) {
 }
 
 // updateTemplate(template: TemplateInput!, id: String!): Template!
-export async function updateTemplate(parent, args, ctx: Context) {
+export async function updateTemplate(parent, args: UpdateTemplateArgs, ctx: Context) {
   requireLoggedInUser(ctx)
 
   // Extract args
-  const { content, tags, title, id } = args
+  const { template, id } = args
+
+  console.log({ id })
 
   // Validate current logged in user is template owner
   const templateOwnerId = await ctx.db.template({ id }).user().id()
-  if (templateOwnerId !== ctx.user.id) {
+  if (templateOwnerId !== ctx.userId) {
     throw new Error("You cannot edit someone else's template")
   }
 
   // validate tags are formated properly ex: "#text #text2"
-  const filteredTags = filterValidTags(tags)
+  const filteredTags = filterValidTags(template.tags)
   if (!filteredTags.length) {
     throw new Error("No valid tags were provided.")
   }
   const joinedTags = filteredTags.join(" ")
 
-  return ctx.db.updateTemplate({ where: { id }, data: { title, content, tags: joinedTags } })
+  return ctx.db.updateTemplate({ where: { id }, data: { ...template, tags: joinedTags } })
 }

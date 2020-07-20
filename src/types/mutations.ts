@@ -1,4 +1,4 @@
-import { LetterInput, AddressInput } from "."
+import { LetterInput, AddressInput, TemplateInput } from "."
 
 export interface SignUpArgs {
   email: string
@@ -30,9 +30,7 @@ export interface CreateTemplateArgs {
 
 export interface UpdateTemplateArgs {
   id: string
-  title: string
-  tags: string[]
-  content: string
+  template: TemplateInput
 }
 
 export interface CreateLetterArgs {

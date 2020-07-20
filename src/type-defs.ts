@@ -4,18 +4,17 @@ export default gql`
   type Query {
     me: User
     templates(where: TemplateSearchInput): [Template]!
-    getDraftLetters: [Letter!]!
-    getLetterById(id: String!): Letter!
-    getSentLetters: [Letter!]!
     getTemplateById(id: String!): Template!
-    getAddressById(id: String!): Address!
     getUsersTemplates: [Template!]!
+    getLetterById(id: String!): Letter!
+    getDraftLetters: [Letter!]!
+    getSentLetters: [Letter!]!
+    getAddressById(id: String!): Address!
   }
   type Mutation {
     createLetter(letter: LetterInput): Letter!
     updateLetter(letterId: String!, from: AddressInput, content: Json): Letter!
     mailLetter(letterId: String!, stripeId: String!): Mail!
-    # new
     signin(email: String!, password: String!): User!
     signout: SuccessMessage
     signup(email: String!, password: String!): User!
@@ -34,6 +33,7 @@ export default gql`
     title: String!
     tags: [String!]!
     content: Json!
+    isSearchable: Boolean!
   }
 
   input LetterInput {
@@ -122,6 +122,7 @@ export default gql`
     tags: String!
     content: Json!
     user: User!
+    isSearchable: Boolean!
     createdAt: String!
     updatedAt: String!
   }
