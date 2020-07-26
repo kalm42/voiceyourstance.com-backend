@@ -5,13 +5,31 @@ import { requireLoggedInUser } from "../utilities"
 /**
  * Find all relevant templates
  *
- * templates(where: TemplateSearchInput): [Template]!
+ * templates(where: TemplateSearchInput): PageinatedTemplates!
  */
 export function templates(parent, args: TemplatesArgs, ctx: Context) {
-  const { text } = args
-  return ctx.db.templates({
-    where: { AND: [{ isSearchable: true }, { OR: [{ title_contains: text, tags_contains: text }] }] },
-  })
+  const { text, page } = args
+  const PAGE_SIZE = 10
+
+  const where = { where: { AND: [{ isSearchable: true }, { OR: [{ title_contains: text, tags_contains: text }] }] } }
+
+  return {
+    nodes: ctx.db.templates({
+      ...where,
+      orderBy: "createdAt_DESC",
+      first: PAGE_SIZE,
+      skip: page * PAGE_SIZE,
+    }),
+    meta: async () => {
+      const count = await ctx.db.templatesConnection(where).aggregate().count()
+      return {
+        nodeCount: count,
+        pageCount: Math.ceil(count / PAGE_SIZE),
+        pageCurrent: (page * PAGE_SIZE) / PAGE_SIZE,
+        nodesPerPage: PAGE_SIZE,
+      }
+    },
+  }
 }
 
 export async function getTemplateById(parent, args: GetTemplateByIdArgs, ctx: Context) {

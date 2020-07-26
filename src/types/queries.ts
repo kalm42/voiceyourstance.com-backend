@@ -1,5 +1,6 @@
 export interface TemplatesArgs {
   text: string
+  page: number
 }
 
 export interface GetTemplateByIdArgs {

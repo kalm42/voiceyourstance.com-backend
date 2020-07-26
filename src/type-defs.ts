@@ -3,7 +3,7 @@ import { gql } from "apollo-server-express"
 export default gql`
   type Query {
     me: User
-    templates(where: TemplateSearchInput): [Template]!
+    templates(text: String!, page: Int!): PaginatedTemplates!
     getTemplateById(id: String!): Template!
     getUsersTemplates: [Template!]!
     getLetterById(id: String!): Letter!
@@ -11,6 +11,7 @@ export default gql`
     getSentLetters: [Letter!]!
     getAddressById(id: String!): Address!
   }
+
   type Mutation {
     createLetter(letter: LetterInput): Letter!
     updateLetter(letterId: String!, from: AddressInput, content: Json): Letter!
@@ -24,11 +25,7 @@ export default gql`
     updateTemplate(template: TemplateInput!, id: String!): Template!
   }
 
-  input TemplateSearchInput {
-    title: String
-    tags: [String]
-  }
-
+  # Inputs
   input TemplateInput {
     title: String!
     tags: [String!]!
@@ -60,6 +57,7 @@ export default gql`
     fromAddressZip: String!
   }
 
+  # Models
   type SuccessMessage {
     message: String
   }
@@ -125,6 +123,18 @@ export default gql`
     isSearchable: Boolean!
     createdAt: String!
     updatedAt: String!
+  }
+
+  type PaginatedTemplates {
+    nodes: [Template!]!
+    meta: PaginatedTemplatesMeta!
+  }
+
+  type PaginatedTemplatesMeta {
+    nodeCount: Int!
+    pageCount: Int!
+    pageCurrent: Int!
+    nodesPerPage: Int!
   }
 
   scalar Json
