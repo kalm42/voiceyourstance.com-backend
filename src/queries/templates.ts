@@ -9,7 +9,9 @@ import { requireLoggedInUser } from "../utilities"
  */
 export function templates(parent, args: TemplatesArgs, ctx: Context) {
   const { text } = args
-  return ctx.db.templates({ where: { OR: [{ title_contains: text, tags_contains: text }, {}] } })
+  return ctx.db.templates({
+    where: { AND: [{ isSearchable: true }, { OR: [{ title_contains: text, tags_contains: text }] }] },
+  })
 }
 
 export async function getTemplateById(parent, args: GetTemplateByIdArgs, ctx: Context) {
