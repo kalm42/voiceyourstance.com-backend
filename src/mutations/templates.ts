@@ -10,7 +10,7 @@ export function createTemplate(parent, args: CreateTemplateArgs, ctx: Context) {
   requireLoggedInUser(ctx)
 
   const {
-    template: { content, tags, title },
+    template: { content, tags, title, isSearchable },
   } = args
 
   // validate tags are formated properly ex: "#text #text2"
@@ -21,7 +21,13 @@ export function createTemplate(parent, args: CreateTemplateArgs, ctx: Context) {
   }
   const joinedTags = filteredTags.join(" ")
 
-  return ctx.db.createTemplate({ content, title, tags: joinedTags, user: { connect: { id: ctx.user.id } } })
+  return ctx.db.createTemplate({
+    isSearchable,
+    content,
+    title,
+    tags: joinedTags,
+    user: { connect: { id: ctx.user.id } },
+  })
 }
 
 // updateTemplate(template: TemplateInput!, id: String!): Template!
@@ -30,8 +36,6 @@ export async function updateTemplate(parent, args: UpdateTemplateArgs, ctx: Cont
 
   // Extract args
   const { template, id } = args
-
-  console.log({ id })
 
   // Validate current logged in user is template owner
   const templateOwnerId = await ctx.db.template({ id }).user().id()
