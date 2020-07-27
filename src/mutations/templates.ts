@@ -1,4 +1,4 @@
-import { Context, CreateTemplateArgs, UpdateTemplateArgs } from "../types"
+import { Context, CreateTemplateArgs, UpdateTemplateArgs, IncrementTemplateUseArgs } from "../types"
 import { requireLoggedInUser, filterValidTags } from "../utilities"
 
 // createTemplate(template: TemplateInput!): Template!
@@ -51,4 +51,10 @@ export async function updateTemplate(parent, args: UpdateTemplateArgs, ctx: Cont
   const joinedTags = filteredTags.join(" ")
 
   return ctx.db.updateTemplate({ where: { id }, data: { ...template, tags: joinedTags } })
+}
+
+export async function incrementTemplateUse(parent, args: IncrementTemplateUseArgs, ctx: Context) {
+  const { id } = args
+  const count = await ctx.db.template({ id }).useCount()
+  return ctx.db.updateTemplate({ where: { id }, data: { useCount: count + 1 } })
 }

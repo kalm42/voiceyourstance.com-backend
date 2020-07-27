@@ -43,3 +43,7 @@ export interface MailLetterArgs {
   letterId: string
   stripeId: string
 }
+
+export interface IncrementTemplateUseArgs {
+  id: string
+}

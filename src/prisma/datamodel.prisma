@@ -61,6 +61,7 @@ type Template {
   content: Json!
   user: User @relation(link: INLINE)
   isSearchable: Boolean! @default(value: false)
+  useCount: Int! @default(value: 0)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt 
 }

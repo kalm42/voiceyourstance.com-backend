@@ -36,7 +36,11 @@ export async function getTemplateById(parent, args: GetTemplateByIdArgs, ctx: Co
   return ctx.db.template({ id: args.id })
 }
 
-export function getUsersTemplates(paranet, args, ctx: Context) {
+export function getUsersTemplates(parent, args, ctx: Context) {
   requireLoggedInUser(ctx)
   return ctx.db.templates({ where: { AND: [{ user: { id: ctx.userId } }] }, orderBy: "updatedAt_DESC" })
+}
+
+export function publicTemplates(parent, args, ctx: Context) {
+  return ctx.db.templates({ where: { isSearchable: true }, orderBy: "useCount_DESC" })
 }
