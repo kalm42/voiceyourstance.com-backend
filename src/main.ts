@@ -66,11 +66,16 @@ app.use(express.json())
 
 server.applyMiddleware({ app, cors: false })
 
-app.get("/secret", async (req, res) => {
+app.post("/secret", async (req, res) => {
   const intent = await stripe.paymentIntents.create({
     amount: 500,
     currency: "usd",
     metadata: { integration_check: "accept_a_payment" },
+  })
+
+  await prisma.updateLetter({
+    where: { id: req.body.letterId },
+    data: { payment: { create: { stripeId: intent.client_secret } } },
   })
 
   res.json({ client_secret: intent.client_secret })
