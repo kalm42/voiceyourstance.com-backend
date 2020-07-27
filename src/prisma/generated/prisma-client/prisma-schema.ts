@@ -1032,6 +1032,7 @@ type Template {
   content: Json!
   user: User
   isSearchable: Boolean!
+  useCount: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1049,6 +1050,7 @@ input TemplateCreateInput {
   content: Json!
   user: UserCreateOneWithoutTemplatesInput
   isSearchable: Boolean
+  useCount: Int
 }
 
 input TemplateCreateManyWithoutUserInput {
@@ -1067,6 +1069,7 @@ input TemplateCreateWithoutUserInput {
   tags: String!
   content: Json!
   isSearchable: Boolean
+  useCount: Int
 }
 
 type TemplateEdge {
@@ -1085,6 +1088,8 @@ enum TemplateOrderByInput {
   content_DESC
   isSearchable_ASC
   isSearchable_DESC
+  useCount_ASC
+  useCount_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1097,6 +1102,7 @@ type TemplatePreviousValues {
   tags: String!
   content: Json!
   isSearchable: Boolean!
+  useCount: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1146,6 +1152,14 @@ input TemplateScalarWhereInput {
   tags_not_ends_with: String
   isSearchable: Boolean
   isSearchable_not: Boolean
+  useCount: Int
+  useCount_not: Int
+  useCount_in: [Int!]
+  useCount_not_in: [Int!]
+  useCount_lt: Int
+  useCount_lte: Int
+  useCount_gt: Int
+  useCount_gte: Int
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1191,6 +1205,7 @@ input TemplateUpdateDataInput {
   content: Json
   user: UserUpdateOneWithoutTemplatesInput
   isSearchable: Boolean
+  useCount: Int
 }
 
 input TemplateUpdateInput {
@@ -1199,6 +1214,7 @@ input TemplateUpdateInput {
   content: Json
   user: UserUpdateOneWithoutTemplatesInput
   isSearchable: Boolean
+  useCount: Int
 }
 
 input TemplateUpdateManyDataInput {
@@ -1206,6 +1222,7 @@ input TemplateUpdateManyDataInput {
   tags: String
   content: Json
   isSearchable: Boolean
+  useCount: Int
 }
 
 input TemplateUpdateManyMutationInput {
@@ -1213,6 +1230,7 @@ input TemplateUpdateManyMutationInput {
   tags: String
   content: Json
   isSearchable: Boolean
+  useCount: Int
 }
 
 input TemplateUpdateManyWithoutUserInput {
@@ -1246,6 +1264,7 @@ input TemplateUpdateWithoutUserDataInput {
   tags: String
   content: Json
   isSearchable: Boolean
+  useCount: Int
 }
 
 input TemplateUpdateWithWhereUniqueWithoutUserInput {
@@ -1310,6 +1329,14 @@ input TemplateWhereInput {
   user: UserWhereInput
   isSearchable: Boolean
   isSearchable_not: Boolean
+  useCount: Int
+  useCount_not: Int
+  useCount_in: [Int!]
+  useCount_not_in: [Int!]
+  useCount_lt: Int
+  useCount_lte: Int
+  useCount_gt: Int
+  useCount_gte: Int
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

@@ -4,6 +4,7 @@ export default gql`
   type Query {
     me: User
     templates(text: String!, page: Int!): PaginatedTemplates!
+    publicTemplates: [Template!]!
     getTemplateById(id: String!): Template!
     getUsersTemplates: [Template!]!
     getLetterById(id: String!): Letter!
@@ -23,6 +24,7 @@ export default gql`
     resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
     createTemplate(template: TemplateInput!): Template!
     updateTemplate(template: TemplateInput!, id: String!): Template!
+    incrementTemplateUse(id: String!): Template!
   }
 
   # Inputs
