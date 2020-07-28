@@ -64,6 +64,8 @@ export function createJWT(userId: string) {
 
 export function setCookie(token: string, ctx: Context) {
   ctx.res.cookie("token", token, {
+    domain: process.env.FRONTEND,
+    path: "/",
     httpOnly: true,
     secure: true,
     sameSite: "strict",
