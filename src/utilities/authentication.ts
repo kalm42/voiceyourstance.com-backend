@@ -65,6 +65,7 @@ export function createJWT(userId: string) {
 export function setCookie(token: string, ctx: Context) {
   ctx.res.cookie("token", token, {
     httpOnly: true,
+    secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
   })
 }
