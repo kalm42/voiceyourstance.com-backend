@@ -7,8 +7,6 @@ import { requireLoggedInUser, filterValidTags } from "../utilities"
  * Save a new template to the registry
  */
 export function createTemplate(parent, args: CreateTemplateArgs, ctx: Context) {
-  requireLoggedInUser(ctx)
-
   const {
     template: { content, tags, title, isSearchable },
   } = args
@@ -26,7 +24,7 @@ export function createTemplate(parent, args: CreateTemplateArgs, ctx: Context) {
     content,
     title,
     tags: joinedTags,
-    user: { connect: { id: ctx.user.id } },
+    user: ctx.userId ? { connect: { id: ctx.userId } } : null,
   })
 }
 

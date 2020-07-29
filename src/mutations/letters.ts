@@ -4,6 +4,24 @@ import stripe from "../apis/stripe"
 import lob from "../apis/lob"
 import { generateHTML, saveAddressIfNew } from "../utilities"
 
+const withAddress = `
+  fragment LetterWithAddresses on Letter {
+    id
+    updatedAt
+    content
+    toAddress {
+      id
+      hash
+      name
+      line1
+      line2
+      city
+      state
+      zip
+    }
+  }
+`
+
 /**
  * Save a new letter to the database
  */
@@ -39,13 +57,15 @@ export async function createLetter(parent, args: CreateLetterArgs, ctx: Context)
   )
 
   // save the letter
-  return ctx.db.createLetter({
-    content,
-    fromAddress: { connect: { hash: fromHash } },
-    toAddress: { connect: { hash: toHash } },
-    user: ctx.userId && { connect: { id: ctx.user.id } },
-    template: templateId && { connect: { id: templateId } },
-  })
+  return ctx.db
+    .createLetter({
+      content,
+      fromAddress: { connect: { hash: fromHash } },
+      toAddress: { connect: { hash: toHash } },
+      user: ctx.userId && { connect: { id: ctx.user.id } },
+      template: templateId && { connect: { id: templateId } },
+    })
+    .$fragment(withAddress)
 }
 
 /**
