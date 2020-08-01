@@ -1,6 +1,6 @@
 import { RawDraftContentState } from "draft-js"
 
-export default function generateHTML(messageBody: RawDraftContentState) {
+export function generateHTML(messageBody: RawDraftContentState) {
   const date = new Date()
   const options = {
     weekday: "long",
