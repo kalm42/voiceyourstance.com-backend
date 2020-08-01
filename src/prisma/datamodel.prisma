@@ -1,18 +1,12 @@
 type Letter {
   id: ID! @id
-  fromName: String!
-  fromLine1: String!
-  fromCity: String!
-  fromState: String!
-  fromZip: String!
-  toName: String!
-  toLine1: String!
-  toCity: String!
-  toState: String!
-  toZip: String!
+  fromAddress: Address! @relation(name: "FromAddress")
+  toAddress: Address! @relation(name: "ToAddress")
   content: Json!
   payment: Payment @relation(link: INLINE)
   mail: Mail @relation(link: INLINE)
+  user: User @elation(link: INLINE)
+  template: Template @relation(link: INLINE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt 
 }
@@ -30,6 +24,44 @@ type Mail {
   lobId: String!
   letter: Letter!
   expectedDeliveryDate: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt 
+}
+
+type User {
+  id: ID! @id
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetExpiry: Float
+  address: Address @relation(link: INLINE)
+  letters: [Letter!]!
+  templates: [Template!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt 
+}
+
+type Address {
+  id: ID! @id
+  hash: String! @unique
+  name: String!
+  line1: String!
+  line2: String
+  city: String!
+  state: String!
+  zip: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt 
+}
+
+type Template {
+  id: ID! @id
+  title: String!
+  tags: String!
+  content: Json!
+  user: User @relation(link: INLINE)
+  isSearchable: Boolean! @default(value: false)
+  useCount: Int! @default(value: 0)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt 
 }
