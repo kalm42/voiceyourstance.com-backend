@@ -11,7 +11,7 @@ import { isPwndPassword, promiseRandomBytes, transport, createJWT, setCookie, ma
  */
 export async function signin(parent, args: SigninArgs, ctx: Context, info) {
   const { email, password } = args
-  const user = await ctx.db.user({ email })
+  const user = await ctx.db.user({ email: email.toLowerCase() })
   if (!user) {
     throw new Error(`No such user found for email ${email}.`)
   }
@@ -44,7 +44,7 @@ export async function signup(parent, args: SignUpArgs, context: Context, info) {
   const { email, password } = args
 
   // Validate user is not already registered
-  const userExists = await context.db.$exists.user({ email })
+  const userExists = await context.db.$exists.user({ email: email.toLowerCase() })
   if (userExists) {
     throw new Error("You already have an account. Maybe reset your password and consider using a password manager.")
   }
