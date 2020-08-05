@@ -105,7 +105,7 @@ export async function requestReset(parent, args: RequestResetArgs, ctx: Context)
 
   // Send the email
   const mailResponse = await transport.sendMail({
-    from: "donotreply@voiceyourstance.com",
+    from: "me@kylemelton.dev",
     to: user.email,
     subject: "Your Password Reset Token",
     html,
