@@ -145,7 +145,10 @@ export async function resetPassword(parent, args: ResetPasswordArgs, ctx: Contex
   const hashedPassword = await bcrypt.hash(password, 10)
 
   // Update the user's record with the new password
-  ctx.db.updateUser({ where: { id: user.id }, data: { password: hashedPassword, resetToken: null, resetExpiry: null } })
+  await ctx.db.updateUser({
+    where: { id: user.id },
+    data: { password: hashedPassword, resetToken: null, resetExpiry: null },
+  })
 
   // create the jwt
   const token = createJWT(user.id)
